@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlTimetableMain"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingLeft="0dp" >
+
+    <ScrollView
+        android:id="@+id/ScrollView1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="10dp" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="0dp"
+            android:orientation="vertical"
+            android:padding="0dp" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="left"
+                    android:layout_marginRight="10dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_launcher_acheter" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:text="@string/prix"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent" >
+
+                        <ToggleButton
+                            android:id="@+id/allerSimple"
+                            android:layout_width="90dp"
+                            android:layout_height="30dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_toLeftOf="@+id/allerRetour"
+                            android:background="@drawable/bouton_aller_simple_vert"
+                            android:checked="true"
+                            android:height="30dp"
+                            android:onClick="onClick"
+                            android:padding="5dp"
+                            android:paddingStart="50dp"
+                            android:text="@string/allerSimple"
+                            android:textOff="@string/allerSimple"
+                            android:textOn="@string/allerSimple"
+                            android:textSize="12sp" />
+
+                        <ToggleButton
+                            android:id="@+id/allerRetour"
+                            android:layout_width="90dp"
+                            android:layout_height="30dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginLeft="-5dp"
+                            android:background="@drawable/bouton_aller_retour_vert"
+                            android:height="30dp"
+                            android:onClick="onClick"
+                            android:padding="5dp"
+                            android:text="@string/allerRetour"
+                            android:textOff="@string/allerRetour"
+                            android:textOn="@string/allerRetour"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llTimetableGareAller"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/linearlayout_border_bottom"
+                android:clickable="true"
+                android:onClick="onClick"
+                android:padding="10dp" >
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gareDepart"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/table_content" />
+
+                <fr.wheelmilk.android.altibusproject.layout.AutoResizeTextView
+                    android:id="@+id/tvTimetableGareAller"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="none"
+                    android:gravity="right"
+                    android:singleLine="true"
+                    android:text="@string/rechercherGare"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/greenFont" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llTimetableGareArrivee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/linearlayout_border_bottom"
+                android:clickable="true"
+                android:onClick="onClick"
+                android:padding="10dp" >
+
+                <TextView
+                    android:id="@+id/TextView02"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gareArrivee"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/table_content" />
+
+                <fr.wheelmilk.android.altibusproject.layout.AutoResizeTextView
+                    android:id="@+id/tvTimetableGareArrivee"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="@string/rechercherGare"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/greenFont" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llTimetableDateAller"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/linearlayout_border_bottom"
+                android:clickable="true"
+                android:onClick="onClick"
+                android:padding="10dp" >
+
+                <TextView
+                    android:id="@+id/TextView02"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dateDepart"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/table_content" />
+
+                <fr.wheelmilk.android.altibusproject.layout.AutoResizeTextView
+                    android:id="@+id/tvTimetableDateAller"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="@string/rechercheDate"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/greenFont" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llTimetableHorraireAller"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/linearlayout_border_bottom"
+                android:clickable="true"
+                android:onClick="onClick"
+                android:padding="10dp" >
+
+                <TextView
+                    android:id="@+id/TextView02"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/horraireAller"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/table_content" />
+
+                <fr.wheelmilk.android.altibusproject.layout.AutoResizeTextView
+                    android:id="@+id/tvTimetableHorraireAller"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="@string/rechercherHorraire"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/greenFont" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llTimetableRetour"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:id="@+id/llTimetableDateRetour"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/linearlayout_border_bottom"
+                    android:clickable="true"
+                    android:onClick="onClick"
+                    android:padding="10dp" >
+
+                    <TextView
+                        android:id="@+id/TextView01"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/dateRetour"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/table_content" />
+
+                    <fr.wheelmilk.android.altibusproject.layout.AutoResizeTextView
+                        android:id="@+id/tvTimetableDateRetour"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:text="@string/rechercheDate"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/greenFont" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llTimetableHorraireRetour"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/linearlayout_border_bottom"
+                    android:clickable="true"
+                    android:onClick="onClick"
+                    android:padding="10dp" >
+
+                    <TextView
+                        android:id="@+id/TextView03"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/horraireRetour"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/table_content" />
+
+                    <fr.wheelmilk.android.altibusproject.layout.AutoResizeTextView
+                        android:id="@+id/tvTimetableHorraireRetour"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:text="@string/rechercheDate"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/greenFont" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/button1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/green_button"
+                android:clickable="true"
+                android:text="@string/commander" />
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

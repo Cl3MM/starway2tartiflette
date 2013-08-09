@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- File created by the Android Action Bar Style Generator
+
+     Copyright (C) 2011 The Android Open Source Project
+     Copyright (C) 2012 readyState Software Ltd
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+  
+          http://www.apache.org/licenses/LICENSE-2.0
+  
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<resources>
+
+    <style name="Theme.Altibus_light" parent="@style/Theme.Sherlock.Light.DarkActionBar">
+        <item name="actionBarItemBackground">@drawable/selectable_background_altibus_light</item>
+        <item name="popupMenuStyle">@style/PopupMenu.Altibus_light</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.Altibus_light</item>
+        <item name="actionBarTabStyle">@style/ActionBarTabStyle.Altibus_light</item>
+        <item name="actionDropDownStyle">@style/DropDownNav.Altibus_light</item>
+        <item name="actionBarStyle">@style/ActionBar.Solid.Altibus_light</item>
+        <item name="actionModeBackground">@drawable/cab_background_top_altibus_light</item>
+        <item name="actionModeSplitBackground">@drawable/cab_background_bottom_altibus_light</item>
+        <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Altibus_light</item>
+
+                <!-- Light.DarkActionBar specific -->
+        <item name="actionBarWidgetTheme">@style/Theme.Altibus_light.Widget</item>
+
+    </style>
+
+<!--     clem -->
+
+    <style name="Theme.SuperLightExample" parent="@style/Theme.Altibus_light">
+        <item name="vpiTabPageIndicatorStyle">@style/CustomLightTheme</item>
+    </style>
+        
+    <style name="CustomLightTheme" parent="@style/Widget.TabPageIndicator">
+        <item name="android:textSize">10sp</item>
+   		<item name="android:padding">5dp</item>
+<!--    		<item name="android:paddingBottom">20dp</item> -->
+<!--    		<item name="android:height">100dp</item> -->
+   		<item name="android:width">78dp</item>
+   				        
+   		<item name="background">@drawable/tab_indicator_ab_altibus_light</item>
+   		<item name="android:background">@drawable/tab_indicator_ab_altibus_light</item>
+   		
+   		<!-- Dividers between tabs -->
+        <item name="android:showDividers">middle</item>
+        <item name="android:dividerPadding">16dp</item>
+        <item name="android:divider">@drawable/divider_1x10_444</item>
+        		
+    </style>
+
+
+<!--     clem -->
+    
+    
+    
+    <style name="ActionBar.Solid.Altibus_light" parent="@style/Widget.Sherlock.Light.ActionBar.Solid.Inverse">
+        <item name="background">@drawable/ab_solid_altibus_light</item>
+        <item name="backgroundStacked">@drawable/ab_stacked_solid_altibus_light</item>
+        <item name="backgroundSplit">@drawable/ab_bottom_solid_altibus_light</item>
+        <item name="progressBarStyle">@style/ProgressBar.Altibus_light</item>
+    </style>
+
+    <style name="ActionBar.Transparent.Altibus_light" parent="@style/Widget.Sherlock.ActionBar">
+        <item name="background">@drawable/ab_transparent_altibus_light</item>
+        <item name="progressBarStyle">@style/ProgressBar.Altibus_light</item>
+    </style>
+	
+    <style name="PopupMenu.Altibus_light" parent="@style/Widget.Sherlock.ListPopupWindow">	
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_altibus_light</item>	
+    </style>
+	
+    <style name="DropDownListView.Altibus_light" parent="@style/Widget.Sherlock.ListView.DropDown">
+        <item name="android:listSelector">@drawable/selectable_background_altibus_light</item>
+    </style>
+
+    <style name="ActionBarTabStyle.Altibus_light" parent="@style/Widget.Sherlock.ActionBar.TabView">
+        <item name="android:background">@drawable/tab_indicator_ab_altibus_light</item>
+        <item name="vpiTabPageIndicatorStyle">@style/ActionBarTabStyle.Altibus_light</item>
+        <item name="background">@drawable/tab_indicator_ab_altibus_light</item>
+        <item name="android:background">@drawable/tab_indicator_ab_altibus_light</item>
+    </style>
+	
+    <style name="DropDownNav.Altibus_light" parent="@style/Widget.Sherlock.Spinner.DropDown.ActionBar">
+        <item name="android:background">@drawable/spinner_background_ab_altibus_light</item>
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_altibus_light</item>
+        <item name="android:dropDownSelector">@drawable/selectable_background_altibus_light</item>
+    </style>
+    
+    <style name="ProgressBar.Altibus_light" parent="@style/Widget.Sherlock.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_altibus_light</item>
+    </style>
+    
+    <style name="ActionButton.CloseMode.Altibus_light" parent="@style/Widget.Sherlock.ActionButton.CloseMode">
+        <item name="android:background">@drawable/btn_cab_done_altibus_light</item>
+    </style>
+    
+    <!-- this style is only referenced in a Light.DarkActionBar based theme -->
+    <style name="Theme.Altibus_light.Widget" parent="@style/Theme.Sherlock">
+        <item name="popupMenuStyle">@style/PopupMenu.Altibus_light</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.Altibus_light</item>
+    </style>
+
+</resources>

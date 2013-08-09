@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+<!--     <style name="Theme.Styled" parent="Theme.Sherlock.Light.DarkActionBar"> -->
+<!--         <item name="actionBarStyle">@style/Widget.Styled.ActionBar</item> -->
+<!--         <item name="android:actionBarStyle">@style/Widget.Styled.ActionBar</item> -->
+<!--     </style> -->
+
+
+<!--     <style name="Theme.VPI" parent="Theme.Styled"> -->
+<!--        <item name="vpiTabPageIndicatorStyle">@style/CustomTabPageIndicator</item> -->
+<!--     </style> -->
+    
+    <style name="Widget.Styled.ActionBar" parent="Widget.Sherlock.Light.ActionBar.Solid">
+        <item name="titleTextStyle">@style/TitleText</item>
+        <item name="android:titleTextStyle">@style/TitleText</item>
+    </style>
+    
+    <!-- Styling the tabs -->
+    <style name="CustomTabPageIndicator" parent="Widget.TabPageIndicator">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">#FFA3441B</item>
+        
+        <!-- Dividers between tabs -->
+        <item name="android:showDividers">middle</item>
+        <item name="android:dividerPadding">8dp</item>
+<!--         <item name="android:divider">@drawable/custom_tab_indicator_divider</item> -->
+        
+         <!--  Lines under tabs -->
+        <item name="android:background">@drawable/tab_indicator_ab_alpe1</item>
+    </style>
+    
+    <!-- Title on action bar -->
+     <style name="TitleText" >
+        <item name="android:textColor">@android:color/darker_gray</item>
+        <item name="android:textSize">17dip</item>
+    </style>
+    
+     
+</resources>

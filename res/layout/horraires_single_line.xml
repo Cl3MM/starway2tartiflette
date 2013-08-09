@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llHorraireSingleLineRoot"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+	android:background="@drawable/linearlayout_selected"
+    android:clickable="true"
+    android:onClick="onClick"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/horrairesSingleLineLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="5dp"
+            android:text="@string/horraireDepart"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/table_content" />
+
+        <TextView
+            android:id="@+id/horraireAllerTv"
+            android:layout_width="52dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="none"
+            android:gravity="right"
+            android:singleLine="true"
+            android:text="12:00"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/orange_dark" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text=" - "
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/table_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="10dp"
+            android:text="@string/horraireArrivee"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/table_content" />
+
+        <TextView
+            android:id="@+id/horraireArriveeTv"
+            android:layout_width="52dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="none"
+            android:gravity="right"
+            android:singleLine="true"
+            android:text="12:45"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/orange_dark" />
+    </LinearLayout>
+
+</LinearLayout>

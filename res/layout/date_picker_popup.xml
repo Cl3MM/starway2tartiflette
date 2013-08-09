@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llDatePickerRoot"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/table_background"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/llTitleContainer"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/orange_dark"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/imageInfos"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginBottom="-1dp"
+            android:layout_marginRight="4dp"
+            android:background="@drawable/ic_action_info"
+            android:gravity="center|center_vertical" />
+
+        <TextView
+            android:id="@+id/tvMainTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/orange_dark"
+            android:gravity="center_vertical|center_horizontal"
+            android:paddingBottom="5dp"
+            android:paddingLeft="0dp"
+            android:paddingTop="5dp"
+            android:text="@string/trajetDetails"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llHorrairesDepart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/llTitleContainer"
+        android:background="@drawable/linearlayout_border_bottom"
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/TextView02"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/gareDepart"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/table_content" />
+
+        <fr.wheelmilk.android.altibusproject.layout.AutoResizeTextView
+            android:id="@+id/horrairesTvGareDepart"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="none"
+            android:gravity="right"
+            android:singleLine="true"
+            android:text="@string/emptyString"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/orange_dark" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llHorrairesArrivee"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/llHorrairesDepart"
+        android:background="@drawable/linearlayout_border_bottom"
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/TextView01"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/gareArrivee"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/table_content" />
+
+        <fr.wheelmilk.android.altibusproject.layout.AutoResizeTextView
+            android:id="@+id/horrairesTvGareArrivee"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="none"
+            android:gravity="right"
+            android:singleLine="true"
+            android:text="@string/emptyString"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/orange_dark" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llDateAller"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/llHorrairesArrivee"
+        android:background="@drawable/linearlayout_border_bottom"
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/TextView0001"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/dateDepart"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/table_content" />
+
+        <fr.wheelmilk.android.altibusproject.layout.AutoResizeTextView
+            android:id="@+id/dateAllerTv"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="none"
+            android:gravity="right"
+            android:singleLine="true"
+            android:text="@string/emptyString"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/orange_dark" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llTitleLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/llDateAller"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/llTitleLayout001"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/orange_dark"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/TextView04"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginBottom="-1dp"
+                android:background="@drawable/ic_action_horraires"
+                android:gravity="center|center_vertical" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/orange_dark"
+                android:gravity="center_vertical|center_horizontal"
+                android:padding="5dp"
+                android:text="@string/trajetDetails"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <DatePicker
+        android:id="@+id/datePickerPopUp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/llTitleLayout"
+        android:gravity="center" />
+
+    <Button
+        android:id="@+id/btnDatePicker"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/white_button"
+        android:textColor="@drawable/white_button_text_selector" />
+
+</RelativeLayout>

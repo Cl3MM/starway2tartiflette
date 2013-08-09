@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:background="@drawable/linearlayout_border_bottom" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="5dp"
+            android:src="@drawable/ic_action_search" />
+
+        <EditText
+            android:id="@+id/filterGaresAller"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/rechercherGare"
+            android:maxLines="1"
+            android:textColor="@color/table_content"
+            android:textColorHint="@color/hintColor" />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/gareAllerList"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:dividerHeight="1sp"
+        android:background="@drawable/linearlayout_border_bottom"
+        android:divider="@drawable/linearlayout_border_bottom" />
+
+<!--         android:background="@drawable/linearlayout_border_bottom" /> -->
+
+</LinearLayout>

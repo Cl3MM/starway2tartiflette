@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="6dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp" >
+
+    <LinearLayout
+        android:id="@+id/LinearLayout02"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/linearlayout_border_bottom"
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/TextView02"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/gareDepart"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/table_content" />
+
+        <fr.wheelmilk.android.altibusproject.layout.AutoResizeTextView
+            android:id="@+id/horrairesDlgTvGareDepart"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="none"
+            android:gravity="right"
+            android:singleLine="true"
+            android:text="@string/emptyString"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/orange_dark" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llTimetableDateRetour"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/linearlayout_border_bottom"
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/TextView01"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/gareArrivee"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/table_content" />
+
+        <fr.wheelmilk.android.altibusproject.layout.AutoResizeTextView
+            android:id="@+id/horrairesDlgTvGareArrivee"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="none"
+            android:gravity="right"
+            android:singleLine="true"
+            android:text="@string/emptyString"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/orange_dark" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/horrairesSingleLineLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/linearlayout_border_bottom"
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/horraireLeft"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/dateDepart"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/table_content" />
+
+        <fr.wheelmilk.android.altibusproject.layout.AutoResizeTextView
+            android:id="@+id/horrairesDlgTvDateAller"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="none"
+            android:gravity="right"
+            android:singleLine="true"
+            android:text="@string/emptyString"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/orange_dark" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llTimetableDateRetour"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/orange_button"
+        android:orientation="horizontal"
+        android:padding="3dp"
+        android:paddingLeft="5dp" >
+
+        <TextView
+            android:id="@+id/TextView01"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/horraireAller"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+        	android:id="@+id/horrairesScrollView"
+        	android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

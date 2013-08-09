@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/table_background"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/llHeaderProgress"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+      <ProgressBar
+          android:id="@+id/pbHeaderProgress"
+          style="?android:attr/progressBarStyleLarge"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content" />
+
+		</LinearLayout>
+		
+ <LinearLayout
+ android:id="@+id/llPopupContent"
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ android:orientation="vertical" >
+      
+         <LinearLayout
+             android:id="@+id/llMainTitle"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center_vertical|center_horizontal"
+             android:background="@drawable/orange_button"
+             android:gravity="center"
+             android:orientation="horizontal"
+             android:padding="3dp"
+             android:paddingLeft="5dp" >
+
+             <TextView
+                 android:id="@+id/textView1"
+                 android:layout_width="24dp"
+                 android:layout_height="24dp"
+                 android:layout_marginRight="5dp"
+                 android:layout_marginBottom="-2dp"
+                 android:background="@drawable/ic_action_info" />
+
+        <TextView
+            android:id="@+id/tvMainTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/trajetDetails"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llGareAller"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/linearlayout_border_bottom"
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/tvGareAller"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/gareDepart"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/table_content" />
+
+        <fr.wheelmilk.android.altibusproject.layout.AutoResizeTextView
+            android:id="@+id/horrairesDlgTvGareDepart"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="none"
+            android:gravity="right"
+            android:singleLine="true"
+            android:text="@string/emptyString"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/orange_dark" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llGareArrivee"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/linearlayout_border_bottom"
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/tvGareArrivee"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/gareArrivee"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/table_content" />
+
+        <fr.wheelmilk.android.altibusproject.layout.AutoResizeTextView
+            android:id="@+id/horrairesDlgTvGareArrivee"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="none"
+            android:gravity="right"
+            android:singleLine="true"
+            android:text="@string/emptyString"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/orange_dark" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llDateAller"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/linearlayout_border_bottom"
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/tvDateAller"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/dateDepart"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/table_content" />
+
+        <fr.wheelmilk.android.altibusproject.layout.AutoResizeTextView
+            android:id="@+id/horrairesDlgTvDateAller"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="none"
+            android:gravity="right"
+            android:singleLine="true"
+            android:text="@string/emptyString"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/orange_dark" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llDateRetour"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/linearlayout_border_bottom"
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/tvDateRetour"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/dateRetour"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/table_content" />
+
+        <fr.wheelmilk.android.altibusproject.layout.AutoResizeTextView
+            android:id="@+id/horrairesDlgTvDateRetour"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="none"
+            android:gravity="right"
+            android:singleLine="true"
+            android:text="@string/emptyString"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/orange_dark" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:id="@+id/llTimetableDateRetour"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/orange_button"
+        android:orientation="horizontal"
+        android:padding="3dp"
+        android:gravity="center|center_vertical"
+        android:paddingLeft="5dp" >
+
+             <TextView
+                 android:layout_width="24dp"
+                 android:layout_height="24dp"
+                 android:layout_marginBottom="-2dp"
+                 android:layout_marginRight="5dp"
+                 android:gravity="center|center_vertical"
+                 android:background="@drawable/ic_action_heures" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center|center_vertical"
+            android:text="@string/horraireAller"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/listDesGares"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/linearlayout_border_bottom"
+        android:divider="@drawable/linearlayout_border_bottom"
+        android:dividerHeight="1sp" >
+    </ListView>
+</LinearLayout>
+</LinearLayout>
