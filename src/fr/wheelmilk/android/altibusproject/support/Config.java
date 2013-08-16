@@ -17,7 +17,9 @@ public class Config {
 	public static final int HEURE_ALLER_CODE 	= 400;
 	public static final int DATE_RETOUR_CODE 	= 500;
 	public static final int HEURE_RETOUR_CODE 	= 600;
-	
+	public static final int PASSAGERS_RETOUR_CODE 	= 700;
+	public static final int EDITION_PASSAGERS_RETOUR_CODE 	= 800;
+
 	public static final String[] CONTENT = new String[] { "Réservation",
 		"Horraires", "Mes billets", "Historique"
 	};
@@ -29,4 +31,7 @@ public class Config {
             R.drawable.ic_action_mes_billets,
             R.drawable.ic_action_historique,
     };
+
+	public static final String POPUP_ORANGE_COLOR = "#e8521f";
+	public static final String POPUP_GREEN_COLOR = "#99cc33";
 }

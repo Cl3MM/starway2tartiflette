@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">FragmentTabs</string>
+    <color name="purple_light">#a276eb</color>
+    <color name="purple_middle">#8658ce</color>
+    <color name="purple_dark">#6a3ab2</color>
+
     <string name="tab_words">Words</string>
     <string name="tab_numbers">Numbers</string>
     <string name="app_name">Altibus</string>
@@ -16,16 +19,41 @@
     <color name="action_bar_light">#a3a3a3</color>
 
     <string name="emptyString">""</string>
+    <string name="editer">"Editer"</string>
+        <string name="supprimer">"Supprimer"</string>
     <string name="allerRetour">Aller Retour</string>
     <string name="trajetDetails">Détails du trajet</string>
     <string name="allerSimple">Aller simple</string>
     <string name="prix">Prix</string>
     <string name="commander">Commander</string>
+    <string name="passagers">Passager(s)</string>
+    <string name="passager">Passager</string>
+    <string name="passagerss">Passagers</string>
+    
+    <string name="attentionTT">Attention !</string>
+    <string name="saisirNom">Nom</string>
+    <string name="saisirPrenom">Prénom</string>
+    <string name="saisirAge">0</string>
+
+    <string name="erreurNom">Le nom entré n\'est pas valide.</string>
+    <string name="erreurPrenom">Le prénom entré n\'est pas valide.</string>
+    <string name="erreurAge">L\'age du passager doit être compris entre 4 et 120 ans.</string>
+    
+    
+    <string name="addPassager">Ajout passager</string>
+    <string name="ajouterPassager">Ajouter un passager</string>
+    <string name="saisirInfoPassager">Saisir les informations</string>
+    <string name="modifierlePassager">Modifier le passager</string>
+    <string name="modifierPassagerPrincipal">Modifier les données du passager principal</string>
+    <string name="modifierPassager">Modifier les données du passager</string>
+    <string name="passagerFirst">Passager Principal</string>
+    <string name="entrezPassagers">Saisir les passagers</string>
+    <string name="validerPassagers">Valider les passagers</string>
     <string name="loading">Chargement ...</string>
+    <string name="erreurDateRetour">Veuillez sélectionner une date retour</string>
     <string name="erreurSerialisation">L\'application a encontré une erreur lors de la sérialisation.</string>
     <string name="erreurChampsNonRemplis">Veuillez remplir tous les champs</string>
     <string name="erreurPasDHorraire">Désolé, aucun trajet trouvé pour le jour sélectionné. Merci de saisir un autre jour.</string>
-    <string name="gareAcoteDlgTitle">Choisir ma gare de départ</string>
     <string name="gareAcoteDlgTitle">Choisir ma gare de départ</string>
     <string name="errorConnection">Impossible d\'établir la connection Internet. Merci de vérifier votre connection.</string>
     <string name="errorWebservice">Impossible de se connecter au webservice. Veuillez vérifiez votre connection internet.</string>
@@ -33,11 +61,12 @@
     <string name="errorGareAller">Veuillez dabord sélectionner une gare de départ</string>
     <string name="voirGaresACote">Parmi les gares autour de moi</string>
     <string name="voirToutesGares">Dans la liste de toutes les gares</string>
-<color name="topline_btn">#31ffffff</color>
-<color name="bottomline_btn">#31000000</color>
 
-<color name="blue">#449def</color>
-<color name="blue_end">#2f6699</color>
+    <color name="topline_btn">#31ffffff</color>
+    <color name="bottomline_btn">#31000000</color>
+    <color name="blue">#449def</color>
+    <color name="blue_end">#2f6699</color>
+
     <string name="ok">Valider</string>
     <string name="cancel">Annuler</string>
     <string name="tabAchatsBillet">Achats</string>
@@ -46,15 +75,14 @@
     <string name="tabHistorique">Historique</string>
     <string name="garesAllerTitle">Gares départ</string>
     <string name="garesArriveeTitle">Gares arrivée</string>
-
     <string name="rechercheGare">Rechercher une gare...</string>
-    
     <string name="gareDepart">Départ</string>
     <string name="gareArrivee">Arrivée</string>
     <string name="rechercherGare">Choisir une gare</string>
     <string name="acheter">Acheter le billet</string>
     <string name="dateDepart">Date aller</string>
     <string name="dateRetour">Date retour</string>
+    <string name="choisirCetteDate">Choisir cette date</string>
     <string name="rechercheDate">Choisir une date</string>
     <string name="horraireDepart">Départ :</string>
     <string name="horraireArrivee">Arrivée :</string>
@@ -83,11 +111,12 @@
     <color name="hintColor">#ddd</color>
     <color name="greenFont">#99cc33</color>
     <color name="DarkGreenBorder">#376200</color>
+    <color name="greenLight">#83b248</color>
+    <color name="greenDark">#529300</color>
+    
     <color name="DarkRedBorder">#8b2e2b</color>
     <color name="searchEditTextHintColor">#aaa</color>
-    
-    
-    
+
     <string-array name="syncFrequency">
         <item name="1">Once a day</item>
         <item name="7">Once a week</item>
@@ -100,28 +129,26 @@
         <item name="30">30</item>
         <item name="0">0</item>
     </string-array>
-    
-    <string name="title_activity_main">MainActivity</string>
-     
-    <string name="pref_send_report">Send crash reports</string>
-    <string name="pref_send_report_summary">Helps to fix bugs</string>
-    <string name="pref_sync_frequency">Sync frequency</string>
-    <string name="pref_sync_frequency_summary">Set the sync frequency</string>
+
     <string name="pref_user_last_name_summary">Saisissez votre nom</string>
     <string name="pref_user_last_name">Nom</string>
     <string name="pref_user_first_name_summary">Saisissez votre prénom</string>
     <string name="pref_user_first_name">Prénom</string>
     <string name="pref_user_age">Age</string>
     <string name="pref_user_set_age">Saisissez votre age</string>
-    <string name="pref_user_contact">Contact</string>    
+    <string name="pref_user_contact">Contact</string>
     <string name="pref_user_telephone">Téléphone</string>
     <string name="pref_user_set_telephone">Numéro de téléphone</string>
     <string name="pref_user_email">Adresse email</string>
     <string name="pref_user_set_email">Saisissez votre email</string>
     <string name="pref_user_adresse">Adresse</string>
     <string name="pref_user_set_adresse">Saisissez votre adresse</string>
-    
     <string name="pref_user_civilite">Civilité</string>
-    <string name="pref_update_setting">Update Settings</string>
-     
+    <string name="pref_user_countries">Pays</string>
+    <string name="pref_user_countries_summary">Choisissez votre pays</string>
+
+    <string name="pref_user_code_postal_summary">Saisissez votre code postal</string>
+    <string name="pref_user_code_postal">Code Postal</string>
+        
+
 </resources>

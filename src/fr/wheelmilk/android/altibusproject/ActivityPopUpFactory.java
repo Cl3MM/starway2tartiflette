@@ -3,13 +3,12 @@ package fr.wheelmilk.android.altibusproject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -26,6 +25,7 @@ import fr.wheelmilk.android.altibusproject.support.Config;
 public abstract class ActivityPopUpFactory extends SherlockActivity implements OnWebserviceListenner {
 	protected LinearLayout llHeaderProgress;
 	protected String title;
+	protected int popupColor;
 	protected String result = null;
 	protected LinearLayout llPopupContent;
 	protected ListView listeDesGares;
@@ -44,6 +44,8 @@ public abstract class ActivityPopUpFactory extends SherlockActivity implements O
 			finish();
 		}
 		title = extras.getString("title");
+		String color = extras.getString("popupColor");
+		popupColor = Color.parseColor( color );
 	}
 	protected void setSuccessfulResult(int position) {
 //		result 		= arrayAdapter.items.get(position);
@@ -77,9 +79,9 @@ public abstract class ActivityPopUpFactory extends SherlockActivity implements O
 		dlgTitle.setText(title);
 
 		listeDesGares = (ListView) findViewById(R.id.listDesGares);
-		LayoutAnimationController lac = new LayoutAnimationController(AnimationUtils.loadAnimation(this, R.anim.fadein));
-	    lac.setDelay(0.02f);
-	    listeDesGares.setLayoutAnimation(lac);  
+//		LayoutAnimationController lac = new LayoutAnimationController(AnimationUtils.loadAnimation(this, R.anim.fadein));
+//	    lac.setDelay(0.02f);
+//	    listeDesGares.setLayoutAnimation(lac);  
 		listeDesGares.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
@@ -102,18 +104,11 @@ public abstract class ActivityPopUpFactory extends SherlockActivity implements O
 			@Override
 			public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
 				arrayAdapter.getFilter().filter(cs.toString().replace("\n", ""));
-				listeDesGares.refreshDrawableState();
-//				(PopUpArrayAdapter listeDesGares.getAdapter()).
-//				Log.v(this.getClass().toString(), cs.toString());
 			}
 			@Override
-			public void beforeTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
-//				Log.v(this.getClass().toString(), arrayAdapter.toString());
-			}
+			public void beforeTextChanged(CharSequence cs, int arg1, int arg2, int arg3) { }
 			@Override
-			public void afterTextChanged(Editable arg0) { 
-//				Log.v(this.getClass().toString(), arrayAdapter.toString());
-			}
+			public void afterTextChanged(Editable arg0) { }
 		});
 	}
 

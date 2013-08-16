@@ -1,18 +1,40 @@
 package fr.wheelmilk.android.altibusproject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+import java.util.ArrayList;
+
+import org.simpleframework.xml.Serializer;
+import org.simpleframework.xml.core.Persister;
+
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+
+
 import com.viewpagerindicator.PageIndicator;
 
+import fr.wheelmilk.android.altibusproject.models.AltibusDataPays;
 import fr.wheelmilk.android.altibusproject.support.IconsTabPageIndicator;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.widget.Toast;
 
 public class AltibusMainActivity extends SherlockFragmentActivity {
@@ -20,7 +42,9 @@ public class AltibusMainActivity extends SherlockFragmentActivity {
 	AltibusFragmentAdapter mAdapter;
 	ViewPager mPager;
 	PageIndicator mIndicator;
+	private SlidingMenu slidingMenu ;
 	private static final int RESULT_SETTINGS = 1;
+	public ArrayList<String> countryPreferencesList;
 
 	// ConnectivityManager cm =
 	// (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -41,8 +65,8 @@ public class AltibusMainActivity extends SherlockFragmentActivity {
 		setContentView(R.layout.simple_tabs);
 
 		if (isOnline(this)) {
-			Log.v("Altibus", "Launching super asynchronous task...");
-			Toast.makeText(this, "Launching super asynchronous task...",
+			Log.v("Altibus", "Internet connection found! Launching super asynchronous task...");
+			Toast.makeText(this, "Internet connection found! Launching super asynchronous task...",
 					Toast.LENGTH_SHORT).show();
 		} else {
 			Toast.makeText(this, "Internet connection not found.",
@@ -57,6 +81,104 @@ public class AltibusMainActivity extends SherlockFragmentActivity {
 
 		mPager.setAdapter(mAdapter);
 		mIndicator.setViewPager(mPager);
+		
+		slidingMenu = new SlidingMenu(this);
+        slidingMenu.setMode(SlidingMenu.LEFT);
+        slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        slidingMenu.setShadowWidthRes(R.dimen.slidingmenu_shadow_width);
+        slidingMenu.setShadowDrawable(R.drawable.slidingmenu_shadow);
+        slidingMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+        slidingMenu.setFadeDegree(0.35f);
+        slidingMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
+        slidingMenu.setMenu(R.layout.slidingmenu);
+        
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        createOrUpdateCountryList();
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+	}
+
+	
+	
+	private StringBuilder getXml(String url) {
+
+		HttpURLConnection connection = null;
+		BufferedReader rd = null;
+		StringBuilder sb = null;
+		String line = null;
+
+		URL serverAddress = null;
+
+		try {
+			serverAddress = new URL(url);
+			// set up out communications stuff
+			connection = null;
+
+			// Set up the initial connection
+			connection = (HttpURLConnection) serverAddress.openConnection();
+			connection.setRequestMethod("GET");
+			connection.setDoOutput(true);
+			connection.setReadTimeout(5000);
+
+			connection.connect();
+
+			// read the result from the server
+			rd = new BufferedReader(new InputStreamReader( connection.getInputStream()));
+			sb = new StringBuilder();
+
+			while ((line = rd.readLine()) != null) {
+				sb.append(line + '\n');
+			}
+
+			return sb;
+
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (ProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			// close the connection, set all objects to null
+			connection.disconnect();
+			rd = null;
+			sb = null;
+			connection = null;
+		}
+		return null;
+	}
+
+	private void createOrUpdateCountryList() {
+		AssetManager assetManager = getAssets();
+		InputStream countryFile;
+		try {
+			countryFile = assetManager.open("countries.xml");
+		} catch (IOException e) {
+			e.printStackTrace();
+			countryFile = null;
+		}
+		
+		if (countryFile != null) {
+			Serializer serializer = new Persister();
+			Reader reader = null;
+
+			java.util.Scanner s = new java.util.Scanner(countryFile).useDelimiter("\\A");
+		    String file = (s.hasNext() ? s.next() : "");
+			StringReader strReader = new StringReader(file);
+
+			Log.v(this.getClass().toString(), file.replace("\n", " ").replace("\t", " ").replace("  ", " "));
+
+			reader = new InputStreamReader(countryFile);
+
+			AltibusDataPays countries = null;
+			
+			if (strReader != null) {
+				try {
+					 countries = serializer.read(AltibusDataPays.class, strReader);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	@Override
@@ -66,29 +188,39 @@ public class AltibusMainActivity extends SherlockFragmentActivity {
 		return true;
 	}
 
+	// If-else statements instead of switch
+	// http://tools.android.com/recent/buildchangesinrevision14
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getItemId() == R.id.prefs) {
-			startActivity(new Intent(this, ShowUserPreferences.class));
-		}
-		return super.onOptionsItemSelected(item);
+
+        if (item.getItemId() == R.id.prefs) {
+        	startActivity(new Intent(this, UserPreferences.class));
+        } else if (item.getItemId() == android.R.id.home) { // Sliding Menu
+            this.slidingMenu.toggle();
+        } else 
+            return super.onOptionsItemSelected(item);
+        return true;
 	}
 
-	// @Override
-	// public void onBackPressed() {
-	// Fragment fragment =
-	// AltibusFragmentAdapter.getRegisteredFragment(mPager.getCurrentItem());
-	// if (fragment != null) // could be null if not instantiated yet
-	// {
-	// if (fragment.getView() != null) {
-	// // Pop the backstack on the ChildManager if there is any. If not, close
-	// this activity as normal.
-	// if (!fragment.getChildFragmentManager().popBackStackImmediate()) {
-	// finish();
-	// }
-	// }
-	// }
-	// }
+	@Override
+    public void onBackPressed() {
+        if ( slidingMenu.isMenuShowing()) {
+            slidingMenu.toggle();
+        }
+        else {
+            super.onBackPressed();
+        }
+    }
+	
+	@Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ( keyCode == KeyEvent.KEYCODE_MENU ) {
+            this.slidingMenu.toggle();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
 	public boolean isOnline(Context con) {
 		boolean connected = false;
 		try {

@@ -5,6 +5,7 @@ import java.util.TreeMap;
 import java.util.Map.Entry;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -77,7 +78,7 @@ public class HorrairesPopUpActivity extends ActivityPopUpFactory {
 	}
 
 	private HorrairesArrayAdapter buildHorrairesArrayAdpater( ArrayList<HorrairesMapping> _horrairesArrayAdapter) {
-		HorrairesArrayAdapter arrayAdapter = new HorrairesArrayAdapter(this, R.layout.popup_list_item, _horrairesArrayAdapter);
+		HorrairesArrayAdapter arrayAdapter = new HorrairesArrayAdapter(this, R.layout.popup_list_item, _horrairesArrayAdapter, popupColor);
 		return arrayAdapter;
 	}
 	@Override
@@ -91,6 +92,12 @@ public class HorrairesPopUpActivity extends ActivityPopUpFactory {
 		TextView tvDateAller = (TextView) findViewById(R.id.horrairesDlgTvDateAller);
 		TextView tvDateRetour = (TextView) findViewById(R.id.horrairesDlgTvDateRetour);
 
+		if (popupColor == Color.parseColor(Config.POPUP_GREEN_COLOR)) {
+			tvGareDepart.setTextColor(popupColor);
+			tvGareArrivee.setTextColor(popupColor);
+			tvDateAller.setTextColor(popupColor);
+		}
+
 		tvGareDepart.setText(params.gareAller());
 		tvGareArrivee.setText(params.gareArrivee());
 		tvDateAller.setText(params.prettyDateAller());
@@ -99,6 +106,7 @@ public class HorrairesPopUpActivity extends ActivityPopUpFactory {
 			llDateRetour.setVisibility(View.GONE);
 		} else {
 			tvDateRetour.setText(params.prettyDateRetour());
+			tvDateRetour.setTextColor(popupColor);
 		}
 	}
 	@Override
@@ -146,5 +154,14 @@ public class HorrairesPopUpActivity extends ActivityPopUpFactory {
 			arrayAdapter.add( new HorrairesPopUpActivity.HorrairesMapping( value.getKey(), value.getValue()) );
 		}
 		return arrayAdapter;
+	}
+	@Override
+	protected void addLayoutCustomizations() {
+		if (popupColor == Color.parseColor(Config.POPUP_GREEN_COLOR)) {
+			LinearLayout ll1 = (LinearLayout) findViewById(R.id.llBgToChange1);
+			ll1.setBackgroundColor(popupColor);
+			LinearLayout ll2 = (LinearLayout) findViewById(R.id.llBgToChange2);
+			ll2.setBackgroundColor(popupColor);
+		}
 	}
 }

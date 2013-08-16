@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/addPassager" android:icon="@drawable/ic_action_add_passager" android:title="@string/addPassager" android:showAsAction="always"/>
+</menu>

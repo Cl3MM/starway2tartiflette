@@ -44,10 +44,17 @@
             android:name="HorrairesPopUpActivity"
             android:label="Altibus" >
         </activity>
-        <activity android:name="ShowUserPreferences" 
+        <activity android:name="UserPreferences" 
             android:label="Altibus"
             android:theme="@style/Theme.SuperLightExample"/>
-        
+        <activity android:name="PassagersPopUp" 
+            android:label="Altibus"
+            android:uiOptions="splitActionBarWhenNarrow"
+            android:theme="@style/Theme.SuperLightExample"/>
+        <activity android:name="EditionPassager" 
+            android:label="Altibus"
+            android:uiOptions="splitActionBarWhenNarrow"
+            android:theme="@style/Theme.SuperLightExample"/>
     </application>
 
 </manifest>

@@ -20,13 +20,14 @@ class AltibusFragmentAdapter extends FragmentPagerAdapter implements
 		super(fm);
 	}
 
+	
 	@Override
 	public Fragment getItem(int position) {
 		switch (position) {
 		case 0: // Fragment # 0 - This will show image
-			return PageHorraires.init(position);
+			return PageAchat.init(position);
 		case 1: // Fragment # 0 - This will show image
-			return TimetableFragment.init(position);
+			return PageHorraires.init(position);
 		case 2: // Fragment # 0 - This will show image
 			return AchatFragment.init(position);
 			// case 1: // Fragment # 1 - This will show image

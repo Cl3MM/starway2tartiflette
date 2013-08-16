@@ -12,8 +12,9 @@
         android:layout_margin="10dp" >
 
         <LinearLayout
+            android:id="@+id/llRoot"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="0dp"
             android:orientation="vertical"
             android:padding="0dp" >
@@ -257,6 +258,33 @@
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="@color/greenFont" />
                 </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llPassagers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/linearlayout_border_bottom"
+                android:clickable="true"
+                android:onClick="onClick"
+                android:padding="10dp" >
+
+                <TextView
+                    android:id="@+id/TextView04"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/passagers"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/table_content" />
+
+                <fr.wheelmilk.android.altibusproject.layout.AutoResizeTextView
+                    android:id="@+id/tvPassagers"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="@string/entrezPassagers"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/greenFont" />
             </LinearLayout>
 
             <Button

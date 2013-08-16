@@ -2,9 +2,7 @@ package fr.wheelmilk.android.altibusproject;
 
 import java.util.Calendar;
 import java.util.Date;
-
 import com.actionbarsherlock.app.SherlockFragment;
-
 import fr.wheelmilk.android.altibusproject.models.GaresArrivee;
 import fr.wheelmilk.android.altibusproject.models.GaresDataModel;
 import fr.wheelmilk.android.altibusproject.models.GaresDepart;
@@ -13,25 +11,26 @@ import fr.wheelmilk.android.altibusproject.models.HorrairesParams;
 import fr.wheelmilk.android.altibusproject.models.HorrairesRetour;
 import fr.wheelmilk.android.altibusproject.support.Config;
 import fr.wheelmilk.android.altibusproject.support.Helper;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.DecelerateInterpolator;
+
+import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.view.animation.ScaleAnimation;
+import android.view.animation.Transformation;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 
 public abstract class PageFactory extends SherlockFragment implements View.OnClickListener { // , TtAllerDlg.TtAllerDlgListener {
+
+	protected String popupColor;
 
 	int fragVal;
 	TextView tvGareAller;
@@ -45,9 +44,7 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 	ToggleButton ar;
 	TimetableMainOnClickListener onClick;
 
-	protected void startGareAllerPopUpActivity() {
-		new UnsupportedOperationException("Please implement this method in child classes");
-	}
+	protected View layoutView;
 
 	public void setTagResult(Intent data, TextView tv) {
 		String result = data.getExtras().getString("result");
@@ -130,9 +127,13 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setUpPopUpColor();
 		fragVal = getArguments() != null ? getArguments().getInt("val") : 1;
 	}
 
+	protected void setUpPopUpColor() {
+		popupColor = Config.POPUP_GREEN_COLOR;
+	}
 	protected View inflateDialog(LayoutInflater inflater, ViewGroup container) {
 		return inflater.inflate(R.layout.consultation_horraires_layout,
 				container, false);
@@ -142,7 +143,7 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 		onClick = new TimetableMainOnClickListener();
 
-		View layoutView = inflateDialog(inflater, container);
+		layoutView = inflateDialog(inflater, container);
 
 		layoutView.findViewById(R.id.llTimetableGareAller).setOnClickListener(this);
 		layoutView.findViewById(R.id.llTimetableGareArrivee).setOnClickListener(this);
@@ -169,8 +170,14 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 		llRetour.setOnClickListener(this);
 		llRetour.setVisibility(View.GONE);
 		setDeveloppmentTestData();
+		setUpChildrenPages();
 		return layoutView;
 	}
+	protected void setUpChildrenPages() {
+		// Add more layout stuffs to the default if needed 
+		new UnsupportedOperationException("Please implement this method in child classes");
+	}
+
 	private void setDeveloppmentTestData() {
 		Calendar cal = Calendar.getInstance();  
 		cal.setTime(new Date());  
@@ -191,21 +198,59 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 	}
 
 	protected void fadeInAnimation() {
-		Animation fadeIn = new AlphaAnimation(0, 1);
-		fadeIn.setInterpolator(new DecelerateInterpolator()); //add this
-		fadeIn.setDuration(600);
-
-		AnimationSet animation = new AnimationSet(false); //change to false
-		animation.addAnimation(fadeIn);
-		LayoutAnimationController controller = new LayoutAnimationController(animation, 0.25f);
-		llRetour.setLayoutAnimation(controller);
+		LayoutAnimationController lac = new LayoutAnimationController(AnimationUtils.loadAnimation(getActivity(), R.anim.fadein));
+	    lac.setDelay(0.05f);
+	    llRetour.setLayoutAnimation(lac); 
 	}
+	protected void fadeOutAnimation() {
+		LayoutAnimationController lac = new LayoutAnimationController(AnimationUtils.loadAnimation(getActivity(), R.anim.fadeout));
+	    lac.setDelay(0.05f);
+	    llRetour.setLayoutAnimation(lac); 
+	}
+	
+    public class MyScaler extends ScaleAnimation {
+
+        private View mView;
+        private LayoutParams mLayoutParams;
+        private int mMarginBottomFromY, mMarginBottomToY;
+        private boolean mVanishAfter = false;
+
+        public MyScaler(float fromX, float toX, float fromY, float toY, int duration, View view,
+                boolean vanishAfter) {
+            super(fromX, toX, fromY, toY);
+            setDuration(duration);
+            mView = view;
+            mVanishAfter = vanishAfter;
+            mLayoutParams = (LayoutParams) view.getLayoutParams();
+            int height = mView.getHeight();
+            mMarginBottomFromY = (int) (height * fromY) + mLayoutParams.bottomMargin - height;
+            mMarginBottomToY = (int) (0 - ((height * toY) + mLayoutParams.bottomMargin)) - height;
+        }
+
+        @Override
+        protected void applyTransformation(float interpolatedTime, Transformation t) {
+            super.applyTransformation(interpolatedTime, t);
+            if (interpolatedTime < 1.0f) {
+            	mView.setVisibility(View.VISIBLE);
+                int newMarginBottom = mMarginBottomFromY
+                        + (int) ((mMarginBottomToY - mMarginBottomFromY) * interpolatedTime);
+                mLayoutParams.setMargins(mLayoutParams.leftMargin, mLayoutParams.topMargin,
+                    mLayoutParams.rightMargin, newMarginBottom);
+                mView.getParent().requestLayout();
+            } else if (mVanishAfter) {
+                mView.setVisibility(View.GONE);
+            }
+        }
+
+    }
+
 	protected void toggleAllerSimple() {
 		if (as.isChecked() && ar.isChecked()) {
 			as.setChecked(true);
 			ar.setChecked(false);
-//			fadeInAnimation();
+//			fadeOutAnimation(); 
 			llRetour.setVisibility(View.GONE);
+//			llRetour.startAnimation(new LinearLayoutVerticalScaleAnimation(1.0f, 1.0f, 1.0f, 0.0f, 500, llRetour, true));
 		} else {
 			as.setChecked(true);
 			ar.setChecked(false);
@@ -217,6 +262,7 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 			ar.setChecked(true);
 //			fadeInAnimation();
 			llRetour.setVisibility(View.VISIBLE);
+//			llRetour.startAnimation(new LinearLayoutVerticalScaleAnimation(1.0f, 1.0f, 0.0f, 1.0f, 500, llRetour, false));
 		} else {
 			as.setChecked(false);
 			ar.setChecked(true);
@@ -227,8 +273,7 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 		int vid = v.getId();
 		String gareAllerText = (String) this.tvGareAller.getText();
 		String gareArriveeText = (String) this.tvGareArrivee.getText();
-		
-		
+
 		// Arrghhh Android 14 suxxx, I have to convert the switch statement to if-else 
 		// because of a problem cause by lookup of R.id.xxx
 		//
@@ -250,7 +295,8 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 			startHorrairePopUpActivity(v, gareAllerText, gareArriveeText, Config.HEURE_ALLER_CODE);
 		} else if (vid == R.id.llTimetableHorraireRetour) {
 			startHorrairePopUpActivity(v, gareAllerText, gareArriveeText, Config.HEURE_RETOUR_CODE);
-		} else {
+		} 
+			else {
 			Helper.grilledRare(getActivity(), "Erreur inconnue");
 		}
 	}
@@ -261,45 +307,62 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 			Date da = (Date) tvDateAller.getTag();
 			Date dr = null; 
 			if (this.tvDateRetour.getTag() != null) dr = (Date) this.tvDateRetour.getTag();
-			GaresArrivee rt = (GaresArrivee) this.tvGareArrivee.getTag();
-			
-			// Construction des paramètres à envoyer
-			HorrairesParams params = new HorrairesParams(da, dr, rt, gareAllerText, gareArriveeText);				
-
-			// Création de l'intent
-			Intent i = new Intent(this.getActivity(), HorrairesPopUpActivity.class);
-			i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
-
-			// Sérialisation des paramètres
-			Bundle b = new Bundle();
-			b.putParcelable("params", params);
-			i.putExtras(b);
-			if (code == Config.HEURE_ALLER_CODE) {
-				i.putExtra("title", getResources().getString(R.string.horrairesAller));
+			if (code == Config.HEURE_RETOUR_CODE && dr == null) {
+				Helper.grilledRare(getActivity(), getResources().getString(R.string.erreurDateRetour));
 			} else {
-				i.putExtra("title", getResources().getString(R.string.horraireRetour));
+				GaresArrivee rt = (GaresArrivee) this.tvGareArrivee.getTag();
+				
+				// Construction des paramètres à envoyer
+				HorrairesParams params = new HorrairesParams(da, dr, rt, gareAllerText, gareArriveeText);				
+	
+				// Création de l'intent
+				Intent i = new Intent(this.getActivity(), HorrairesPopUpActivity.class);
+				i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
+	
+				// Sérialisation des paramètres
+				Bundle b = new Bundle();
+				b.putParcelable("params", params);
+				i.putExtras(b);
+				i.putExtra("popupColor", popupColor);
+				if (code == Config.HEURE_ALLER_CODE) {
+					i.putExtra("title", getResources().getString(R.string.horrairesAller));
+				} else {
+					i.putExtra("title", getResources().getString(R.string.horraireRetour));
+				}
+				i.putExtra("code", code);
+				//  Démarage de l'activité
+				startActivityForResult(i, code);
+				getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 			}
-			i.putExtra("code", code);
-			//  Démarage de l'activité
-			startActivityForResult(i, code);
-			getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 		} else {
 			Helper.grilledRare(getActivity(), getResources().getString(R.string.erreurChampsNonRemplis));
 		}		
 	}
 
 	protected void startDateAllerPickerActivity(View v, String gareAllerText, String gareArriveeText, int code) {
+		if (code == Config.DATE_ALLER_CODE) {
+			tvDateRetour.setTag(null);
+			tvDateRetour.setText(getResources().getString(R.string.rechercheDate));
+		}
 		Intent i = new Intent(this.getActivity(), DatePickerPopUp.class);
 		i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
 		i.putExtra("title", getResources().getString(R.string.dateDepart));
 		i.putExtra("gareDepart", gareAllerText);
 		i.putExtra("gareArrivee", gareArriveeText);
 		i.putExtra("code", code);
+		i.putExtra("popupColor", popupColor);
 		i.putExtra("date", (Date) tvDateAller.getTag());
 		startActivityForResult(i, code);
 		this.getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 	}
-
+	protected void startGareAllerPopUpActivity() {
+		Intent i = new Intent(this.getActivity(), GareAllerPopUp.class);
+		i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NO_ANIMATION);
+		i.putExtra("title", getActivity().getResources().getString(R.string.garesAllerTitle));
+		i.putExtra("popupColor", popupColor);
+		startActivityForResult(i, Config.GARE_ALLER_CODE);
+		this.getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+	}
 	protected void startGareArriveePopUpActivity(View v, String gareAllerText) {
 		if (TextUtils.isEmpty(gareAllerText) || gareAllerText.equals(getActivity().getString(R.string.rechercherGare))) {
 			Helper.grilledRare(getActivity(), getResources().getString(R.string.errorGareAller));
@@ -308,32 +371,9 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 			i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
 			i.putExtra("title", getResources().getString(R.string.garesArriveeTitle));
 			i.putExtra("gareDepart", gareAllerText);
+			i.putExtra("popupColor", popupColor);
 			startActivityForResult(i, Config.GARE_ARRIVEE_CODE);
 			this.getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-		}
-	}
-
-	// Vérifie les champs Départ, Arrivée, Date aller et/ou Date retour et
-	// affiche le dialog pour choisir les horraires
-	protected void displayHorrairesDialog(String gareAllerText,
-			String gareArriveeText, TextView resultTv) {
-		// est ce que les champs obligatoires ont été remplis ?
-		if (this.tvGareAller.getTag() != null
-				&& !this.tvGareArrivee.getText().equals( getResources().getString(R.string.rechercherGare))
-				&& this.tvGareArrivee.getTag() != null
-				&& this.tvDateAller.getTag() != null) {
-			Date da = (Date) this.tvDateAller.getTag();
-			Date dr = null;
-			if (this.tvDateRetour.getTag() != null)
-				dr = (Date) this.tvDateRetour.getTag();
-
-			GaresArrivee rt = (GaresArrivee) this.tvGareArrivee.getTag();
-			HorrairesParams params = new HorrairesParams(da, dr, rt, gareAllerText, gareArriveeText);
-			Log.v(this.getClass().toString(), this.tvGareAller.getTag().toString());
-			HorrairesDialog dlg = new HorrairesDialog(getActivity(), resultTv,params);
-			dlg.prepareDialogFragment();
-		} else {
-			Helper.grilledRare(getActivity(), getResources().getString(R.string.erreurChampsNonRemplis));
 		}
 	}
 

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <ListView
+        android:id="@+id/lvPassagers"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_above="@+id/rlValidPassagers"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/llTitle"
+        android:drawSelectorOnTop="false"
+        android:listSelector="@drawable/passager_list_selector" >
+
+    </ListView>
+
+    <RelativeLayout
+        android:id="@+id/rlButtonAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/add_passager_button"
+        android:clickable="true"
+        android:padding="5dp" >
+
+        <View
+            android:id="@+id/vButtonAdd"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/add_passager_icon"
+            android:duplicateParentState="true" />
+
+        <TextView
+            android:id="@+id/tvButtonAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/vButtonAdd"
+            android:duplicateParentState="true"
+            android:lines="1"
+            android:paddingRight="5dp"
+            android:text="@string/ajouterPassager"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@drawable/add_passager_button_text" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/llTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/rlButtonAdd"
+        android:layout_marginTop="10dp"
+        android:background="@color/greenFont"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/passagers"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/table_background" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlValidPassagers"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/white_and_green_button"
+        android:clickable="true"
+        android:gravity="center"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp" >
+
+        <View
+            android:id="@+id/View01"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/valid_icon"
+            android:duplicateParentState="true" />
+
+        <TextView
+            android:id="@+id/TextView01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_toRightOf="@+id/View01"
+            android:duplicateParentState="true"
+            android:lines="1"
+            android:paddingRight="5dp"
+            android:text="@string/ajouterPassager"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@drawable/add_passager_button_text" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

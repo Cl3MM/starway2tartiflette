@@ -8,6 +8,10 @@
     <dimen name="tab_padding">10dp</dimen>
     <dimen name="text_small">14sp</dimen>
     <dimen name="text_default">17sp</dimen> 
-    <dimen name="list_item_height">30dp</dimen>  
+    <dimen name="list_item_height">30dp</dimen>
+
+ <!-- sliding menu -->
+    <dimen name="slidingmenu_shadow_width">15dp</dimen>
+    <dimen name="slidingmenu_offset">60dp</dimen>
     
 </resources>

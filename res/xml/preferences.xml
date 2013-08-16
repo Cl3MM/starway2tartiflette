@@ -5,8 +5,10 @@
         <EditTextPreference
                 android:title="@string/pref_user_last_name"
                 android:summary="@string/pref_user_last_name_summary"
+                android:defaultValue=""
                 android:key="prefUserLastName"/>
         <EditTextPreference
+            	android:defaultValue=""
                 android:title="@string/pref_user_first_name"
                 android:summary="@string/pref_user_first_name_summary"
                 android:key="prefUserFirstName"/>
@@ -14,24 +16,39 @@
                 android:title="@string/pref_user_age"
                 android:summary="@string/pref_user_set_age"
                 android:numeric="integer"
+                android:defaultValue="0"
                 android:key="prefUserAge"/>
     </PreferenceCategory>
      
     
     <PreferenceCategory android:title="@string/pref_user_contact" >
         <EditTextPreference
+            	android:defaultValue=""
                 android:title="@string/pref_user_telephone"
                 android:summary="@string/pref_user_set_telephone"
 				android:numeric="integer"
-                android:key="prefUserLastName"/>
+                android:key="prefUserTelephone"/>
         <EditTextPreference
+            	android:defaultValue=""
                 android:title="@string/pref_user_email"
                 android:summary="@string/pref_user_set_email"
-                android:key="prefUserFirstName"/>
+                android:key="prefUserEmail"/>
         <EditTextPreference
+            	android:defaultValue=""
                 android:title="@string/pref_user_adresse"
                 android:summary="@string/pref_user_set_adresse"
-                android:key="prefUserAge"/>
+                android:key="prefUserAddress"/>
+        <EditTextPreference
+            	android:defaultValue=""
+                android:title="@string/pref_user_code_postal"
+                android:summary="@string/pref_user_code_postal_summary"
+                android:key="prefUserCodePostal"/>
+        
+        <ListPreference
+            android:key="prefUserCountry"
+            android:summary="@string/pref_user_countries_summary"
+            android:title="@string/pref_user_countries" />
+                
     </PreferenceCategory>
 
 <!--     <PreferenceCategory android:title="@string/pref_update_setting" > -->
@@ -41,13 +58,7 @@
 <!--             android:summary="@string/pref_send_report_summary" -->
 <!--             android:title="@string/pref_send_report" > -->
 <!--         </CheckBoxPreference> -->
- 
-<!--         <ListPreference -->
-<!--             android:key="prefSyncFrequency" -->
-<!--             android:entries="@array/syncFrequency" -->
-<!--             android:summary="@string/pref_sync_frequency_summary" -->
-<!--             android:entryValues="@array/syncFrequencyValues" -->
-<!--             android:title="@string/pref_sync_frequency" /> -->
+
 <!--     </PreferenceCategory> -->
  
 </PreferenceScreen>

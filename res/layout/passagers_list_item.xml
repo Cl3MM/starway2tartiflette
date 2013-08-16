@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:layout_marginTop="8dp"
+    android:background="@drawable/passager_list_item_normal"
+    android:duplicateParentState="true"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp" >
+
+    <View
+        android:id="@+id/imgRemove"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/ic_action_passagers_dark"
+        android:clickable="true"
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/imgRemove"
+        android:text="@string/passagerFirst"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/table_content" />
+
+    <TextView
+        android:id="@+id/tvNom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvTitle"
+        android:layout_toRightOf="@+id/imgRemove"
+        android:text="Prénom Nom de la mort"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@drawable/text_green_to_white_selector" />
+
+    <LinearLayout
+        android:id="@+id/llRemove"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:background="@drawable/ic_action_list_arrow" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvSummary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvNom"
+        android:layout_marginTop="4dp"
+        android:layout_toLeftOf="@+id/llRemove"
+        android:gravity="right"
+        android:text="@string/modifierPassagerPrincipal"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/table_content"
+        android:textSize="11sp"
+        android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/tvAge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvTitle"
+        android:layout_toLeftOf="@+id/llRemove"
+        android:layout_toRightOf="@+id/tvNom"
+        android:gravity="right"
+        android:text="32 ans"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@drawable/text_green_to_white_selector" />
+
+</RelativeLayout>

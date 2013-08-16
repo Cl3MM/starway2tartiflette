@@ -5,11 +5,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.MenuItem;
+
 import fr.wheelmilk.android.altibusproject.R;
 import fr.wheelmilk.android.altibusproject.support.Config;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,6 +26,7 @@ public class DatePickerPopUp extends SherlockActivity implements View.OnClickLis
 	private String title;
 	private String gareDepart;
 	private String gareArrivee;
+	private int popupColor;
 	private Date date = null;
 	private int code;
 	protected final int DATE_ALLER_CODE 	= 300;
@@ -36,6 +39,8 @@ public class DatePickerPopUp extends SherlockActivity implements View.OnClickLis
 		title 		= extras.getString("title");
 		date	   	= (Date) extras.getSerializable("date");
 		code	   	= extras.getInt("code");
+		String color = extras.getString("popupColor");
+		popupColor = Color.parseColor( color );
 	}
 
 	@Override
@@ -47,17 +52,21 @@ public class DatePickerPopUp extends SherlockActivity implements View.OnClickLis
 		setContentView(R.layout.date_picker_popup);
 		initialize(getIntent().getExtras());
 
+		// Changing background color depending on the Intent's popupColor argument
+		LinearLayout llTitleUp = (LinearLayout) findViewById(R.id.llTitleContainer);
+		llTitleUp.setBackgroundColor(popupColor);
+		LinearLayout llTitleDown = (LinearLayout) findViewById(R.id.llTitleLayoutDown);
+		llTitleDown.setBackgroundColor(popupColor);
+		
 		DatePicker dp = (DatePicker) findViewById(R.id.datePickerPopUp);
 		TextView tvTitle = (TextView) findViewById(R.id.title);
 		TextView tvDepart = (TextView) findViewById(R.id.horrairesTvGareDepart);
 		TextView tvArrivee = (TextView) findViewById(R.id.horrairesTvGareArrivee);
 		Button btn = (Button) findViewById(R.id.btnDatePicker);
-
-		int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-		if (currentapiVersion >= 11) {
-			dp.setCalendarViewShown(Config.CALENDAR_VIEW);
-			tvTitle.setText(title);
-		}
+		
+		tvDepart.setTextColor(popupColor);
+		tvArrivee.setTextColor(popupColor);
+		
 		if ( code == Config.DATE_ALLER_CODE ) {
 			LinearLayout llDateAller = (LinearLayout) findViewById(R.id.llDateAller);
 			llDateAller.setVisibility(View.GONE);
@@ -66,6 +75,7 @@ public class DatePickerPopUp extends SherlockActivity implements View.OnClickLis
 			if (date != null) {
 				String tmpDate = new SimpleDateFormat("EEEE d MMMM yyyy", Locale.FRANCE).format(date);
 				String pretyDate = tmpDate.substring(0, 1).toUpperCase() + tmpDate.substring(1);
+				dateAllerTv.setTextColor(popupColor);
 				dateAllerTv.setText(pretyDate);
 			}
 			tvTitle.setText(getResources().getString(R.string.dateRetour));
@@ -74,7 +84,13 @@ public class DatePickerPopUp extends SherlockActivity implements View.OnClickLis
 		tvDepart.setText(this.gareDepart);
 		tvArrivee.setText(this.gareArrivee);
 		btn.setOnClickListener( this );
-		btn.setText("Choisir cette date");
+		
+		// Changing button drawable if we are in a PageAchat
+		if (popupColor == Color.parseColor( Config.POPUP_GREEN_COLOR ) ) {
+			btn.setBackground(getResources().getDrawable(R.drawable.white_and_green_button));			
+		}
+		
+		btn.setText(getResources().getString(R.string.choisirCetteDate));
 		final Calendar c = Calendar.getInstance();
 		// Save the date if it exists
 		if (this.date != null) {
@@ -86,12 +102,27 @@ public class DatePickerPopUp extends SherlockActivity implements View.OnClickLis
         int day = c.get(Calendar.DAY_OF_MONTH);
         // initialize the date to avoid null pointer exceptions
         date = c.getTime();
-		ActionBar actionBar = getSupportActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(true);
-		
-		dp.init(year, month, day, this);
-	}
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+		int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+		if (currentapiVersion >= 11) {
+			dp.setMinDate(new Date().getTime() - 1000);
+			dp.setCalendarViewShown(Config.CALENDAR_VIEW);
+			tvTitle.setText(title);
+		}
+
+		dp.init(year, month, day, this);
+
+	}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {
+	    case android.R.id.home:
+	        finish();
+	        return true;
+	    default: return super.onOptionsItemSelected(item);  
+	    }
+	}
 	@Override
 	public void onClick(View v) {
 		Log.v(this.getClass().toString(), date.toString());

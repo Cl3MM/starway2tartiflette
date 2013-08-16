@@ -8,12 +8,7 @@ import fr.wheelmilk.android.altibusproject.models.AltibusDataModel;
 
 
 public class AltibusSerializer {
-	String url;
 	Class<AltibusDataModel> klass; // Type of object to build
-	
-//	public AltibusSerializer( ) {
-//		this.klass = klass;
-//	}
 		
 	public AltibusDataModel serializeXml( String xmlString ) {
 

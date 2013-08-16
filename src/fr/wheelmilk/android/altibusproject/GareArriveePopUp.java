@@ -1,6 +1,7 @@
 package fr.wheelmilk.android.altibusproject;
 
 import android.os.Bundle;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.loopj.android.http.RequestParams;
 
@@ -23,5 +24,10 @@ public class GareArriveePopUp extends ActivityPopUpFactory {
 	protected void addLayoutCustomizations() {
 		TextView horrairesTvGareDepart = (TextView) findViewById(R.id.horrairesTvGareDepart);
 		horrairesTvGareDepart.setText(gareDepart);
+		horrairesTvGareDepart.setTextColor(popupColor);
+		LinearLayout ll1 = (LinearLayout) findViewById(R.id.llBgToChange1);
+		LinearLayout ll2 = (LinearLayout) findViewById(R.id.llBgToChange2);
+		ll1.setBackgroundColor(popupColor);
+		ll2.setBackgroundColor(popupColor);
 	}
 }
