@@ -31,7 +31,7 @@ public class HorrairesAller implements GaresDataModel {
 		return ha.replace("H", ":");
 	}
 	@Override
-	public String heureRetour() {
+	public String heureArrivee() {
 		return haa.replace("H", ":");
 	}
 	@Override

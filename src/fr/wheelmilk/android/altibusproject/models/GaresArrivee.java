@@ -44,7 +44,7 @@ public class GaresArrivee implements GaresDataModel {
 	}
 
 	@Override
-	public String heureRetour() {
+	public String heureArrivee() {
 		return null;
 	}
 	

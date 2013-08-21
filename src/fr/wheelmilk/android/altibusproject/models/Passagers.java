@@ -1,20 +1,38 @@
 package fr.wheelmilk.android.altibusproject.models;
 
 import java.util.ArrayList;
+import java.util.TreeMap;
+import java.util.logging.ErrorManager;
 
+import com.loopj.android.http.RequestParams;
+
+import fr.wheelmilk.android.altibusproject.R;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
+import android.util.Log;
 
 public class Passagers extends ArrayList<Passager> implements Parcelable {
-	private ArrayList<Passager> passagers;
+
+	private static final long serialVersionUID = 1L;
+	StringBuilder erroMessages;
+	RequestParams params;
+	GaresArrivee ga;
 	
+	public Passagers() {
+		super();
+	}
 	public Passagers(ArrayList<Passager> _passagers) {
-		passagers = new ArrayList<Passager>();
-		passagers = _passagers;
+		super();
+		this.addAll( _passagers );
 	}
 	public Passagers(Passager _passager) {
-		passagers = new ArrayList<Passager>();
-		passagers.add(_passager);
+		super();
+		this.add(_passager);
 	}
 	public Passager first() {
 		if (size() > 0) {
@@ -23,9 +41,84 @@ public class Passagers extends ArrayList<Passager> implements Parcelable {
 			return null;
 		}
 	}
-	
+
+	public boolean isValid(Resources mRes) {
+		boolean result = true;
+		erroMessages = new StringBuilder();
+		StringBuilder messagePassagerPrincipal = new StringBuilder();
+		StringBuilder messages = new StringBuilder();
+		
+		for(Passager p : this) {
+			boolean isValid; 
+			if (p.isPrincipal) isValid = p.isPassagerPrincipalValid(mRes);
+			else isValid = p.isValid(mRes);
+
+			if (!isValid) {
+				StringBuilder message = new StringBuilder();
+				Log.v(this.getClass().toString(), p.getClass().toString());
+				if ( p.isPrincipal ) {
+					messagePassagerPrincipal.append(p.errorMessages());
+				} else {
+					// if (position == 0)
+					messages.append("- ").append(mRes.getString(R.string.passager)).append(" ").append(String.valueOf(indexOf(p) + 1));
+					messages.append("\n");
+				}
+			} 
+		}
+		if (messagePassagerPrincipal.length()> 0) {
+			erroMessages.append( messagePassagerPrincipal.toString() );
+			erroMessages.append("\n");
+		}
+		if (messages.length()>0) {
+			erroMessages.append(mRes.getString(R.string.passagersInvalides));
+			erroMessages.append("\n");
+			erroMessages.append(messages);
+		}
+
+		if (erroMessages.length()> 0) { 
+			result = false;
+		}
+		Log.v(this.getClass().toString(), "Passager valid? " + result);
+		return result;
+	}
+	public String getErrorMessages() {
+		return erroMessages.toString();
+	}
+	public int getNombreEnfants() {
+		int nbEnfants = 0;
+		for(Passager p : this) {
+			if (p.isEnfant()) nbEnfants += 1 ; 
+		}
+		return nbEnfants;
+	}
+	public int getNombreAdultes() {
+		return size() - getNombreEnfants();
+	}
+
+	public TreeMap<String, String> getParams(Context cxt) {
+		TreeMap<String, String> paramsTree = new TreeMap<String, String>();
+
+		for(Passager p : this) {
+//			TreeMap<String, String> t = new TreeMap<String, String>();
+//			t = p.getParams(cxt);
+//			Log.v(this.getClass().toString(), p.getParams(cxt).toString());
+//			paramsTree.putAll( p.getParams(cxt) );
+			int position = this.indexOf(p); 
+			if (p.isPrincipal){
+				paramsTree.putAll( p.getPassagerPrincipalParams(cxt) );
+			} else {
+				paramsTree.putAll( p.getParams(cxt) );
+			}
+		}
+		paramsTree.put("version", "ebillet Android v1.1");
+
+		return paramsTree;
+	}
+
+	// Parcelable implementation
 	public Passagers(Parcel in) {
-		in.readTypedList(this, null);
+		super();
+		in.readTypedList(this, Passager.CREATOR);
 	}
 	@Override
 	public int describeContents() {
@@ -33,7 +126,8 @@ public class Passagers extends ArrayList<Passager> implements Parcelable {
 	}
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeTypedList(this);		
+//		dest.writeList(this);
+		dest.writeTypedList(this);
 	}
     public static final Parcelable.Creator<Passagers> CREATOR = new Parcelable.Creator<Passagers>() {
         @Override

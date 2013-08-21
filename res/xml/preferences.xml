@@ -5,17 +5,16 @@
         <EditTextPreference
                 android:title="@string/pref_user_last_name"
                 android:summary="@string/pref_user_last_name_summary"
-                android:defaultValue=""
+                android:defaultValue="@string/saisirNom"
                 android:key="prefUserLastName"/>
         <EditTextPreference
-            	android:defaultValue=""
+            	android:defaultValue="@string/saisirPrenom"
                 android:title="@string/pref_user_first_name"
                 android:summary="@string/pref_user_first_name_summary"
                 android:key="prefUserFirstName"/>
         <EditTextPreference
                 android:title="@string/pref_user_age"
                 android:summary="@string/pref_user_set_age"
-                android:numeric="integer"
                 android:defaultValue="0"
                 android:key="prefUserAge"/>
     </PreferenceCategory>
@@ -26,7 +25,6 @@
             	android:defaultValue=""
                 android:title="@string/pref_user_telephone"
                 android:summary="@string/pref_user_set_telephone"
-				android:numeric="integer"
                 android:key="prefUserTelephone"/>
         <EditTextPreference
             	android:defaultValue=""
@@ -40,12 +38,23 @@
                 android:key="prefUserAddress"/>
         <EditTextPreference
             	android:defaultValue=""
+                android:title="@string/pref_user_adresse2"
+                android:summary="@string/pref_user_set_adresse"
+                android:key="prefUserAddress2"/>
+        <EditTextPreference
+            	android:defaultValue=""
                 android:title="@string/pref_user_code_postal"
                 android:summary="@string/pref_user_code_postal_summary"
                 android:key="prefUserCodePostal"/>
-        
+        <EditTextPreference
+            	android:defaultValue=""
+                android:title="@string/pref_user_ville"
+                android:summary="@string/pref_user_ville_summary"
+                android:key="prefUserVille"/>
         <ListPreference
             android:key="prefUserCountry"
+            android:entries="@array/syncFrequency"
+            android:entryValues="@array/syncFrequencyValues"
             android:summary="@string/pref_user_countries_summary"
             android:title="@string/pref_user_countries" />
                 

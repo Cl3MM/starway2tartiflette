@@ -43,6 +43,7 @@ public class PassagersArrayAdapter extends ArrayAdapter<Passager> {
             holder.tvNom = (TextView) v.findViewById(R.id.tvNom);
             holder.tvTitle = (TextView) v.findViewById(R.id.tvTitle);
             holder.tvAge = (TextView) v.findViewById(R.id.tvAge);
+            holder.tvSummary = (TextView) v.findViewById(R.id.tvSummary);
             holder.vRemove = v.findViewById(R.id.imgRemove);
             holder.rlRoot = (RelativeLayout) v.findViewById(R.id.rlRoot);
 
@@ -50,22 +51,20 @@ public class PassagersArrayAdapter extends ArrayAdapter<Passager> {
 		} else {
 			holder = (PassagerHolder) v.getTag();
 		}
-		Passager o = getItem(position);
+		Passager p = getItem(position);
 		if (position == 0) {
 			holder.vRemove.setVisibility(View.GONE);
 			holder.tvNom.setPadding(20, 0, 0, 0);
 			holder.tvTitle.setPadding(20, 0, 0, 0);
+			setSummaryForMain(p, v, holder);
 		} else {
 			holder.vRemove.setVisibility(View.VISIBLE);
+			setSummary(p, v, holder);
 		}
-		if (o.isValid(v.getResources())) {
-			holder.tvNom.setTextColor(v.getResources().getColor(R.color.orange_dark));
-		} else {
-			holder.tvNom.setTextColor(v.getResources().getColor(R.color.table_content));
-		}
-        holder.tvNom.setText( o.getFullName());
+
+        holder.tvNom.setText( p.getFullName());
         holder.tvTitle.setText(getTitle(position));
-        holder.tvAge.setText( o.getAgeAsStringWithYear());
+        holder.tvAge.setText( p.getAgeAsStringWithYear());
 
 //        int pL = holder.rlRoot.getPaddingLeft();
 //        int pT = holder.rlRoot.getPaddingTop();
@@ -77,7 +76,24 @@ public class PassagersArrayAdapter extends ArrayAdapter<Passager> {
 
         return v;
 	}
-
+	private void setSummaryForMain(Passager p, View v, PassagerHolder holder) {
+		if (p.isValid(v.getResources())) {
+			holder.tvSummary.setTextColor(v.getResources().getColor(R.color.table_content));
+			holder.tvSummary.setText(v.getResources().getString(R.string.modifierPassagerPrincipal));
+		} else {
+			holder.tvSummary.setTextColor(v.getResources().getColor(R.color.orange_dark));
+			holder.tvSummary.setText(v.getResources().getString(R.string.ouvrirPrefPassagerPrincipal));
+		}
+	}
+	private void setSummary(Passager p, View v, PassagerHolder holder) {
+		if (p.isValid(v.getResources())) {
+			holder.tvSummary.setTextColor(v.getResources().getColor(R.color.table_content));
+			holder.tvSummary.setText(v.getResources().getString(R.string.editerInfoPassager));
+		} else {
+			holder.tvSummary.setTextColor(v.getResources().getColor(R.color.orange_dark));
+			holder.tvSummary.setText(v.getResources().getString(R.string.completerInfoPassager));
+		}
+	}
 	public String getTitle(int position) {
 		String str = "Principal";
 		if (position > 0) str = String.valueOf(position + 1);

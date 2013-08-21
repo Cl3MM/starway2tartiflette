@@ -39,7 +39,7 @@ public class GaresDepart implements GaresDataModel, Parcelable {
 	}
 
 	@Override
-	public String heureRetour() {
+	public String heureArrivee() {
 		// TODO Auto-generated method stub
 		return null;
 	}

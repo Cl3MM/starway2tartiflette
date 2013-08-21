@@ -1,5 +1,7 @@
 package fr.wheelmilk.android.altibusproject;
 
+import com.loopj.android.http.RequestParams;
+
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -8,7 +10,9 @@ public class GareAllerPopUp extends ActivityPopUpFactory {
 
 	@Override
 	protected void startAsyncHTTPRequest() {
-		new AltibusWebservice<ActivityPopUpFactory>(this, "data.aspx?tip=gps7", null);
+		RequestParams params = new RequestParams();
+		params.put("tip", "gps7");
+		new AltibusWebservice<ActivityPopUpFactory>(this, "sw/altibus/data.aspx?", params);
 	}
 
 	@Override

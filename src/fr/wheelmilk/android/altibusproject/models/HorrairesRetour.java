@@ -39,7 +39,7 @@ public class HorrairesRetour implements GaresDataModel {
 		}
 
 		@Override
-		public String heureRetour() {
+		public String heureArrivee() {
 			return this.hra.replace("H", ":");
 		}
 		

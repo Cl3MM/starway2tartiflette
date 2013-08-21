@@ -98,7 +98,7 @@
             android:duplicateParentState="true"
             android:lines="1"
             android:paddingRight="5dp"
-            android:text="@string/ajouterPassager"
+            android:text="@string/validerPassagers"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@drawable/add_passager_button_text" />
 

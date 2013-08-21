@@ -1,6 +1,5 @@
 package fr.wheelmilk.android.altibusproject;
 
-import android.app.Activity;
 import android.content.res.Resources;
 import android.util.Log;
 

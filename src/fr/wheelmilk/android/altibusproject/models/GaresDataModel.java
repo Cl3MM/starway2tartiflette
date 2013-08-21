@@ -6,5 +6,5 @@ public interface GaresDataModel extends Parcelable {
 	public String gareName();
 	public String gareCode();
 	public String heureAller();
-	public String heureRetour();
+	public String heureArrivee();
 }

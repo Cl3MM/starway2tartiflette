@@ -1,12 +1,8 @@
 package fr.wheelmilk.android.altibusproject;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Bundle;
-
-import com.actionbarsherlock.app.SherlockDialogFragment;
 
 public class SimpleAlertDialog extends AlertDialog {
 	private String mMessage;
@@ -18,7 +14,8 @@ public class SimpleAlertDialog extends AlertDialog {
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
 		builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-		           public void onClick(DialogInterface dialog, int id) {
+		           @Override
+				public void onClick(DialogInterface dialog, int id) {
 		               // User clicked OK button
 		        	   dismiss();
 		           }
@@ -33,9 +30,11 @@ public class SimpleAlertDialog extends AlertDialog {
 		mDialog = builder.create();
 	}
 
+	@Override
 	public void show() {
 		mDialog.show();
 	}
+	@Override
 	public void dismiss() {
 		mDialog.dismiss();
 	}

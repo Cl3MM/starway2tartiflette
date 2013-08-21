@@ -43,7 +43,6 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 	ToggleButton as;
 	ToggleButton ar;
 	TimetableMainOnClickListener onClick;
-
 	protected View layoutView;
 
 	public void setTagResult(Intent data, TextView tv) {

@@ -18,7 +18,7 @@ public class GareArriveePopUp extends ActivityPopUpFactory {
 		RequestParams params = new RequestParams();
 		params.put("tip", "garesarrivee7");
 		params.put("gd", this.gareDepart);
-		new AltibusWebservice<GareArriveePopUp>(this, "data.aspx?", params);
+		new AltibusWebservice<GareArriveePopUp>(this, "sw/altibus/data.aspx?", params);
 	}
 	@Override
 	protected void addLayoutCustomizations() {

@@ -1,7 +1,6 @@
 package fr.wheelmilk.android.altibusproject;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -41,9 +40,16 @@ public class EditionPassager extends SherlockActivity implements OnClickListener
 		etPrenom = (EditText) findViewById(R.id.etPrenom); 
 		etAge = (EditText) findViewById(R.id.etAge); 
 		
-		etNom.setText(passager.getNom());
-		etPrenom.setText(passager.getPrenom());
-		etAge.setText(passager.getAgeAsString());
+		
+		etNom.setHint(getResources().getString(R.string.saisirNom));
+		etPrenom.setHint(getResources().getString(R.string.saisirPrenom));
+		etAge.setHint(getResources().getString(R.string.saisirAgeString));
+
+		if( passager.isValid(getResources())) {
+			etNom.setText(passager.getNom());
+			etPrenom.setText(passager.getPrenom());
+			etAge.setText(passager.getAgeAsString());			
+		}
 	}
 	
 	public void initialize( Bundle extras ) {

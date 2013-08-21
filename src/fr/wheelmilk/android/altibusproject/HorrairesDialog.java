@@ -44,7 +44,7 @@ public class HorrairesDialog extends GaresDialog implements View.OnClickListener
 		Log.v(this.getClass().toString(), this.onClickValue);
 		
 		String ha = this.altibusData.get(result).heureAller();
-		String haa = this.altibusData.get(result).heureRetour();
+		String haa = this.altibusData.get(result).heureArrivee();
 		Log.v(this.getClass().toString(), this.altibusData.get(result).toString());
 
 		tv.setText(ha + " - " + haa);
@@ -82,10 +82,10 @@ public class HorrairesDialog extends GaresDialog implements View.OnClickListener
 			Log.v(this.getClass().toString(), value.getClass().toString());
 			if ( value.getClass().toString().equals(HorrairesAller.class.toString()) ) {
 //				Log.v(this.getClass().toString(), "Processing Horraires Aller");
-				horrairesAller.put(value.heureAller(), value.heureRetour()); // + "::" + value.gareName()
+				horrairesAller.put(value.heureAller(), value.heureArrivee()); // + "::" + value.gareName()
 			} else {
 //				Log.v(this.getClass().toString(), "Processing Horraires Retour");
-				horrairesRetour.put(value.heureAller(), value.heureRetour()); // + "::" + value.gareName()
+				horrairesRetour.put(value.heureAller(), value.heureArrivee()); // + "::" + value.gareName()
 			}
 		}
 

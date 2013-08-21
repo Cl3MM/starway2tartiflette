@@ -65,7 +65,7 @@ public class HorrairesPopUpActivity extends ActivityPopUpFactory {
 	}
 	protected void setUpPrettyResult() {
 		GaresDataModel resultFromWebService = altibusData.get(result);
-		prettyResult = resultFromWebService.heureAller() + " - " + resultFromWebService.heureRetour();
+		prettyResult = resultFromWebService.heureAller() + " - " + resultFromWebService.heureArrivee();
 	}
 	@Override
 	protected void onPreFinish() {
@@ -126,7 +126,7 @@ public class HorrairesPopUpActivity extends ActivityPopUpFactory {
 		 }
 		 _params.put("rt", params.route() );
 		 Log.v(this.getClass().toString(), _params.toString());
-		new AltibusWebservice<HorrairesPopUpActivity>(this, "data.aspx?", _params);
+		new AltibusWebservice<HorrairesPopUpActivity>(this, "sw/altibus/data.aspx?", _params);
 	}
 	protected ArrayList<HorrairesMapping> sortAndCreateArrayAdapter() {
 		//tri des horraires
@@ -136,9 +136,9 @@ public class HorrairesPopUpActivity extends ActivityPopUpFactory {
 		// On remplit le TreeMap avec les horraires triés dans l'ordre (horrairesAller = { 12h30 => 13h00, 16h30 => 17h00 ... }
 		for (GaresDataModel value: this.altibusData.values()) {
 			if ( value.getClass().toString().equals(HorrairesAller.class.toString()) ) {
-				horrairesAller.put(value.heureAller(), value.heureRetour()); // + "::" + value.gareName()
+				horrairesAller.put(value.heureAller(), value.heureArrivee()); // + "::" + value.gareName()
 			} else {
-				horrairesRetour.put(value.heureAller(), value.heureRetour()); // + "::" + value.gareName()
+				horrairesRetour.put(value.heureAller(), value.heureArrivee()); // + "::" + value.gareName()
 			}
 		}
 

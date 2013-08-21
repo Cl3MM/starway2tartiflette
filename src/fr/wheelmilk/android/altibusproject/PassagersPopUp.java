@@ -1,9 +1,5 @@
 package fr.wheelmilk.android.altibusproject;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Random;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -13,8 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.RelativeLayout;
@@ -25,8 +19,9 @@ import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-import fr.wheelmilk.android.altibusproject.models.GaresDataModel;
 import fr.wheelmilk.android.altibusproject.models.Passager;
+import fr.wheelmilk.android.altibusproject.models.PassagerSimpleASupprimer;
+import fr.wheelmilk.android.altibusproject.models.Passagers;
 import fr.wheelmilk.android.altibusproject.support.Config;
 import fr.wheelmilk.android.altibusproject.support.Helper;
 
@@ -35,36 +30,44 @@ public class PassagersPopUp extends SherlockActivity implements OnClickListener,
 	RelativeLayout rlValidPassagers;
 	ListView lvPassagers;
 	PassagersArrayAdapter aaPassagers;
-	ArrayList<Passager> passagers;
+	Passagers passagers;
 	protected ActionMode mMode;
 	Passager passagerCourant;
 	protected String delete;
 	protected String edit;
-	int counter;
+	private UserPref preferences;
+	private int returnCode;
+	boolean displayFillUpMessage = true;
 	
+	public void initialize( Bundle extras ) {
+		if (extras == null) { // Pas d'extras : nouveau passagers !
+			// TODO :
+			// Faire une verif pour éviter les paramètres par défaut.
+			// Ouvrir les preferencesActivity pour permettre à l'utilisateur de remplir ses infos
+	
+			Passager passagerPrincipal = new Passager(preferences.nom, preferences.prenom, preferences.age);
+			passagerPrincipal.createPassagerPrincipal(preferences.adresse, preferences.adresse2, preferences.codePostal, 
+					preferences.ville, preferences.pays, preferences.telephone, preferences.email);
+			passagers = new Passagers();
+			passagers.add(passagerPrincipal);
+			Log.v(this.getClass().toString(), passagerPrincipal.toString());
+		 } else {
+			passagers = extras.getParcelable("passagers");
+		 }
+	}
 
 	@Override
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
+		// On récupère le pref manager pour remplir le passager principal avec les valeur saisies dans "mon compte"
+		preferences = getUserPreferences();
+
+		initialize(getIntent().getExtras());
 		setContentView(R.layout.passagers_popup);
 
 		edit 	= getResources().getString(R.string.editer);
 		delete 	= getResources().getString(R.string.supprimer);
 
-		// On récupère le pref manager pour remplir le passager principal avec les valeur saisies dans "mon compte"
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		String nom = prefs.getString("prefUserLastName", getResources().getString(R.string.pref_user_last_name_summary));
-		String prenom = prefs.getString("prefUserFirstName", getResources().getString(R.string.pref_user_last_name_summary));
-		String age = prefs.getString("prefUserAge", "prout");
-		
-		// TODO :
-		// Faire une verif pour éviter les paramètres par défaut.
-		// Ouvrir les preferencesActivity pour permettre à l'utilisateur de remplir ses infos
-
-		Passager passagerPrincipal = new Passager(nom, prenom, age);
-		passagers = new ArrayList<Passager>();
-		passagers.add(passagerPrincipal);
-		Log.v(this.getClass().toString(), passagerPrincipal.toString());
 		// requestWindowFeature(Window.FEATURE_NO_TITLE);
 		// getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 		// WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -72,8 +75,8 @@ public class PassagersPopUp extends SherlockActivity implements OnClickListener,
 		rlAddPassager = (RelativeLayout) findViewById(R.id.rlButtonAdd);
 		rlAddPassager.setOnClickListener(this);
 
-		rlAddPassager = (RelativeLayout) findViewById(R.id.rlValidPassagers);
-		rlAddPassager.setOnClickListener(this);
+		rlValidPassagers = (RelativeLayout) findViewById(R.id.rlValidPassagers);
+		rlValidPassagers.setOnClickListener(this);
 
 		lvPassagers = (ListView) findViewById(R.id.lvPassagers);
  
@@ -118,6 +121,44 @@ public class PassagersPopUp extends SherlockActivity implements OnClickListener,
 		}
 		
 	}
+	private class UserPref {
+		String nom;
+		String prenom;
+		String age;
+		String adresse;
+		String adresse2;
+		String ville;
+		String codePostal;
+		String pays;
+		String telephone;
+		String email;
+	}
+	private UserPref getUserPreferences() {
+		UserPref p = new UserPref();
+		// On récupère le pref manager pour remplir le passager principal avec les valeur saisies dans "mon compte"
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		p.nom = prefs.getString("prefUserLastName", getResources().getString(R.string.saisirNom));
+		p.prenom = prefs.getString("prefUserFirstName", getResources().getString(R.string.pref_user_last_name_summary));
+		p.age = prefs.getString("prefUserAge", "0");
+
+		p.adresse = prefs.getString("prefUserAddress", getResources().getString(R.string.pref_user_adresse));
+		p.adresse2 = prefs.getString("prefUserAddress2", getResources().getString(R.string.pref_user_adresse2));
+		p.ville = prefs.getString("prefUserVille", getResources().getString(R.string.pref_user_ville));
+		p.codePostal = prefs.getString("prefUserCodePostal", getResources().getString(R.string.pref_user_code_postal));
+		p.pays = prefs.getString("prefUserCountry", getResources().getString(R.string.pref_user_countries));
+		p.telephone = prefs.getString("prefUserTelephone", getResources().getString(R.string.pref_user_telephone));
+		p.email = prefs.getString("prefUserEmail", getResources().getString(R.string.pref_user_email));
+
+		return p;
+	}
+	private UserPref getDefaultPreferences() {
+		UserPref p = new UserPref();
+		p.nom = getResources().getString(R.string.saisirNom);
+		p.prenom = getResources().getString(R.string.pref_user_last_name_summary);
+		p.age = "0";
+
+		return p;
+	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -133,34 +174,56 @@ public class PassagersPopUp extends SherlockActivity implements OnClickListener,
 	public void onClick(View v) {
 		int vid = v.getId();
 		if (vid == R.id.rlButtonAdd) {
-			// Ajout d'un nouveau passager dans la liste
-			Helper.grilledRare(this, "Merci de remplir les données du nouveau passager");
-			Resources mRes = getResources();
-			String defaultNom =  mRes.getString(R.string.saisirNom);
-			String defaultPrenom =  mRes.getString(R.string.saisirPrenom);
-			String defaultAge =  mRes.getString(R.string.saisirAge);
-					
-			passagers.add(new Passager( defaultNom, defaultPrenom, defaultAge ) );
-			counter++;
-			aaPassagers.notifyDataSetChanged();
-			lvPassagers.invalidate();
-			Log.v(this.getClass().toString(), "Get count: " + aaPassagers.getCount());
-//			lvPassagers.invalidate();
-		}
-		
+			int size = passagers.size();
+			if (size < 12) { // Pas plus de 12 passagers
+				// Ajout d'un nouveau passager dans la liste
+				if (displayFillUpMessage) {
+					Helper.grilledWellDone(this, getResources().getString(R.string.displayFillUpMessage));
+					displayFillUpMessage = false;
+				}
+				passagers.add(new PassagerSimpleASupprimer( getDefaultPreferences().nom, getDefaultPreferences().prenom, getDefaultPreferences().age) );
+				refreshListView();
+			} else {
+				Helper.grilledRare(this, getResources().getString(R.string.pasPlusdeDouze));
+			}
+		} // Validation des passagers et retour à l'activité précédente 
+		  else if (vid == R.id.rlValidPassagers) { 
+			if (passagers.isValid(getResources())) { // Si tous les infos passagers ont été rempli correctement
+				Log.v(this.getClass().toString(), "onClick: Passagers valides");
+				returnCode = RESULT_OK;
+				finish();
+			} else {
+				SimpleAlertDialog dialog = new SimpleAlertDialog(this, passagers.getErrorMessages());
+				dialog.show();
+			}
+		}	
 	}
+	
+	protected void onPreFinish() {
+		Intent data = new Intent();
+		Bundle b = new Bundle();
+		
+		b.putParcelable("passagers", passagers);
+		data.putExtras(b);
+		setResult(returnCode, data);
+	}
+	@Override
+	public void finish() {
+		if (returnCode == RESULT_OK) onPreFinish();
+		else setResult(returnCode);
+		super.finish();
+		overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+	}
+	
 	@Override
 	protected void onStart () {
 		super.onStart();
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		String nom = prefs.getString("prefUserLastName", getResources().getString(R.string.pref_user_last_name_summary));
-		String prenom = prefs.getString("prefUserFirstName", getResources().getString(R.string.pref_user_last_name_summary));
-		String age = prefs.getString("prefUserAge", "25");
-
-		Passager passagerPrincipal = new Passager(nom, prenom, age, 0);
-//		if (passagers == null) passagers = new Passager();
+		preferences = getUserPreferences();
+		Passager passagerPrincipal = new Passager(preferences.nom, preferences.prenom, preferences.age);
+		passagerPrincipal.createPassagerPrincipal(preferences.adresse, preferences.adresse2, preferences.codePostal, 
+				preferences.ville, preferences.pays, preferences.telephone, preferences.email);
 		passagers.set(0, passagerPrincipal);
-		aaPassagers.notifyDataSetChanged();
+		refreshListView();
 	}
 	
 	//
@@ -231,12 +294,14 @@ public class PassagersPopUp extends SherlockActivity implements OnClickListener,
     	Log.v(this.getClass().toString(), "onDestroyActionMode");
 		displayPassagerCourant();
     }
-    
+
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch(resultCode) {
 		case Config.EXTRA_FAILURE:
 			Helper.grilledRare(this, getResources().getString(R.string.errorExtras));
+			break;
+		case RESULT_CANCELED:
 			break;
 		default:
 			switch(requestCode) {

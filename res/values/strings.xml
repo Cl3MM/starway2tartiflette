@@ -20,7 +20,8 @@
 
     <string name="emptyString">""</string>
     <string name="editer">"Editer"</string>
-        <string name="supprimer">"Supprimer"</string>
+    <string name="displayFillUpMessage">"Merci de cliquer pour remplir les données du nouveau passager"</string>
+    <string name="supprimer">"Supprimer"</string>
     <string name="allerRetour">Aller Retour</string>
     <string name="trajetDetails">Détails du trajet</string>
     <string name="allerSimple">Aller simple</string>
@@ -34,17 +35,30 @@
     <string name="saisirNom">Nom</string>
     <string name="saisirPrenom">Prénom</string>
     <string name="saisirAge">0</string>
-
+    <string name="saisirAgeString">Saisir votre age</string>
+    
+    <string name="pasPlusdeDouze">Vous ne pouvez pas saisir plus de 12 passagers.</string>
     <string name="erreurNom">Le nom entré n\'est pas valide.</string>
     <string name="erreurPrenom">Le prénom entré n\'est pas valide.</string>
     <string name="erreurAge">L\'age du passager doit être compris entre 4 et 120 ans.</string>
-    
+
+    <string name="erreurEmptyUserPref">Les données du passager principal sont érronnées. Merci de remplir les champs suivants dans le menu "Mon Compte" : </string>
+    <string name="erreurEmptyUserPrefEmail">- adresse email</string>
+    <string name="erreurEmptyUserPrefAdresse">- adresse </string>
+    <string name="erreurEmptyUserPrefTel">- numéro de téléphone</string>
+    <string name="erreurEmptyUserPrefVille">- ville</string>
+    <string name="erreurEmptyUserPrefCodePostal">- code Postal</string>
+    <string name="erreurEmptyUserPrefPays">- pays</string>
     
     <string name="addPassager">Ajout passager</string>
+    <string name="passagersInvalides">Les passagers suivants comportent des erreurs qui doivent être corrigées :\n</string>
     <string name="ajouterPassager">Ajouter un passager</string>
     <string name="saisirInfoPassager">Saisir les informations</string>
+    <string name="completerInfoPassager">Clicker pour completer les informations</string>
+    <string name="editerInfoPassager">Modifier les informations</string>
     <string name="modifierlePassager">Modifier le passager</string>
     <string name="modifierPassagerPrincipal">Modifier les données du passager principal</string>
+    <string name="ouvrirPrefPassagerPrincipal">Editer les paramètres du passager principal</string>
     <string name="modifierPassager">Modifier les données du passager</string>
     <string name="passagerFirst">Passager Principal</string>
     <string name="entrezPassagers">Saisir les passagers</string>
@@ -143,10 +157,13 @@
     <string name="pref_user_set_email">Saisissez votre email</string>
     <string name="pref_user_adresse">Adresse</string>
     <string name="pref_user_set_adresse">Saisissez votre adresse</string>
+    <string name="pref_user_adresse2">Adresse 2</string>
     <string name="pref_user_civilite">Civilité</string>
     <string name="pref_user_countries">Pays</string>
     <string name="pref_user_countries_summary">Choisissez votre pays</string>
-
+    <string name="pref_user_ville">Ville</string>
+    <string name="pref_user_ville_summary">Choisissez votre ville</string>
+    
     <string name="pref_user_code_postal_summary">Saisissez votre code postal</string>
     <string name="pref_user_code_postal">Code Postal</string>
         

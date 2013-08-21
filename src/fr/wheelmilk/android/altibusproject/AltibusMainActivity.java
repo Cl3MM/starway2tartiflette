@@ -27,6 +27,7 @@ import fr.wheelmilk.android.altibusproject.models.AltibusDataPays;
 import fr.wheelmilk.android.altibusproject.support.IconsTabPageIndicator;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;

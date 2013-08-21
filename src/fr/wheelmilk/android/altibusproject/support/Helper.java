@@ -27,11 +27,13 @@ public class Helper {
 			v.setGravity(Gravity.CENTER);
 		toast.show();
 	}
-	
+
 	public static String capitalizeFirstLetter(String input) {
-		return input.substring(0, 1).toUpperCase() + input.substring(1);
+		if (input.length() > 1) {
+			return input.substring(0, 1).toUpperCase() + input.substring(1);
+		}else return input;
 	}
-	
+
 	public static String prettifyDate(Date date, String format) {
 		if (format == null) format = "EEEE d MMMM yyyy";
 		String tmpDate = new SimpleDateFormat(format, Locale.FRANCE).format(date);
