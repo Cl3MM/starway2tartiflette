@@ -126,7 +126,7 @@ abstract class GaresDialog implements OnWebserviceListenner {
 //		Toast.makeText(activity, "Webservice success !!", Toast.LENGTH_SHORT).show();
 		Log.v(this.getClass().toString(), xmlString);
 		Log.v(this.getClass().toString(), (this.getClass().toString().equalsIgnoreCase(HorrairesDialog.class.toString())) ? "Am I an instance of HorrairesDialog? TRUE" : "Am I an instance of HorrairesDialog? FALSE");
-		AltibusDataModel altibusDataModel = new AltibusSerializer().serializeXml(xmlString);
+		AltibusDataModel altibusDataModel = new AltibusSerializer(AltibusDataModel.class).serializeXml(xmlString);
 		Log.v(this.getClass().toString(), "Je suis une instance de " + this.getClass());
 
 		if (altibusDataModel != null ) {

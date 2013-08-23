@@ -43,6 +43,7 @@ public class Passagers extends ArrayList<Passager> implements Parcelable {
 	}
 
 	public boolean isValid(Resources mRes) {
+		if (size() == 0) return false;
 		boolean result = true;
 		erroMessages = new StringBuilder();
 		StringBuilder messagePassagerPrincipal = new StringBuilder();
@@ -99,18 +100,12 @@ public class Passagers extends ArrayList<Passager> implements Parcelable {
 		TreeMap<String, String> paramsTree = new TreeMap<String, String>();
 
 		for(Passager p : this) {
-//			TreeMap<String, String> t = new TreeMap<String, String>();
-//			t = p.getParams(cxt);
-//			Log.v(this.getClass().toString(), p.getParams(cxt).toString());
-//			paramsTree.putAll( p.getParams(cxt) );
 			int position = this.indexOf(p); 
-			if (p.isPrincipal){
+			if (p.isPrincipal)
 				paramsTree.putAll( p.getPassagerPrincipalParams(cxt) );
-			} else {
+			else
 				paramsTree.putAll( p.getParams(cxt) );
-			}
 		}
-		paramsTree.put("version", "ebillet Android v1.1");
 
 		return paramsTree;
 	}

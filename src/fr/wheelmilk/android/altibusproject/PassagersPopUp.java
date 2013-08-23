@@ -216,7 +216,7 @@ public class PassagersPopUp extends SherlockActivity implements OnClickListener,
 	}
 	
 	@Override
-	protected void onStart () {
+	protected void onStart() {
 		super.onStart();
 		preferences = getUserPreferences();
 		Passager passagerPrincipal = new Passager(preferences.nom, preferences.prenom, preferences.age);

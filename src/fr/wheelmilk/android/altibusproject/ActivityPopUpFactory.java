@@ -158,7 +158,7 @@ public abstract class ActivityPopUpFactory extends SherlockActivity implements O
 	@Override
 	public void onWebserviceSuccess(String xmlString) {
 
-		AltibusDataModel altibusDataModel = new AltibusSerializer().serializeXml(xmlString);
+		AltibusDataModel altibusDataModel = new AltibusSerializer(AltibusDataModel.class).serializeXml(xmlString);
 
 		if (altibusDataModel != null) {
 			// Le xml est sérialisé

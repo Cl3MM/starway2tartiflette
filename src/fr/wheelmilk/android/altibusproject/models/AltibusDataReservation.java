@@ -15,4 +15,7 @@ public class AltibusDataReservation {
 	public String getMontant() {
 		return reservation.montant;
 	}
+	public String getPrettyMontant() {
+		return reservation.getPrettyMontant();
+	}
 }

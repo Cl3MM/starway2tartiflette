@@ -87,7 +87,11 @@ public class DatePickerPopUp extends SherlockActivity implements View.OnClickLis
 		
 		// Changing button drawable if we are in a PageAchat
 		if (popupColor == Color.parseColor( Config.POPUP_GREEN_COLOR ) ) {
-			btn.setBackground(getResources().getDrawable(R.drawable.white_and_green_button));			
+			int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+			if (currentapiVersion >= 11) {
+				btn.setBackground(getResources().getDrawable(R.drawable.white_and_green_button));
+			}
+						
 		}
 		
 		btn.setText(getResources().getString(R.string.choisirCetteDate));

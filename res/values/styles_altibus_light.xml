@@ -35,34 +35,6 @@
 
     </style>
 
-<!--     clem -->
-
-    <style name="Theme.SuperLightExample" parent="@style/Theme.Altibus_light">
-        <item name="vpiTabPageIndicatorStyle">@style/CustomLightTheme</item>
-    </style>
-        
-    <style name="CustomLightTheme" parent="@style/Widget.TabPageIndicator">
-        <item name="android:textSize">10sp</item>
-   		<item name="android:padding">5dp</item>
-<!--    		<item name="android:paddingBottom">20dp</item> -->
-<!--    		<item name="android:height">100dp</item> -->
-   		<item name="android:width">78dp</item>
-   				        
-   		<item name="background">@drawable/tab_indicator_ab_altibus_light</item>
-   		<item name="android:background">@drawable/tab_indicator_ab_altibus_light</item>
-   		
-   		<!-- Dividers between tabs -->
-        <item name="android:showDividers">middle</item>
-        <item name="android:dividerPadding">16dp</item>
-        <item name="android:divider">@drawable/divider_1x10_444</item>
-        		
-    </style>
-
-
-<!--     clem -->
-    
-    
-    
     <style name="ActionBar.Solid.Altibus_light" parent="@style/Widget.Sherlock.Light.ActionBar.Solid.Inverse">
         <item name="background">@drawable/ab_solid_altibus_light</item>
         <item name="backgroundStacked">@drawable/ab_stacked_solid_altibus_light</item>

@@ -9,21 +9,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import fr.wheelmilk.android.altibusproject.models.AltibusDataModel;
 import fr.wheelmilk.android.altibusproject.models.AltibusDataReservation;
 import fr.wheelmilk.android.altibusproject.models.Billet;
 import fr.wheelmilk.android.altibusproject.models.GaresArrivee;
 import fr.wheelmilk.android.altibusproject.models.HorrairesAller;
 import fr.wheelmilk.android.altibusproject.models.HorrairesRetour;
 import fr.wheelmilk.android.altibusproject.models.Passagers;
-import fr.wheelmilk.android.altibusproject.models.Reservation;
 import fr.wheelmilk.android.altibusproject.support.Config;
 import fr.wheelmilk.android.altibusproject.support.Helper;
 
 public class PageAchat extends PageFactory implements OnWebserviceListenner {
 	private TextView tvPassagers;
-	Passagers passagers;
+	Passagers passagers = new Passagers();
 	Billet billet;
+	boolean firstRun = true;
 	protected TextView tvMontant;
 	private AltibusDataReservation reservation;
 	
@@ -38,16 +37,15 @@ public class PageAchat extends PageFactory implements OnWebserviceListenner {
 	}
 	public void setPassagersResult(Intent data, TextView tv) {
 		passagers = data.getParcelableExtra("passagers");
+		tv.setText(String.valueOf(passagers.size()));
+		tv.setTag(passagers);
+//		startAsyncHTTPRequest();
+	}
+
+	protected void startAsyncHTTPRequest() {
 		billet = new Billet( passagers, (GaresArrivee) tvGareArrivee.getTag(), 
 				(java.util.Date) tvDateAller.getTag(), (HorrairesAller) tvHeureAller.getTag(), 
 				(java.util.Date) tvDateRetour.getTag(), (HorrairesRetour) tvHeureRetour.getTag() );
-		tv.setText(String.valueOf(passagers.size()));
-		tv.setTag(passagers);
-		startAsyncHTTPRequest();
-	}
-	
-	protected void startAsyncHTTPRequest() {
-
 		RequestParams params = billet.setParams(getActivity());
 //		RequestParams params = passagers.getParams(getActivity());
 		Log.v(this.getClass().toString(), params.toString());
@@ -85,6 +83,8 @@ public class PageAchat extends PageFactory implements OnWebserviceListenner {
 		layoutView.findViewById(R.id.llPassagers).setOnClickListener(this);
 		tvPassagers = (TextView) layoutView.findViewById(R.id.tvPassagers);
 		tvMontant = (TextView) layoutView.findViewById(R.id.tvMontant);
+		tvMontant.setTextColor(getResources().getColor(R.color.greenFont));
+		tvMontant.setText("");
 	}
 	static PageAchat init(int val) {
 		PageAchat page = new PageAchat();
@@ -93,7 +93,16 @@ public class PageAchat extends PageFactory implements OnWebserviceListenner {
 		page.setArguments(args);
 		return page;
 	}
-	
+	@Override
+	protected void updateMontant() {
+		startAsyncHTTPRequest();
+	}
+	@Override
+	protected void resetTextViews() {
+		super.resetTextViews();
+		tvMontant.setText(getResources().getString(R.string.emptyString));
+		tvMontant.setTag(null);
+	}
 	@Override
 	protected View inflateDialog(LayoutInflater inflater, ViewGroup container) {
 		return inflater.inflate(R.layout.achat_billets_fragment, container, false);
@@ -101,12 +110,13 @@ public class PageAchat extends PageFactory implements OnWebserviceListenner {
 	@Override
 	public void onWebserviceSuccess(String xmlString) {
 		Log.v(this.getClass().toString(), xmlString);
-		reservation = (AltibusDataReservation) new AltibusSerializer().serializeXmlToObject(xmlString);
+		reservation = (AltibusDataReservation) new AltibusSerializer(AltibusDataReservation.class).serializeXmlToObject(xmlString);
 
 		if (reservation != null) {
 			Log.v(this.getClass().toString(), "Montant: " + reservation.getMontant());
-			tvMontant.setText( reservation.getMontant() );
+			tvMontant.setText( reservation.getPrettyMontant() );
 		} else {
+			tvMontant.setText( "" );
 			// Problème de sérialisation
 			Log.v(this.getClass().toString(), "Serializer faillure :(");
 		}
@@ -114,6 +124,18 @@ public class PageAchat extends PageFactory implements OnWebserviceListenner {
 	@Override
 	public void onWebserviceFailure() {
 		Log.v(this.getClass().toString(), "Webservice Failure :(");
-		
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		if (firstRun) {
+			firstRun = false;
+		} else {
+			if( passagers.isValid(getResources()) && tvGareAller.getTag() != null && tvGareArrivee.getTag() != null && tvDateAller.getTag() != null && tvHeureAller.getTag() != null ) {
+				startAsyncHTTPRequest();
+				Log.v(this.getClass().toString(), "Je suis RESUME !!!");
+			}
+		}
 	}
 }

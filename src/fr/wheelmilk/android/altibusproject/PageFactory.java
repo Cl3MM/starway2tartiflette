@@ -14,6 +14,7 @@ import fr.wheelmilk.android.altibusproject.support.Helper;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,11 +52,20 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 			GaresDataModel tag = data.getParcelableExtra("tag");
 			tv.setText(result);
 			tv.setTag(tag);
+			Log.v(this.getClass().toString(), "Je suis REMET A ZERO !!!");
+			// Remise à zéro des champs
 			if (tv.equals(tvGareAller)) {
 				tvGareArrivee.setText(getResources().getString(R.string.rechercherGare));
 				tvGareArrivee.setTag(null);
 			}
+			resetTextViews();
 		}
+	}
+	protected void resetTextViews() {
+		tvHeureAller.setText(getResources().getString(R.string.rechercherHorraire));
+		tvHeureRetour.setText(getResources().getString(R.string.rechercherHorraire));
+		tvHeureAller.setTag(null);
+		tvHeureRetour.setTag(null);
 	}
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -88,6 +98,8 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 				if ( date != null ) {
 					tvDateAller.setText( Helper.prettifyDate(date, null) );
 					tvDateAller.setTag(date);
+					tvHeureAller.setText(getResources().getString(R.string.rechercherHorraire));
+					tvHeureAller.setTag(null);
 				}
 				break;
 			case Config.HEURE_ALLER_CODE:
@@ -98,6 +110,8 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 				if ( date != null ) {
 					tvDateRetour.setText( Helper.prettifyDate(date, null) );
 					tvDateRetour.setTag(date);
+					tvHeureRetour.setText(getResources().getString(R.string.rechercherHorraire));
+					tvHeureRetour.setTag(null);					
 				}
 				break;
 			case Config.HEURE_RETOUR_CODE:
@@ -168,7 +182,7 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 		this.llRetour = (LinearLayout) layoutView.findViewById(R.id.llTimetableRetour);
 		llRetour.setOnClickListener(this);
 		llRetour.setVisibility(View.GONE);
-		setDeveloppmentTestData();
+//		setDeveloppmentTestData();
 		setUpChildrenPages();
 		return layoutView;
 	}
@@ -186,14 +200,14 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 		Date afterTomorrow = cal.getTime();
 		
 		tvDateAller.setTag(tomorrow);
-		tvDateRetour.setTag(afterTomorrow);
+//		tvDateRetour.setTag(afterTomorrow);
 		
 		tvGareAller.setTag( new GaresDepart("AIX LES BAINS", 45.6884f, 5.9096f) );
 		tvGareAller.setText("AIX LES BAINS");
 		tvGareArrivee.setTag( new GaresArrivee("CHAMBERY", "CHA851") );
 		tvGareArrivee.setText("CHAMBERY");
 		tvHeureAller.setTag(new HorrairesAller("10H02", "10H40", "CHA91001"));
-		tvHeureRetour.setTag(new HorrairesRetour("10H02", "10H40", "CHA91001"));
+//		tvHeureRetour.setTag(new HorrairesRetour("10H02", "10H40", "CHA91001"));
 	}
 
 	protected void fadeInAnimation() {
@@ -249,11 +263,19 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 			ar.setChecked(false);
 //			fadeOutAnimation(); 
 			llRetour.setVisibility(View.GONE);
+			tvHeureRetour.setTag(null);
+			tvHeureRetour.setText(getString(R.string.rechercherHorraire));
+			tvDateRetour.setTag(null);
+			tvDateRetour.setText(getString(R.string.rechercherHorraire));
+			updateMontant();
 //			llRetour.startAnimation(new LinearLayoutVerticalScaleAnimation(1.0f, 1.0f, 1.0f, 0.0f, 500, llRetour, true));
 		} else {
 			as.setChecked(true);
 			ar.setChecked(false);
 		}
+	}
+	protected void updateMontant() {
+		new UnsupportedOperationException("Please implement this method in child classes");
 	}
 	protected void toggleAllerRetour() {
 		if (as.isChecked() && ar.isChecked()) {

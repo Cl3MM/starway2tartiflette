@@ -53,6 +53,8 @@ public class Billet {
 		params.put("ha", ha);
 		params.put("haa", haa);
 		params.put("nba", nba);
+		params.put("nba", nba);
+		params.put("version", "999.9");
 
 //		params.put("nba", );
 		if (horrairesR != null) {
@@ -62,6 +64,7 @@ public class Billet {
 			params.put("hra", hra);
 			params.put("nbr", nbr);
 		}
+//		params.put("aa", "ne_pas_supprimer");
 		return params;
 	}
 }

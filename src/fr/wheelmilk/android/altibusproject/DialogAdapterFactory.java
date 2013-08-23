@@ -97,7 +97,7 @@ public class DialogAdapterFactory implements OnWebserviceListenner {
 		Toast.makeText(activity, "Webservice success !!", Toast.LENGTH_SHORT).show();
 		Log.v(DialogAdapterFactory.class.toString(), xmlString);
 		
-		AltibusDataModel altibusDataModel = new AltibusSerializer().serializeXml(xmlString);
+		AltibusDataModel altibusDataModel = new AltibusSerializer(AltibusDataModel.class).serializeXml(xmlString);
 		
 		if (altibusDataModel != null ) {
 			this.mDialog.dismiss();

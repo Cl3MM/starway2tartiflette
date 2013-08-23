@@ -92,15 +92,18 @@ public class Passager implements Parcelable {
 		return _params;
 	}
 	public TreeMap<String, String> getPassagerPrincipalParams(Context cxt) {
-		TreeMap<String, String> _params = new TreeMap<String, String>();
+		// Initialisation avec getParams pour avoir nom1, prenom1 et age1
+		TreeMap<String, String> _params = new TreeMap<String, String>(getParams(cxt));
+
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(cxt);
-		_params.put("nom1", prefs.getString("prefUserLastName", cxt.getString(R.string.saisirNom)));
-		_params.put("prenom1", prefs.getString("prefUserFirstName", cxt.getString(R.string.pref_user_last_name_summary)));
-		_params.put("age1", prefs.getString("prefUserAge", cxt.getString(R.string.pref_user_last_name_summary)));
+		_params.put("nom", prefs.getString("prefUserLastName", cxt.getString(R.string.saisirNom)));
+		_params.put("prenom", prefs.getString("prefUserFirstName", cxt.getString(R.string.pref_user_last_name_summary)));
+//		_params.put("age", prefs.getString("prefUserAge", cxt.getString(R.string.pref_user_last_name_summary)));
 		_params.put("adresse", prefs.getString("prefUserAddress", cxt.getString(R.string.pref_user_adresse)));
+		_params.put("adresse2", prefs.getString("prefUserAddress", "(null)"));
 		
-		adresse2 = prefs.getString("prefUserAddress2", cxt.getString(R.string.pref_user_adresse2));
-		if (!TextUtils.isEmpty(adresse2) ) _params.put("adresse2", adresse2);
+//		adresse2 = prefs.getString("prefUserAddress2", cxt.getString(R.string.pref_user_adresse2));
+//		if (!TextUtils.isEmpty(adresse2) ) _params.put("adresse2", adresse2);
 		_params.put("cp", prefs.getString("prefUserCodePostal", cxt.getString(R.string.pref_user_code_postal)));
 		_params.put("ville", prefs.getString("prefUserVille", cxt.getString(R.string.pref_user_ville)));
 		_params.put("pays", prefs.getString("prefUserCountry", cxt.getString(R.string.pref_user_countries)));

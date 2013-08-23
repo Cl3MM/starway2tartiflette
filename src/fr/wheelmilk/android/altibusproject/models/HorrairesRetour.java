@@ -57,13 +57,13 @@ public class HorrairesRetour implements GaresDataModel {
 		public void writeToParcel(Parcel dest, int flags) {
 			dest.writeString(hr);
 			dest.writeString(hra);
-			dest.writeString(hra);
+			dest.writeString(nbr);
 		}
 		
 	    public void readFromParcel(Parcel in) {
 	        hr = in.readString();
 	        hra = in.readString();
-	        hra = in.readString();
+	        nbr = in.readString();
 	    }
 		
 	    public static final Parcelable.Creator<HorrairesRetour> CREATOR = new Parcelable.Creator<HorrairesRetour>() {
