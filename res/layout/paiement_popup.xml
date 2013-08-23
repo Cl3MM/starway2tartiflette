@@ -40,7 +40,7 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/imageView1"
             android:layout_marginLeft="-4dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             android:src="@drawable/ic_action_cb" />
 
         <ImageView
@@ -67,7 +67,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/imageView2"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:orientation="vertical" >
 
             <LinearLayout
@@ -291,6 +291,7 @@
                     android:textColorHint="@color/table_border" />
             </LinearLayout>
         </LinearLayout>
+        
     </RelativeLayout>
 
     <RelativeLayout
@@ -345,7 +346,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/relativeLayout2"
         android:layout_alignParentLeft="true"
-        android:layout_marginBottom="25dp" >
+        android:layout_marginBottom="5dp" >
 
         <ImageView
             android:id="@+id/imageView6"
@@ -367,6 +368,41 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/blue_end" />
 
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relativeLayout1"
+        
+        android:id="@+id/rlBtnValidate"
+        android:layout_centerHorizontal="true"
+                android:background="@drawable/checkout_button"
+        android:clickable="true"
+        android:padding="5dp"
+        android:layout_marginTop="15dp" >
+
+               <View
+                   android:id="@+id/vBtnValidate"
+                   android:layout_width="24dp"
+                   android:layout_height="24dp"
+                   android:layout_marginRight="5dp"
+                   android:background="@drawable/ic_action_valid_dark"
+                   android:duplicateParentState="true" />
+
+        <TextView
+            android:id="@+id/tvBtnValidate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/vBtnValidate"
+            android:duplicateParentState="true"
+            android:lines="1"
+			android:layout_centerVertical="true"
+            android:paddingRight="5dp"
+            android:text="@string/valideLaCommande"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/table_content" />
+        
     </RelativeLayout>
 
 </RelativeLayout>
