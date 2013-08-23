@@ -36,6 +36,10 @@ public class Reservation implements Parcelable {
 	public Reservation(Parcel in) {
 		readFromParcel(in);
 	}
+	private void readFromParcel(Parcel in) {
+        montant = in.readString();
+        refReservation = in.readString();
+	}
 	@Override
 	public int describeContents() {
 		return 0;
@@ -46,11 +50,6 @@ public class Reservation implements Parcelable {
 		dest.writeString(montant);
 		dest.writeString(refReservation);
 	}
-	
-    public void readFromParcel(Parcel in) {
-        montant = in.readString();
-        refReservation = in.readString();
-    }
 	
     public static final Parcelable.Creator<Reservation> CREATOR = new Parcelable.Creator<Reservation>() {
         @Override

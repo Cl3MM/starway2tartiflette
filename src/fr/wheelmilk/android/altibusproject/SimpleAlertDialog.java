@@ -3,6 +3,7 @@ package fr.wheelmilk.android.altibusproject;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.view.ContextThemeWrapper;
 
 public class SimpleAlertDialog extends AlertDialog {
 	private String mMessage;
@@ -27,11 +28,12 @@ public class SimpleAlertDialog extends AlertDialog {
 	protected SimpleAlertDialog(Context context, String _message, String btnOk, String btnCancel, DialogInterface.OnClickListener mListener) {
 		super(context);
 		mMessage = _message;
-		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		AlertDialog.Builder builder = new AlertDialog.Builder( new ContextThemeWrapper(context, android.R.style.Theme_Holo_Light_Dialog_NoActionBar) );
 
 		builder.setPositiveButton(btnOk, mListener);
 		builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-		           public void onClick(DialogInterface dialog, int id) {
+		           @Override
+				public void onClick(DialogInterface dialog, int id) {
 		               dismiss();
 		           }
 		       });

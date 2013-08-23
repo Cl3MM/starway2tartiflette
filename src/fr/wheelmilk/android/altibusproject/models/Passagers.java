@@ -2,18 +2,14 @@ package fr.wheelmilk.android.altibusproject.models;
 
 import java.util.ArrayList;
 import java.util.TreeMap;
-import java.util.logging.ErrorManager;
-
 import com.loopj.android.http.RequestParams;
 
 import fr.wheelmilk.android.altibusproject.R;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class Passagers extends ArrayList<Passager> implements Parcelable {

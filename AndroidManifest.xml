@@ -55,6 +55,10 @@
             android:label="Altibus"
             android:uiOptions="splitActionBarWhenNarrow"
             android:theme="@style/Theme.SuperLightExample"/>
+        <activity android:name="PaiementPopUp" 
+            android:label="Altibus"
+            android:uiOptions="splitActionBarWhenNarrow"
+            android:theme="@style/Theme.SuperExample"/>
     </application>
 
 </manifest>

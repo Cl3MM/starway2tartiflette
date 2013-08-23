@@ -27,7 +27,6 @@ import fr.wheelmilk.android.altibusproject.models.AltibusDataPays;
 import fr.wheelmilk.android.altibusproject.support.IconsTabPageIndicator;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -36,7 +35,6 @@ import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.widget.Toast;
 
 public class AltibusMainActivity extends SherlockFragmentActivity {
 
@@ -65,14 +63,14 @@ public class AltibusMainActivity extends SherlockFragmentActivity {
 		setContentView(R.layout.activity_altibus_main);
 		setContentView(R.layout.simple_tabs);
 
-		if (isOnline(this)) {
-			Log.v("Altibus", "Internet connection found! Launching super asynchronous task...");
-			Toast.makeText(this, "Internet connection found! Launching super asynchronous task...",
-					Toast.LENGTH_SHORT).show();
-		} else {
-			Toast.makeText(this, "Internet connection not found.",
-					Toast.LENGTH_SHORT).show();
-		}
+//		if (isOnline(this)) {
+//			Log.v("Altibus", "Internet connection found! Launching super asynchronous task...");
+//			Toast.makeText(this, "Internet connection found! Launching super asynchronous task...",
+//					Toast.LENGTH_SHORT).show();
+//		} else {
+//			Toast.makeText(this, "Internet connection not found.",
+//					Toast.LENGTH_SHORT).show();
+//		}
 		mAdapter = new AltibusFragmentAdapter(getSupportFragmentManager());
 		mPager = (ViewPager) findViewById(R.id.pager);
 		mPager.setOffscreenPageLimit(4);
@@ -83,18 +81,18 @@ public class AltibusMainActivity extends SherlockFragmentActivity {
 		mPager.setAdapter(mAdapter);
 		mIndicator.setViewPager(mPager);
 		
-		slidingMenu = new SlidingMenu(this);
-        slidingMenu.setMode(SlidingMenu.LEFT);
-        slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-        slidingMenu.setShadowWidthRes(R.dimen.slidingmenu_shadow_width);
-        slidingMenu.setShadowDrawable(R.drawable.slidingmenu_shadow);
-        slidingMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-        slidingMenu.setFadeDegree(0.35f);
-        slidingMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-        slidingMenu.setMenu(R.layout.slidingmenu);
-        
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        createOrUpdateCountryList();
+//		slidingMenu = new SlidingMenu(this);
+//        slidingMenu.setMode(SlidingMenu.LEFT);
+//        slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+//        slidingMenu.setShadowWidthRes(R.dimen.slidingmenu_shadow_width);
+//        slidingMenu.setShadowDrawable(R.drawable.slidingmenu_shadow);
+//        slidingMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+//        slidingMenu.setFadeDegree(0.35f);
+//        slidingMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
+//        slidingMenu.setMenu(R.layout.slidingmenu);
+//        
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        createOrUpdateCountryList();
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 	}
 

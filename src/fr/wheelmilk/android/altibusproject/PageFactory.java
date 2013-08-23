@@ -8,7 +8,6 @@ import fr.wheelmilk.android.altibusproject.models.GaresDataModel;
 import fr.wheelmilk.android.altibusproject.models.GaresDepart;
 import fr.wheelmilk.android.altibusproject.models.HorrairesAller;
 import fr.wheelmilk.android.altibusproject.models.HorrairesParams;
-import fr.wheelmilk.android.altibusproject.models.HorrairesRetour;
 import fr.wheelmilk.android.altibusproject.support.Config;
 import fr.wheelmilk.android.altibusproject.support.Helper;
 import android.content.Intent;
@@ -182,7 +181,7 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 		this.llRetour = (LinearLayout) layoutView.findViewById(R.id.llTimetableRetour);
 		llRetour.setOnClickListener(this);
 		llRetour.setVisibility(View.GONE);
-//		setDeveloppmentTestData();
+		setDeveloppmentTestData();
 		setUpChildrenPages();
 		return layoutView;
 	}

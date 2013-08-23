@@ -6,7 +6,6 @@ import java.util.TreeMap;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.location.Address;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
