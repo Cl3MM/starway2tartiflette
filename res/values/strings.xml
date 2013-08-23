@@ -19,9 +19,11 @@
     <color name="action_bar_light">#a3a3a3</color>
 
     <string name="emptyString">""</string>
-    <string name="editer">"Editer"</string>
-    <string name="displayFillUpMessage">"Merci de cliquer pour remplir les données du nouveau passager"</string>
-    <string name="supprimer">"Supprimer"</string>
+    <string name="acceptAndPay">Accepter et payer</string>
+    <string name="editer">Editer</string>
+    <string name="cancel">Annuler</string>
+    <string name="displayFillUpMessage">Merci de cliquer pour remplir les données du nouveau passager</string>
+    <string name="supprimer">Supprimer</string>
     <string name="allerRetour">Aller Retour</string>
     <string name="trajetDetails">Détails du trajet</string>
     <string name="allerSimple">Aller simple</string>
@@ -82,7 +84,6 @@
     <color name="blue_end">#2f6699</color>
 
     <string name="ok">Valider</string>
-    <string name="cancel">Annuler</string>
     <string name="tabAchatsBillet">Achats</string>
     <string name="tabHorraires">Horraires</string>
     <string name="tabMesBillets">Mes billets</string>
