@@ -18,7 +18,6 @@ public class Reservation implements Parcelable {
 	@Element(name = "refReservation")
 	public String refReservation;
 
-	
 	public String getMontant() {
 		return montant;
 	}
@@ -30,6 +29,17 @@ public class Reservation implements Parcelable {
 		StringBuilder str = new StringBuilder();
 		str.append("Prix : ");
 		str.append( montant.replace("EUR", "€").replace(".", ",") );
+		return str.toString();
+	}
+	
+	public Float getMontantAsFloat() {
+		StringBuilder str = new StringBuilder();
+		str.append( montant.replace("EUR", ""));
+		return Float.valueOf(str.toString());
+	}
+	public String getMontantAsString() {
+		StringBuilder str = new StringBuilder();
+		str.append( montant.replace("EUR", ""));
 		return str.toString();
 	}
 	// Parcelable implementation

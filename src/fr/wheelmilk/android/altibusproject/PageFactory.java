@@ -27,8 +27,7 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-
-public abstract class PageFactory extends SherlockFragment implements View.OnClickListener { // , TtAllerDlg.TtAllerDlgListener {
+public abstract class PageFactory extends SherlockFragment implements View.OnClickListener {
 
 	protected String popupColor;
 
@@ -194,7 +193,7 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 		Calendar cal = Calendar.getInstance();  
 		cal.setTime(new Date());  
 		cal.add(Calendar.DAY_OF_YEAR, 1); // <--  
-		Date tomorrow = cal.getTime();  
+		Date tomorrow = cal.getTime();
 		cal.add(Calendar.DAY_OF_YEAR, 1); // <--  
 		Date afterTomorrow = cal.getTime();
 		
@@ -376,20 +375,20 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 		this.getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 	}
 	protected void startGareAllerPopUpActivity() {
-		Intent i = new Intent(this.getActivity(), GareAllerPopUp.class);
+		Intent i = new Intent(getActivity(), GareAllerPopUp.class);
 		i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NO_ANIMATION);
-		i.putExtra("title", getActivity().getResources().getString(R.string.garesAllerTitle));
+		i.putExtra("title", getString(R.string.garesAllerTitle));
 		i.putExtra("popupColor", popupColor);
 		startActivityForResult(i, Config.GARE_ALLER_CODE);
 		this.getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 	}
 	protected void startGareArriveePopUpActivity(View v, String gareAllerText) {
-		if (TextUtils.isEmpty(gareAllerText) || gareAllerText.equals(getActivity().getString(R.string.rechercherGare))) {
-			Helper.grilledRare(getActivity(), getResources().getString(R.string.errorGareAller));
+		if (TextUtils.isEmpty(gareAllerText) || gareAllerText.equals(getString(R.string.rechercherGare)) || tvGareAller.getTag() == null) {
+			Helper.grilledRare(getActivity(), getString(R.string.errorGareAller));
 		} else {
 			Intent i = new Intent(this.getActivity(), GareArriveePopUp.class);
 			i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
-			i.putExtra("title", getResources().getString(R.string.garesArriveeTitle));
+			i.putExtra("title", getString(R.string.garesArriveeTitle));
 			i.putExtra("gareDepart", gareAllerText);
 			i.putExtra("popupColor", popupColor);
 			startActivityForResult(i, Config.GARE_ARRIVEE_CODE);

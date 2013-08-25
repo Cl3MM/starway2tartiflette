@@ -24,15 +24,25 @@ public class HorrairesAller implements GaresDataModel {
 
 	@Override
 	public String gareName() {
-		return ha.replace("H", ":");
+		return heureAller();
 	}
 	@Override
 	public String heureAller() {
-		return ha.replace("H", ":");
+		return (ha.contains(":")) ? ha : ha.replace("H", ":");
+	}
+	public int heureArriveeOfTheDay() {
+		int index = heureArrivee().indexOf(":");
+		String heure = haa.substring(0, index);
+		return Integer.valueOf(heure);
+	}
+	public int minuteArriveeOfTheDay() {
+		int index = heureArrivee().indexOf(":");
+		String min = haa.substring(index+1, haa.length());
+		return Integer.valueOf(min);
 	}
 	@Override
 	public String heureArrivee() {
-		return haa.replace("H", ":");
+		return (haa.contains(":")) ? haa : haa.replace("H", ":");
 	}
 	@Override
 	public String gareCode() {

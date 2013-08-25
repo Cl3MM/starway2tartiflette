@@ -33,10 +33,27 @@
     <string name="valideLaCommande">Valider</string>
 	<string name="erreurCB">Le numéro de la carte doit comporter 16 chiffres</string>
 	<string name="erreurMois">Le mois ne doit pas comporter plus de deux chiffres</string>
-		<string name="erreurCode">Le code doit être composé de 3 chiffres</string>
-		<string name="erreurAnnee">L\'année doit comporter 2 ou 4 chiffres</string>
+	<string name="erreurCode">Le code doit être composé de 3 chiffres</string>
+	<string name="erreurAnnee">L\'année doit comporter 2 ou 4 chiffres</string>
+	<string name="paymentSuccess">Merci d\'avoir choisi le ebillet Altibus, nous avons bien reçu votre paiement. Votre ebillet est dès à présent enregistré dans votre application et disponible à la validation. Il n\'est valable que sur l\'appareil avec lequel il a été acheté. Vous devrez le valider manuellement le jour de votre voyage, au moment de votre montée à bord de l\'Autocar.</string>
+	<string name="paymentRefused">Votre paiement à échoué</string>
+	<string name="cgvTitle">CONDITIONS GENERALES\n DU e-BILLET ALTIBUS</string>
+	<string name="nouvelleRecherche">Nouvelle recherche</string>
+	<string name="effectuerNouvelleRecherche">Souhaitez vous effectuer une nouvelle recherche ?</string>
+	<string name="avertissement">Avertissement !</string>
+	<string name="cliquerPourEditer">Cliquez pour composter</string>
+	<string name="billetComposte">Billet composté</string>
+	<string name="pasdeBillet">Aucun billet enregistré</string>
+	<string name="billetPerime">Billet invalide</string>
+	<string name="appuyezIci">Appuyez ici pour Valider votre e-Billet</string>
+	<string name="jmjv">Je monte, je valide !</string>
+	<string name="validationDefinitive">Toute validation est définitive</string>
+	<string name="emptyString"></string>
+		<string name="emptyString"></string>
+		<string name="emptyString"></string>
 			<string name="emptyString"></string>
-		
+						
+
     <string name="cgv">Ce titre de transport est soumis aux conditions générales du site Altibus.com ainsi qu\'aux conditions particulières suivantes que vous avez acceptées au moment de l\’achat :\n\nCe titre de transport dématérialisé est uniquement valable s\'il est montré, validé, sur l’appareil avec lequel il a été acheté, dans l’application officielle Altibus. Vous devez valider votre billet vous-même et manuellement au moment de votre montée à bord de l\'Autocar.\n\nLe e-billet ne peut pas être transféré sur un autre appareil et ne peut en aucun cas être présenté sur un autre support (autre téléphone, imprimé sur papier, écran d’ordinateur portable...). L’appareil et la luminosité de votre écran doivent être en bon état de marche. Les écrans cassés, abîmés, ou dépourvus de rétro éclairage ne seront pas acceptés à bord de l\'autocar et seront considérés comme non valables (sauf autorisation du transporteur). En cas d\'incident (chute au sol ou dans la neige par exemple) ou de batterie vide, vous devez faire réparer ou recharger votre appareil avant de monter à bord. Par ailleurs vous devez avoir assez de batterie pour pouvoir justifier de votre titre de transport pendant toute la durée du trajet en cas d\'éventuels contrôles à bord.\n\nLors des contrôles, vous devrez obligatoirement montrer votre billet sur votre propre appareil et naviguer vous-même dans l’application (personne d’autre que vous n’est habilité à manipuler votre appareil). Le porteur du titre pourra également avoir à présenter une pièce d\'identité officielle en cours de validité avec photo : Carte d\'identité, Passeport, Permis de conduire ou carte de séjour. Le nom, et l\'âge du porteur de cette pièce d\'identité devra être identique à celui mentionné sur le présent titre de transport.\n\nCe titre est uniquement valable pour l\'horaire, la date, et le parcours désignés ci dessus. Dans les autres cas, et sauf accord du transporteur, ce titre sera considéré comme non valable et vous devrez vous munir d\'un autre titre pour être en règle. Ce titre doit être conservé jusqu\'à la sortie du car (toujours visible même après validation dans la partie « Historique » de l’Application).\n\nAltibus décline toute responsabilité : - Pour les anomalies pouvant survenir en cours de commande, de manipulation du smartphone, de l’affichage du titre de transport dans la mesure où elle ne les a pas provoquées intentionnellement. - en cas de perte, vol ou utilisation illicite.\n\nCe titre n\'est ni échangeable ni remboursable. Ce titre est personnel et incessible.</string>
     <string name="commercant">Commerçant</string>
     <string name="ref">Référence</string>
@@ -107,7 +124,8 @@
     <color name="bottomline_btn">#31000000</color>
     <color name="blue">#449def</color>
     <color name="blue_end">#2f6699</color>
-
+    <color name="black">#000000</color>
+    <color name="fuchia">#d8007a</color>
     <string name="ok">Valider</string>
     <string name="tabAchatsBillet">Achats</string>
     <string name="tabHorraires">Horraires</string>

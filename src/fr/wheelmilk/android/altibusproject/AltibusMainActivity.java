@@ -6,15 +6,18 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
+import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
+import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
@@ -25,13 +28,17 @@ import com.viewpagerindicator.PageIndicator;
 
 import fr.wheelmilk.android.altibusproject.models.AltibusDataPays;
 import fr.wheelmilk.android.altibusproject.support.IconsTabPageIndicator;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.AssetManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -62,6 +69,8 @@ public class AltibusMainActivity extends SherlockFragmentActivity {
 		// WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_altibus_main);
 		setContentView(R.layout.simple_tabs);
+	    LocalBroadcastManager.getInstance(this).registerReceiver(
+	            mMessageReceiver, new IntentFilter("billetCreated"));
 
 //		if (isOnline(this)) {
 //			Log.v("Altibus", "Internet connection found! Launching super asynchronous task...");
@@ -73,7 +82,7 @@ public class AltibusMainActivity extends SherlockFragmentActivity {
 //		}
 		mAdapter = new AltibusFragmentAdapter(getSupportFragmentManager());
 		mPager = (ViewPager) findViewById(R.id.pager);
-		mPager.setOffscreenPageLimit(4);
+		mPager.setOffscreenPageLimit(3);
 		mIndicator = (IconsTabPageIndicator) findViewById(R.id.indicator);
 		((IconsTabPageIndicator) mIndicator)
 				.setTabIconLocation(IconsTabPageIndicator.LOCATION_UP);
@@ -96,8 +105,40 @@ public class AltibusMainActivity extends SherlockFragmentActivity {
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 	}
 
-	
-	
+	private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			String action = intent.getAction();
+			Log.v(getClass().toString(), "Received intent: " + action);
+			mAdapter.notifyDataSetChanged();
+		}
+	};
+//	List<WeakReference<MesBilletsFragment>> fragList = new ArrayList<WeakReference<MesBilletsFragment>>();
+//
+//	@Override
+//	public void onAttachFragment (Fragment fragment) {
+//	    Log.i(getClass().toString(), "onAttachFragment: " + fragment);
+//	    if(fragment instanceof MesBilletsFragment){
+//		    Log.i(getClass().toString(), "Class MesBilletsFragment : " + fragment.getClass());
+//	        fragList.add(new WeakReference<MesBilletsFragment>((MesBilletsFragment)fragment));
+//	    }
+//	}
+//	public MesBilletsFragment getFragmentByPosition(int position) {
+//
+//		MesBilletsFragment ret = null;
+//	    for(WeakReference<MesBilletsFragment> ref : fragList) {
+//	    	MesBilletsFragment f = ref.get();
+//	        if(f != null) {
+//	            if(f.getPosition() == position){
+//	                ret = f;
+//	            }
+//	        } else { //delete from list
+//	            fragList.remove(f);
+//	        }
+//	    }
+//	    return ret;
+//
+//	}
 	private StringBuilder getXml(String url) {
 
 		HttpURLConnection connection = null;
@@ -203,20 +244,20 @@ public class AltibusMainActivity extends SherlockFragmentActivity {
 
 	@Override
     public void onBackPressed() {
-        if ( slidingMenu.isMenuShowing()) {
-            slidingMenu.toggle();
-        }
-        else {
+//        if ( slidingMenu.isMenuShowing()) {
+//            slidingMenu.toggle();
+//        }
+//        else {
             super.onBackPressed();
-        }
+//        }
     }
 	
 	@Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if ( keyCode == KeyEvent.KEYCODE_MENU ) {
-            this.slidingMenu.toggle();
-            return true;
-        }
+//        if ( keyCode == KeyEvent.KEYCODE_MENU ) {
+//            this.slidingMenu.toggle();
+//            return true;
+//        }
         return super.onKeyDown(keyCode, event);
     }
 

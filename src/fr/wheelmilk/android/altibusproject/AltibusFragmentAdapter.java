@@ -4,13 +4,20 @@ import com.viewpagerindicator.IconPagerAdapter;
 
 import fr.wheelmilk.android.altibusproject.support.Config;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 
-class AltibusFragmentAdapter extends FragmentPagerAdapter implements
+class AltibusFragmentAdapter extends FragmentStatePagerAdapter implements
 		IconPagerAdapter {
 
 	private int mCount = Config.CONTENT.length;
@@ -20,20 +27,35 @@ class AltibusFragmentAdapter extends FragmentPagerAdapter implements
 		super(fm);
 	}
 
-	
+	@Override
+	public int getItemPosition(Object object) {
+		Log.v(getClass().toString(), "Refreshing fragment: " + registeredFragments.indexOfValue((Fragment) object) );
+		if (object instanceof ListeBilletsFragment) {
+			Log.v(getClass().toString(), "POSITION NONE" );
+			return POSITION_NONE;
+//	        ((MesBilletsFragment) object).update();
+	    }
+	    //don't return POSITION_NONE, saves new fragment creation 
+//	    return super.getItemPosition(object);
+		return POSITION_UNCHANGED;
+//		return registeredFragments.indexOfValue((Fragment) object);
+	}
 	@Override
 	public Fragment getItem(int position) {
+		Log.v(getClass().toString(), "getItem Position: " + position );
 		switch (position) {
 		case 0: // Fragment # 0 - This will show image
 			return PageAchat.init(position);
 		case 1: // Fragment # 0 - This will show image
 			return PageHorraires.init(position);
 		case 2: // Fragment # 0 - This will show image
-			return AchatFragment.init(position);
+			return MesBilletsFragment.init(position);
+		case 3: // Fragment # 0 - This will show image
+			return HistoriqueFragment.init(position);
 			// case 1: // Fragment # 1 - This will show image
 			// return BuyTicketsFragment.init(position);
 		default:// Fragment # 2-9 - Will show list
-			return TestFragment.newInstance(String.valueOf(position));
+			return PageAchat.init(position);
 		}
 		// return AltibusFragment.newInstance(String.valueOf(position));
 	}
@@ -56,8 +78,8 @@ class AltibusFragmentAdapter extends FragmentPagerAdapter implements
 	// Feinte pour chopper le Fragment actif dans le Viewpager
 	@Override
 	public Object instantiateItem(ViewGroup container, int position) {
-		Fragment fragment = (Fragment) super.instantiateItem(container,
-				position);
+		Log.v(getClass().toString(), "instantiateItem: " + position );
+		Fragment fragment = (Fragment) super.instantiateItem(container, position);
 		registeredFragments.put(position, fragment);
 		return fragment;
 	}

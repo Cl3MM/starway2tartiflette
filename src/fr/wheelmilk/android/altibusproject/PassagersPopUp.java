@@ -108,13 +108,9 @@ public class PassagersPopUp extends SherlockActivity implements OnClickListener,
 		if (position == 0 ) { // Passager principal, on lance l'écran des paramètres
 			startActivity(new Intent(this, UserPreferences.class));
 		} else {
-//			RelativeLayout rlRoot = (RelativeLayout) v.findViewById(R.id.rlRoot);
-//			v.setSelected(true);
-	    	Log.v(this.getClass().toString(), "onItemClicked 2");
 			displayPassagerCourant();
 			passagerCourant = passagers.get(position);
 	    	passagerCourant.setPosition(position);
-	    	Log.v(this.getClass().toString(), "onItemClicked 3");
 			displayPassagerCourant();
 	    	mMode = startActionMode(this);
 //			finish();

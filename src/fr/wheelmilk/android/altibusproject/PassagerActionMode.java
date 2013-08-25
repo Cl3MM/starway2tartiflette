@@ -13,9 +13,8 @@ public class PassagerActionMode implements ActionMode.Callback {
 	Resources mRes;
 	Passager passager;
 	
-	public PassagerActionMode( Resources _res, Passager _passager) {
+	public PassagerActionMode( Resources _res) {
 		mRes = _res;
-		passager = _passager;
 	}
     @Override
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
@@ -43,8 +42,6 @@ public class PassagerActionMode implements ActionMode.Callback {
     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 //    	Toast.makeText(mActivity, "Got click: " + item, Toast.LENGTH_SHORT).show();
 //    	if (item.getTitleCondensed())
-    	Log.v(this.getClass().toString(), item.getTitle().toString());
-    	Log.v(this.getClass().toString(), "Passager: " + passager.toString());
     	
         mode.finish();
         return true;

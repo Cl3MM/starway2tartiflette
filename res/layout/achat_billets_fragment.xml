@@ -3,6 +3,7 @@
     android:id="@+id/rlTimetableMain"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@drawable/background_dark_radial"
     android:paddingLeft="0dp" >
 
     <ScrollView
@@ -92,7 +93,6 @@
                             android:gravity="right"
                             android:text="@string/prix"
                             android:textAppearance="?android:attr/textAppearanceMedium" />
-
                     </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -295,57 +295,122 @@
                     android:textColor="@color/greenFont" />
             </LinearLayout>
 
-<!--             <Button -->
-<!--                 android:id="@+id/button1" -->
-<!--                 android:layout_width="fill_parent" -->
-<!--                 android:layout_height="wrap_content" -->
-<!--                 android:layout_marginTop="10dp" -->
-<!--                 android:background="@drawable/add_passager_button" -->
-<!--                 android:clickable="true" -->
-<!--                 android:text="@string/commander" /> -->
+            <!-- <Button -->
+            <!-- android:id="@+id/button1" -->
+            <!-- android:layout_width="fill_parent" -->
+            <!-- android:layout_height="wrap_content" -->
+            <!-- android:layout_marginTop="10dp" -->
+            <!-- android:background="@drawable/add_passager_button" -->
+            <!-- android:clickable="true" -->
+            <!-- android:text="@string/commander" /> -->
 
-    <RelativeLayout
-        android:id="@+id/rlButtonPaiement"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/add_passager_button"
-        android:clickable="true"
-        android:padding="5dp"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp" >
+            <RelativeLayout
+                android:id="@+id/rlButtonPaiement"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/add_passager_button"
+                android:clickable="true"
+                android:padding="5dp"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp" >
 
-        <View
-            android:id="@+id/vButtonAdd"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignTop="@+id/tvButtonAdd"
-            android:layout_centerInParent="true"
-            android:layout_toLeftOf="@+id/tvButtonAdd"
-            android:background="@drawable/achat_billets_icon"
-            android:duplicateParentState="true" />
+                <RelativeLayout
+                    android:id="@+id/rlCommandCenter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true" >
 
-        <TextView
-            android:id="@+id/tvButtonAdd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_marginBottom="15dp"
-            android:layout_marginRight="-25dp"
-            android:layout_marginTop="15dp"
-            android:duplicateParentState="true"
-            android:lines="1"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:text="@string/commander"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@drawable/add_passager_button_text" />
+                    <View
+                        android:id="@+id/vButtonAdd"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/achat_billets_icon"
+                        android:duplicateParentState="true" />
 
-    </RelativeLayout>
+                    <TextView
+                        android:id="@+id/tvButtonAdd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_toRightOf="@+id/vButtonAdd"
+                        android:duplicateParentState="true"
+                        android:lines="1"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:text="@string/commander"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@drawable/add_passager_button_text" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlButtonNew"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/add_passager_button"
+                android:clickable="true"
+                android:padding="5dp"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp" >
+
+                <RelativeLayout
+                    android:id="@+id/rlNewSearchCenter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true" >
+
+                    <View
+                        android:id="@+id/vButtonNew"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/search_dark_icon"
+                        android:duplicateParentState="true" />
+
+                    <TextView
+                        android:id="@+id/tvButtonNew"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_toRightOf="@+id/vButtonNew"
+                        android:duplicateParentState="true"
+                        android:lines="1"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:text="@string/nouvelleRecherche"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@drawable/add_passager_button_text" />
+
+                </RelativeLayout>
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rlLoading"
+        android:visibility="gone"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
+
+
+    <ProgressBar
+        android:id="@+id/progressBar1"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+                </RelativeLayout>
 </RelativeLayout>

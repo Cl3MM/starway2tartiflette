@@ -1,7 +1,12 @@
 package fr.wheelmilk.android.altibusproject;
 
+import java.sql.SQLException;
+import java.util.List;
+
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -15,12 +20,23 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
+import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.j256.ormlite.dao.Dao;
 import com.loopj.android.http.RequestParams;
 
+import fr.wheelmilk.android.altibusproject.models.AltibusDataReservation;
 import fr.wheelmilk.android.altibusproject.models.Billet;
+import fr.wheelmilk.android.altibusproject.models.ResultatPaiement;
+import fr.wheelmilk.android.altibusproject.models.Reservation;
 import fr.wheelmilk.android.altibusproject.support.Config;
+import fr.wheelmilk.android.altibusproject.support.DatabaseHelper;
+import fr.wheelmilk.android.altibusproject.support.Helper;
 
-public class PaiementPopUp extends SherlockActivity implements OnClickListener {
+public class PaiementPopUp extends SherlockActivity implements OnClickListener, OnWebserviceListenner, DialogInterface.OnClickListener {
+	private final String LOG_TAG = getClass().getSimpleName();
+	private DatabaseHelper databaseHelper = null;
+	Dao<Billet, Integer> billetsDao;
+
 	int returnCode;
 	SimpleAlertDialog mDialog;
 	Billet billet;
@@ -31,12 +47,16 @@ public class PaiementPopUp extends SherlockActivity implements OnClickListener {
 	EditText etAnnee;
 	EditText etCode;
 	RelativeLayout rlBtnValidate;
+	RequestParams params;
+	private ResultatPaiement resultatPaiement;
+	RelativeLayout rlLoading;
+	private boolean isProceedingPayment = false;
 	
 	@Override
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
 		setContentView(R.layout.paiement_popup);
-		
+
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		initialize(getIntent().getExtras());
@@ -48,7 +68,9 @@ public class PaiementPopUp extends SherlockActivity implements OnClickListener {
 		etMois = (EditText) findViewById(R.id.etMois);
 		etNumeroCarte = (EditText) findViewById(R.id.etNumeroCarte);
 		rlBtnValidate = (RelativeLayout) findViewById(R.id.rlBtnValidate);
-		
+		rlLoading = (RelativeLayout) findViewById(R.id.rlLoading);
+		rlLoading.setVisibility(View.GONE);
+
 		rlBtnValidate.setOnClickListener(this);
 		StringBuilder s = new StringBuilder(getString(R.string.montantTransaction));
 		s.append(" ");
@@ -56,46 +78,42 @@ public class PaiementPopUp extends SherlockActivity implements OnClickListener {
 		tvMontant.setText(s);
 		tvRefReservation.setText(billet.getRefReservation());
 		
-//		etNumeroCarte.addTextChangedListener(new TextWatcher() {
-//			@Override
-//			public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
-//			}
-//			@Override
-//			public void beforeTextChanged(CharSequence cs, int arg1, int arg2, int arg3) { }
-//			@Override
-//			public synchronized void afterTextChanged(Editable s) {
-//				String str = etNumeroCarte.getText().toString();
-//				Log.v(this.getClass().toString(), str);
-//				etNumeroCarte.setText( formatText(s) );
-//			}
-//			private Editable formatText(Editable text) {
-//			    int sep1Loc = 3;
-//			    int sep2Loc = 8;
-//			    int sep3Loc = 14;
-//			    int sep4Loc = 20;
-//
-//			    if(text.length()==sep1Loc) {
-//			    	text.append('-');
-//			    	return text;
-//			    }
-//
-//			    if(text.length()==sep2Loc) {
-//			    	text.append('-');
-//			    	return text;
-//			    }
-//
-//			    if(text.length()==sep3Loc) {
-//				    text.append('-');
-//			    	return text;
-//			    }
-//
-//			    if(text.length() > sep4Loc) {
-//			    	return text;
-//			    }
-//			    
-//			    return text;
-//			}
-//		});
+		setTestData();
+	}
+	private void setTestData() {
+		etAnnee.setText("13");
+		etMois.setText("12");
+		etCode.setText("666");
+		etNumeroCarte.setText("1234567891012131");
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+
+		if (databaseHelper != null) {
+			OpenHelperManager.releaseHelper();
+			databaseHelper = null;
+		}
+	}
+	@Override
+	protected void onResume() {
+		super.onResume();
+		try {
+			billetsDao = getHelper().getBilletDataDao();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			billetsDao = null;
+		}
+	}
+
+	private DatabaseHelper getHelper() {
+		if (databaseHelper == null) {
+			databaseHelper = OpenHelperManager.getHelper(this,
+					DatabaseHelper.class);
+		}
+		return databaseHelper;
 	}
 	@Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
@@ -113,12 +131,10 @@ public class PaiementPopUp extends SherlockActivity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		int vid = v.getId();
-		Log.v(this.getClass().toString(), v.toString());
-		Log.v(this.getClass().toString(), "ID: " + v.getId());
 		if (vid == R.id.rlBtnValidate) {
+			isProceedingPayment = true;
 			startPaiement();
 		}
-		
 	}
 	private void startPaiement() {
 		String annee = etAnnee.getText().toString();
@@ -128,14 +144,24 @@ public class PaiementPopUp extends SherlockActivity implements OnClickListener {
 		
 		ErrorMessage e = isValid(cb, annee, mois, code);
 		if (e.isValid) {
-			RequestParams params = billet.setParams(getActivity());
+			// https://www.altibus.com/iphone/cybermut/etp1.aspx
+			findViewById(R.id.rlBtnValidate).setOnClickListener(null);
+			params = new RequestParams();
+			params.put("nc", cb);
+			if (annee.length() == 2) params.put("av", "20" + annee);
+			else params.put("av", annee);
+			params.put("mv", mois);
+			params.put("c", code);
+			params.put("r", billet.getRefReservation());
+			
 			Log.v(this.getClass().toString(), params.toString());
-			AltibusRestClient.post("iphone/enregistrementReservation.aspx?", params, new GaresAsyncHttpResponseHandler(this));
+			rlLoading.setVisibility(View.VISIBLE);
+			AltibusRestClient.postSSL("iphone/cybermut/etp1.aspx?", params, new GaresAsyncHttpResponseHandler(this));
 		} else {
+			isProceedingPayment = false;
 			SimpleAlertDialog dlg = new SimpleAlertDialog(this, e.messages.toString());
 			dlg.show();
-		}
-		
+		}	
 	}
 	private class ErrorMessage {
 		StringBuilder messages = new StringBuilder();
@@ -178,5 +204,82 @@ public class PaiementPopUp extends SherlockActivity implements OnClickListener {
 		else setResult(returnCode);
 		super.finish();
 		overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+	}
+	@Override
+	public void onWebserviceSuccess(String xmlString) {
+		Log.v(getClass().toString(), xmlString);
+		resultatPaiement = (ResultatPaiement) new AltibusSerializer(ResultatPaiement.class).serializeXmlToObject(xmlString);
+		if (resultatPaiement != null) {
+			afterPaymentValidation();
+			Log.v(this.getClass().toString(), "Numéro de reservation: " +  resultatPaiement.getReference());
+		} else {
+			rlLoading.setVisibility(View.GONE);
+			Helper.grilledRare(this, getString(R.string.erreurSerialisation));
+			Log.v(this.getClass().toString(), "Serializer faillure :(");
+		}
+	}
+	private void afterPaymentValidation() {
+		if (resultatPaiement.getCdr() == -5 ) { // Paiement OK
+			returnCode = RESULT_OK;
+			saveBilletToDB();
+			mDialog = new SimpleAlertDialog(this, getString(R.string.paymentSuccess), getString(R.string.ok), null, this);
+			mDialog.setTitle("Paiement Effectué");
+		} else { // Paiement Foiré :(
+			returnCode = Config.PAYMENT_REFUSED;
+			mDialog = new SimpleAlertDialog(this, getString(R.string.paymentRefused), getString(R.string.ok), null, this);
+			mDialog.setTitle("Erreur");
+		}
+		rlLoading.setVisibility(View.GONE);
+		mDialog.setCancelableProperly(false);
+		mDialog.show();		
+	}
+	private void saveBilletToDB() {
+
+		Log.v(getClass().toString(), "Billet :" + billet.toString());
+		if (billetsDao == null) {
+			Helper.grilledRare(this, "Impossible de sauvegarder le billet dans la base de données");
+			Log.v(getClass().toString(), "Impossible de sauvegarder le billet dans la base de données");
+			Log.v(getClass().toString(), "Billet : " + billet.toString());
+		} else {
+			try {
+				Log.v(getClass().toString(), "Saving ticket to DB...");
+				billet.prepareForDB(true);
+				billetsDao.create(billet);
+				
+				// Creation Billet Retour
+				if(billet.hasHorraireRetour()) {
+//					billet.setAller(false);
+					billet.prepareForDB(false);
+					Log.v(getClass().toString(), "Saving return ticket to DB...");
+					billetsDao.create(billet);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	@Override
+	public void onWebserviceFailure() {
+		Log.v(getClass().toString(), "Failure :'(");
+	}
+	@Override
+	public void onClick(DialogInterface dlg, int which) {
+//		notifyBilletFragment();
+		mDialog.dismiss();
+		finish();		
+	}
+	@Override
+	public void onBackPressed() {
+		if( !isProceedingPayment && mDialog == null) super.onBackPressed();
+	}
+	private void notifyBilletFragment() {
+	    Intent intent = new Intent("billetCreated");
+	    sendLocationBroadcast(intent);
+	}
+
+	private void sendLocationBroadcast(Intent intent){
+		Log.v(getClass().toString(), "Sending Update broadcast");
+	    intent.putExtra("action", "update");
+	    LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 	}
 }

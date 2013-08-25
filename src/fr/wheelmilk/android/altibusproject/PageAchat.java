@@ -5,6 +5,7 @@ import com.loopj.android.http.RequestParams;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,11 +29,16 @@ public class PageAchat extends PageFactory implements OnWebserviceListenner, Dia
 	protected TextView tvMontant;
 	private AltibusDataReservation reservation;
 	SimpleAlertDialog mDialog;
-	
+
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == Config.PASSAGERS_RETOUR_CODE) {
 			if (data != null) setPassagersResult(data, tvPassagers);
+		} else if (requestCode == Config.PAIEMENT_RETOUR_CODE) {
+			Log.v(this.getClass().toString(), "Yeah, billet acheté !!!");
+			notifyBilletFragment();
+			harReset();
+			Log.v(this.getClass().toString(), "Hard Reset done...");
 		} else {
 			super.onActivityResult(requestCode, resultCode, data);
 		}
@@ -43,28 +49,49 @@ public class PageAchat extends PageFactory implements OnWebserviceListenner, Dia
 		tv.setTag(passagers);
 //		startAsyncHTTPRequest();
 	}
+	private void notifyBilletFragment() {
+	    Intent intent = new Intent("billetCreated");
+	    sendLocationBroadcast(intent);
+	}
+
+	private void sendLocationBroadcast(Intent intent){
+		Log.v(getClass().toString(), "Sending Update broadcast");
+	    intent.putExtra("action", "update");
+	    LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
+	}
 
 	protected void startAsyncHTTPRequest() {
+		layoutView.findViewById(R.id.rlLoading).setVisibility(View.VISIBLE);
 		billet = new Billet( passagers, (GaresDepart) tvGareAller.getTag(), (GaresArrivee) tvGareArrivee.getTag(), 
 				(java.util.Date) tvDateAller.getTag(), (HorrairesAller) tvHeureAller.getTag(), 
 				(java.util.Date) tvDateRetour.getTag(), (HorrairesRetour) tvHeureRetour.getTag() );
 		RequestParams params = billet.setParams(getActivity());
-		Log.v(this.getClass().toString(), params.toString());
 		AltibusRestClient.post("iphone/enregistrementReservation.aspx?", params, new GaresAsyncHttpResponseHandler(this));
 	}
-	
+
 	@Override
 	public void onClick(View v) {
 		int vid = v.getId();
+		Log.v(getClass().toString(), "Vid: "+vid);
+		Log.v(getClass().toString(), "rlBtnNew: "+R.id.rlButtonNew);
 		if (vid == R.id.llPassagers) {
 			startPassagerActivity();
 		} else if (vid == R.id.rlButtonPaiement) {
 			if (billet.hasValidReservation()) {
 				mDialog = new SimpleAlertDialog(getActivity(), getString(R.string.cgv), getString(R.string.acceptAndPay), getString(R.string.cancel), this);
+				mDialog.setTitle(getString(R.string.cgvTitle));
+				mDialog.setCancelableProperly(false);
+				mDialog.setTag("cgv");
 				mDialog.show();
 			} else {
 				Helper.grilledRare(getActivity(), getResources().getString(R.string.erreurChampsNonRemplis));
 			}
+		} else if(vid == R.id.rlButtonNew) {
+			mDialog = new SimpleAlertDialog(getActivity(), getString(R.string.effectuerNouvelleRecherche), getString(R.string.ok), getString(R.string.cancel), this);
+			mDialog.setTitle(getString(R.string.avertissement));
+			mDialog.setCancelableProperly(false);
+			mDialog.setTag("hardReset");
+			mDialog.show();
 		} else {
 			super.onClick(v);
 		}
@@ -97,7 +124,7 @@ public class PageAchat extends PageFactory implements OnWebserviceListenner, Dia
 		// Add more layout stuffs to the default if needed 
 		layoutView.findViewById(R.id.llPassagers).setOnClickListener(this);
 		layoutView.findViewById(R.id.rlButtonPaiement).setOnClickListener(this);
-
+		layoutView.findViewById(R.id.rlButtonNew).setOnClickListener(this);
 		tvPassagers = (TextView) layoutView.findViewById(R.id.tvPassagers);
 		tvMontant = (TextView) layoutView.findViewById(R.id.tvMontant);
 		tvMontant.setTextColor(getResources().getColor(R.color.greenFont));
@@ -112,7 +139,12 @@ public class PageAchat extends PageFactory implements OnWebserviceListenner, Dia
 	}
 	@Override
 	protected void updateMontant() {
-		startAsyncHTTPRequest();
+		if (tvHeureAller.getTag() != null && !passagers.isEmpty()) {
+			startAsyncHTTPRequest();
+		} else {
+			tvMontant.setText(getString(R.string.emptyString));
+			tvMontant.setTag(null);
+		}
 	}
 	@Override
 	protected void resetTextViews() {
@@ -128,7 +160,7 @@ public class PageAchat extends PageFactory implements OnWebserviceListenner, Dia
 	public void onWebserviceSuccess(String xmlString) {
 		Log.v(this.getClass().toString(), xmlString);
 		reservation = (AltibusDataReservation) new AltibusSerializer(AltibusDataReservation.class).serializeXmlToObject(xmlString);
-
+		layoutView.findViewById(R.id.rlLoading).setVisibility(View.GONE);
 		if (reservation != null) {
 			billet.setReservation(reservation.reservation);
 			Log.v(this.getClass().toString(), "Montant: " + reservation.getMontant());
@@ -141,6 +173,7 @@ public class PageAchat extends PageFactory implements OnWebserviceListenner, Dia
 	}
 	@Override
 	public void onWebserviceFailure() {
+		layoutView.findViewById(R.id.rlLoading).setVisibility(View.GONE);
 		Log.v(this.getClass().toString(), "Webservice Failure :(");
 	}
 	
@@ -158,9 +191,35 @@ public class PageAchat extends PageFactory implements OnWebserviceListenner, Dia
 
 	@Override
 	public void onClick(DialogInterface dialog, int which) {
-		mDialog.dismiss();
-		if (which == DialogInterface.BUTTON_POSITIVE) {
-			startPaiementActivity();
+
+		Log.v(getClass().toString(), "Dialog class: " + dialog.getClass());
+		if (mDialog != null && mDialog.isVisible()) {
+			if (mDialog.getTag().equals("cgv")) {
+				Log.v(getClass().toString(), "Launching Payment...");
+				mDialog.dismiss();
+				if (which == DialogInterface.BUTTON_POSITIVE) {
+					startPaiementActivity();
+				}
+			} else if (mDialog.getTag().equals("hardReset")) {
+				Log.v(getClass().toString(), "Resetting fields...");
+				if (which == DialogInterface.BUTTON_POSITIVE) {
+					mDialog.dismiss();
+					harReset();
+				}
+			}
 		}
+	}
+	public void harReset() {
+		resetTextViews();
+		tvGareAller.setTag(null);
+		tvGareAller.setText(getString(R.string.rechercheGare));
+		tvGareArrivee.setTag(null);
+		tvGareArrivee.setText(getString(R.string.rechercheGare));
+		tvDateAller.setTag(null);
+		tvDateAller.setText(getString(R.string.rechercheDate));
+		tvDateRetour.setTag(null);
+		tvDateRetour.setText(getString(R.string.rechercheDate));
+		reservation = null;
+		billet = new Billet();
 	}
 }

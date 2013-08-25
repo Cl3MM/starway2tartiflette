@@ -7,6 +7,7 @@ import com.loopj.android.http.*;
 public class AltibusRestClient {
 //	  private static final String BASE_URL = "http://www.altibus.com/sw/altibus/";
 	  private static final String BASE_URL = "http://www.altibus.com/";
+	  private static final String BASE_SSL_URL = "https://www.altibus.com/";
 	  // sw/altibus/
 // data.aspx?tip=gps7
 	  //http://www.altibus.com/iphone/enregistrementReservation.aspx
@@ -24,7 +25,16 @@ public class AltibusRestClient {
 		  client.post(getAbsoluteUrl(url), params, responseHandler);
 	  }
 
+	  public static void postSSL(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+		  Log.v("AltibusRestClient", getAbsoluteUrl(url)+params.toString() );
+		  client.post(getAbsoluteSSLUrl(url), params, responseHandler);
+	  }
+	  
 	  private static String getAbsoluteUrl(String relativeUrl) {
 	      return BASE_URL + relativeUrl;
 	  }
+	  private static String getAbsoluteSSLUrl(String relativeUrl) {
+	      return BASE_SSL_URL + relativeUrl;
+	  }
+	  
 }

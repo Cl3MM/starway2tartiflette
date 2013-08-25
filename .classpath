@@ -7,5 +7,8 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry exported="true" kind="lib" path="/home/clem/Documents/dev/android/libs/android-async-http-1.4.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="/home/clem/Documents/dev/android/libs/simple-xml-2.7/jar/simple-xml-2.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="/home/clem/Documents/dev/android/libs/ormlite-core-4.45.jar"/>
+	<classpathentry exported="true" kind="lib" path="/home/clem/Documents/dev/android/libs/ormlite-android-4.45.jar"/>
+	<classpathentry exported="true" kind="lib" path="/home/clem/Documents/dev/android/libs/ZXing-core-2.2.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

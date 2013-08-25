@@ -18,8 +18,7 @@
         android:layout_height="24dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:background="@drawable/ic_action_passagers_dark"
-        android:clickable="true"
+        android:background="@drawable/passager_icon"
         android:focusable="false"
         android:focusableInTouchMode="false" />
 
@@ -31,10 +30,10 @@
         android:layout_toRightOf="@+id/imgRemove"
         android:text="@string/passagerFirst"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/table_content" />
+        android:textColor="@drawable/text_grey_to_white" />
 
     <TextView
-        android:id="@+id/tvNom"
+        android:id="@+id/tvDateDepart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvTitle"
@@ -66,23 +65,23 @@
         android:id="@+id/tvSummary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvNom"
+        android:layout_below="@+id/tvDateDepart"
         android:layout_marginTop="4dp"
         android:layout_toLeftOf="@+id/llRemove"
         android:gravity="right"
         android:text="@string/modifierPassagerPrincipal"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/table_content"
+        android:textColor="@drawable/text_grey_to_white"
         android:textSize="11sp"
         android:textStyle="italic" />
 
     <TextView
-        android:id="@+id/tvAge"
+        android:id="@+id/tvHeureDepart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvTitle"
         android:layout_toLeftOf="@+id/llRemove"
-        android:layout_toRightOf="@+id/tvNom"
+        android:layout_toRightOf="@+id/tvDateDepart"
         android:gravity="right"
         android:text="32 ans"
         android:textAppearance="?android:attr/textAppearanceSmall"

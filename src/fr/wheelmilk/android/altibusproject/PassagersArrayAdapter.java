@@ -40,9 +40,9 @@ public class PassagersArrayAdapter extends ArrayAdapter<Passager> {
 		if (v == null) {
 			LayoutInflater inflater = ((Activity)context).getLayoutInflater();
             v = inflater.inflate(R.layout.passagers_list_item, parent, false);
-            holder.tvNom = (TextView) v.findViewById(R.id.tvNom);
+            holder.tvNom = (TextView) v.findViewById(R.id.tvDateDepart);
             holder.tvTitle = (TextView) v.findViewById(R.id.tvTitle);
-            holder.tvAge = (TextView) v.findViewById(R.id.tvAge);
+            holder.tvAge = (TextView) v.findViewById(R.id.tvHeureDepart);
             holder.tvSummary = (TextView) v.findViewById(R.id.tvSummary);
             holder.vRemove = v.findViewById(R.id.imgRemove);
             holder.rlRoot = (RelativeLayout) v.findViewById(R.id.rlRoot);

@@ -10,6 +10,7 @@ public class Config {
 	public static final int EXTRA_FAILURE 		= -200;
 	public static final int PAS_D_HORRAIRES 	= -300;
 	public static final int SERIALIZATION_FAILURE = -400;
+	public static final int PAYMENT_REFUSED = -500;
 
 	public static final int GARE_ALLER_CODE 	= 100;
 	public static final int GARE_ARRIVEE_CODE 	= 200;

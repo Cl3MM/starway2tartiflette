@@ -42,7 +42,16 @@ public class HorrairesRetour implements GaresDataModel {
 		public String heureArrivee() {
 			return this.hra.replace("H", ":");
 		}
-		
+		public int heureArriveeOfTheDay() {
+			int index = hra.indexOf("H");
+			String heure = hra.substring(0, index);
+			return Integer.valueOf(heure);
+		}
+		public int minuteArriveeOfTheDay() {
+			int index = hra.indexOf("H");
+			String min = hra.substring(index+1, hra.length());
+			return Integer.valueOf(min);
+		}
 		// Parcelable implementation
 		public HorrairesRetour(Parcel in) {
 			readFromParcel(in);
