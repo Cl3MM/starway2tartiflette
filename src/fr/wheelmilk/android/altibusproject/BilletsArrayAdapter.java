@@ -3,6 +3,7 @@ package fr.wheelmilk.android.altibusproject;
 import java.util.ArrayList;
 
 import fr.wheelmilk.android.altibusproject.models.Billet;
+import fr.wheelmilk.android.altibusproject.models.BilletDB;
 import fr.wheelmilk.android.altibusproject.support.Helper;
 
 import android.app.Activity;
@@ -13,13 +14,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class BilletsArrayAdapter extends ArrayAdapter<Billet> {
+public class BilletsArrayAdapter extends ArrayAdapter<BilletDB> {
 
-    private ArrayList<Billet> items;
+    private ArrayList<BilletDB> items;
     private Context context;
 //    private int itemColor;
 
-    public BilletsArrayAdapter(Context _context, int textViewResourceId, ArrayList<Billet> _items) {
+    public BilletsArrayAdapter(Context _context, int textViewResourceId, ArrayList<BilletDB> _items) {
             super(_context, textViewResourceId, _items);
             items = _items;
             context = _context;
@@ -55,40 +56,21 @@ public class BilletsArrayAdapter extends ArrayAdapter<Billet> {
 		} else {
 			holder = (Holder) v.getTag();
 		}
-        Billet b = getItem(position);
+        BilletDB b = getItem(position);
         holder.tvGareDepart.setText(b.getGareDepart());
         holder.tvGareArrivee.setText(b.getGareRetour());
         holder.tvHeureArrivee.setText(b.getHaa());
         holder.tvHeureDepart.setText(b.getHa());
         holder.tvMontant.setText(b.getPrettyPt());
         holder.tvDateDepart.setText(Helper.prettifyDate(b.getDateAller(), null));
-        holder.tvNbPassagers.setText(setPassagerText(b));
+        holder.tvNbPassagers.setText(b.getTypeBillet());
         
         if (b.isPerime()) holder.tvAction.setText(R.string.billetPerime);
         else {
-        	if (b.getValide()) holder.tvAction.setText(R.string.billetComposte);
+        	if (b.isValide()) holder.tvAction.setText(R.string.billetComposte);
         	else holder.tvAction.setText(R.string.cliquerPourEditer);
         }
         	
 		return v;
-	}
-	private String setPassagerText(Billet b) {
-        int enfants = b.getNbEnfants();
-        int adultes = b.getNbAdultes();
-        StringBuilder s = new StringBuilder();
-        if (enfants > 0) {
-        	s.append(String.valueOf(enfants));
-        	s.append(" billet");
-        	if (enfants > 1) s.append("s");
-        	s.append(" -26 ans");
-        }
-        if (adultes > 0) {
-        	if(enfants>0) s.append(" / ");
-        	s.append(String.valueOf(adultes));
-        	s.append(" billet");
-        	if (adultes > 1) s.append("s");
-        	s.append(" +26 ans");
-        }
-        return s.toString();
 	}
 }

@@ -37,7 +37,8 @@ public class AltibusDataModel implements Parcelable {
 	   }) List<GaresDataModel> _items ) {
 		items = _items;
 	}
-
+	public AltibusDataModel() {
+	}
 	public HashMap<String, GaresDataModel> objects() {
 		HashMap<String, GaresDataModel> objectMap = new HashMap<String, GaresDataModel>();
 

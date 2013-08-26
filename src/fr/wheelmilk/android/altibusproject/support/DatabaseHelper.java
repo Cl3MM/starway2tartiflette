@@ -15,8 +15,7 @@ import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-
-import fr.wheelmilk.android.altibusproject.models.Billet;
+import fr.wheelmilk.android.altibusproject.models.BilletDB;
 
 /**
  * Database helper class used to manage the creation and upgrading of your
@@ -33,7 +32,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	private static final int DATABASE_VERSION = 1;
 
 	// the DAO object we use to access the SimpleData table
-	private Dao<Billet, Integer> billetDao = null;
+	private Dao<BilletDB, Integer> billetDao = null;
 
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -48,7 +47,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	public void onCreate(SQLiteDatabase db, ConnectionSource connectionSource) {
 		try {
 			Log.i(DatabaseHelper.class.getName(), "onCreate");
-			TableUtils.createTable(connectionSource, Billet.class);
+			TableUtils.createTable(connectionSource, BilletDB.class);
 
 			// here we try inserting data in the on-create as a test
 //			Dao<Billet, Integer> dao = getBilletDataDao();
@@ -76,7 +75,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			int oldVersion, int newVersion) {
 		try {
 			Log.i(DatabaseHelper.class.getName(), "onUpgrade");
-			TableUtils.dropTable(connectionSource, Billet.class, true);
+			TableUtils.dropTable(connectionSource, BilletDB.class, true);
 			// after we drop the old databases, we create the new ones
 			onCreate(db, connectionSource);
 		} catch (SQLException e) {
@@ -89,9 +88,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	 * Returns the Database Access Object (DAO) for our SimpleData class. It
 	 * will create it or just give the cached value.
 	 */
-	public Dao<Billet, Integer> getBilletDataDao() throws SQLException {
+	public Dao<BilletDB, Integer> getBilletDataDao() throws SQLException {
 		if (billetDao == null) {
-			billetDao = getDao(Billet.class);
+			billetDao = getDao(BilletDB.class);
 		}
 		return billetDao;
 	}

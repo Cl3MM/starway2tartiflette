@@ -54,6 +54,7 @@ public class HorrairesPopUpActivity extends ActivityPopUpFactory {
 		this.horrairesArrayAdapter = buildHorrairesArrayAdpater(data);
 		ListView listeDesGares = (ListView) findViewById(R.id.listDesGares);
 		listeDesGares.setAdapter(horrairesArrayAdapter);
+		listeDesGares.setEmptyView(findViewById(R.id.tvEmptyList));
 	}
 	@Override
 	protected void setSuccessfulResult(int position) {
@@ -134,7 +135,7 @@ public class HorrairesPopUpActivity extends ActivityPopUpFactory {
 		TreeMap<String, String> horrairesRetour 	= new TreeMap<String, String>();
 
 		// On remplit le TreeMap avec les horraires triés dans l'ordre (horrairesAller = { 12h30 => 13h00, 16h30 => 17h00 ... }
-		for (GaresDataModel value: this.altibusData.values()) {
+		for (GaresDataModel value: altibusData.values()) {
 			if ( value.getClass().toString().equals(HorrairesAller.class.toString()) ) {
 				horrairesAller.put(value.heureAller(), value.heureArrivee()); // + "::" + value.gareName()
 			} else {
@@ -148,7 +149,7 @@ public class HorrairesPopUpActivity extends ActivityPopUpFactory {
 			TextView tvTitle = (TextView) findViewById(R.id.title);
 			tvTitle.setText(title);
 		}
-		
+
 		ArrayList<HorrairesPopUpActivity.HorrairesMapping> arrayAdapter = new ArrayList<HorrairesPopUpActivity.HorrairesMapping>();
 		for (Entry<String, String> value : horrairesAller.entrySet()) {
 			arrayAdapter.add( new HorrairesPopUpActivity.HorrairesMapping( value.getKey(), value.getValue()) );

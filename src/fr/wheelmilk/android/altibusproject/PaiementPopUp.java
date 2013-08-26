@@ -26,6 +26,7 @@ import com.loopj.android.http.RequestParams;
 
 import fr.wheelmilk.android.altibusproject.models.AltibusDataReservation;
 import fr.wheelmilk.android.altibusproject.models.Billet;
+import fr.wheelmilk.android.altibusproject.models.BilletDB;
 import fr.wheelmilk.android.altibusproject.models.ResultatPaiement;
 import fr.wheelmilk.android.altibusproject.models.Reservation;
 import fr.wheelmilk.android.altibusproject.support.Config;
@@ -35,7 +36,7 @@ import fr.wheelmilk.android.altibusproject.support.Helper;
 public class PaiementPopUp extends SherlockActivity implements OnClickListener, OnWebserviceListenner, DialogInterface.OnClickListener {
 	private final String LOG_TAG = getClass().getSimpleName();
 	private DatabaseHelper databaseHelper = null;
-	Dao<Billet, Integer> billetsDao;
+	Dao<BilletDB, Integer> billetsDao;
 
 	int returnCode;
 	SimpleAlertDialog mDialog;
@@ -243,15 +244,14 @@ public class PaiementPopUp extends SherlockActivity implements OnClickListener, 
 		} else {
 			try {
 				Log.v(getClass().toString(), "Saving ticket to DB...");
-				billet.prepareForDB(true);
-				billetsDao.create(billet);
+				BilletDB billetDB = new BilletDB(billet, false);
+				billetsDao.create(billetDB);
 				
 				// Creation Billet Retour
 				if(billet.hasHorraireRetour()) {
-//					billet.setAller(false);
-					billet.prepareForDB(false);
 					Log.v(getClass().toString(), "Saving return ticket to DB...");
-					billetsDao.create(billet);
+					billetDB = new BilletDB(billet, true);
+					billetsDao.create(billetDB);
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();

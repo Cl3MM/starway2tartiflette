@@ -28,6 +28,7 @@ import com.viewpagerindicator.PageIndicator;
 
 import fr.wheelmilk.android.altibusproject.models.AltibusDataPays;
 import fr.wheelmilk.android.altibusproject.support.IconsTabPageIndicator;
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -86,7 +87,6 @@ public class AltibusMainActivity extends SherlockFragmentActivity {
 		mIndicator = (IconsTabPageIndicator) findViewById(R.id.indicator);
 		((IconsTabPageIndicator) mIndicator)
 				.setTabIconLocation(IconsTabPageIndicator.LOCATION_UP);
-
 		mPager.setAdapter(mAdapter);
 		mIndicator.setViewPager(mPager);
 		
@@ -102,6 +102,10 @@ public class AltibusMainActivity extends SherlockFragmentActivity {
 //        
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        createOrUpdateCountryList();
+		
+	    LocalBroadcastManager.getInstance(this).registerReceiver(
+	            mMessageReceiver, new IntentFilter("billetCreated"));
+	    
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 	}
 
@@ -110,35 +114,16 @@ public class AltibusMainActivity extends SherlockFragmentActivity {
 		public void onReceive(Context context, Intent intent) {
 			String action = intent.getAction();
 			Log.v(getClass().toString(), "Received intent: " + action);
-			mAdapter.notifyDataSetChanged();
+			
+			int position = 2;
+			MesBilletsFragment f = (MesBilletsFragment) mAdapter.getRegisteredFragment(position);
+			f.updateView(true);
+			mPager.setCurrentItem(position, true);
 		}
 	};
-//	List<WeakReference<MesBilletsFragment>> fragList = new ArrayList<WeakReference<MesBilletsFragment>>();
-//
-//	@Override
-//	public void onAttachFragment (Fragment fragment) {
-//	    Log.i(getClass().toString(), "onAttachFragment: " + fragment);
-//	    if(fragment instanceof MesBilletsFragment){
-//		    Log.i(getClass().toString(), "Class MesBilletsFragment : " + fragment.getClass());
-//	        fragList.add(new WeakReference<MesBilletsFragment>((MesBilletsFragment)fragment));
-//	    }
-//	}
-//	public MesBilletsFragment getFragmentByPosition(int position) {
-//
-//		MesBilletsFragment ret = null;
-//	    for(WeakReference<MesBilletsFragment> ref : fragList) {
-//	    	MesBilletsFragment f = ref.get();
-//	        if(f != null) {
-//	            if(f.getPosition() == position){
-//	                ret = f;
-//	            }
-//	        } else { //delete from list
-//	            fragList.remove(f);
-//	        }
-//	    }
-//	    return ret;
-//
-//	}
+	private String getFragmentTag(int pos){
+	    return "android:switcher:"+R.id.pager+":"+pos;
+	}
 	private StringBuilder getXml(String url) {
 
 		HttpURLConnection connection = null;

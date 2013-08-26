@@ -27,19 +27,19 @@ class AltibusFragmentAdapter extends FragmentStatePagerAdapter implements
 		super(fm);
 	}
 
-	@Override
-	public int getItemPosition(Object object) {
-		Log.v(getClass().toString(), "Refreshing fragment: " + registeredFragments.indexOfValue((Fragment) object) );
-		if (object instanceof ListeBilletsFragment) {
-			Log.v(getClass().toString(), "POSITION NONE" );
-			return POSITION_NONE;
-//	        ((MesBilletsFragment) object).update();
-	    }
-	    //don't return POSITION_NONE, saves new fragment creation 
-//	    return super.getItemPosition(object);
-		return POSITION_UNCHANGED;
-//		return registeredFragments.indexOfValue((Fragment) object);
-	}
+//	@Override
+//	public int getItemPosition(Object object) {
+//		Log.v(getClass().toString(), "Refreshing fragment: " + registeredFragments.indexOfValue((Fragment) object) );
+//		if (object instanceof ListeBilletsFragment) {
+//			Log.v(getClass().toString(), "POSITION NONE" );
+//			return POSITION_NONE;
+////	        ((MesBilletsFragment) object).update();
+//	    }
+//	    //don't return POSITION_NONE, saves new fragment creation 
+////	    return super.getItemPosition(object);
+//		return POSITION_UNCHANGED;
+////		return registeredFragments.indexOfValue((Fragment) object);
+//	}
 	@Override
 	public Fragment getItem(int position) {
 		Log.v(getClass().toString(), "getItem Position: " + position );
@@ -55,7 +55,7 @@ class AltibusFragmentAdapter extends FragmentStatePagerAdapter implements
 			// case 1: // Fragment # 1 - This will show image
 			// return BuyTicketsFragment.init(position);
 		default:// Fragment # 2-9 - Will show list
-			return PageAchat.init(position);
+			throw new IllegalArgumentException("not this many fragments: " + position);
 		}
 		// return AltibusFragment.newInstance(String.valueOf(position));
 	}

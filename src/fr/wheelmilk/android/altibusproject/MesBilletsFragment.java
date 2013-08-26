@@ -1,9 +1,5 @@
 package fr.wheelmilk.android.altibusproject;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-
-import fr.wheelmilk.android.altibusproject.models.Billet;
 import android.os.Bundle;
 
 public class MesBilletsFragment extends ListeBilletsFragment {

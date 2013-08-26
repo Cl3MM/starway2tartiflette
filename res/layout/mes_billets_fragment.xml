@@ -4,7 +4,21 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_dark_radial" >
 
+    <TextView 
+        android:id="@+id/tvBilletsHeader"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_width="fill_parent"
+        android:gravity="center"
+        android:background="@color/greenFont"
+        android:padding="10dp"
+        android:textColor="@color/table_background"
+        android:layout_marginTop="25dp"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:text="@string/pasdeBillet" />
+        
     <ListView
+        android:layout_below="@+id/tvBilletsHeader"
         android:id="@+id/lvBillets"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,4 +37,15 @@
         android:layout_marginTop="25dp"
         android:layout_height="wrap_content"
         android:text="@string/pasdeBillet" />
+        <TextView 
+        android:id="@+id/tvplop"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_width="fill_parent"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:padding="10dp"
+        android:layout_marginTop="25dp"
+        android:layout_height="wrap_content"
+        android:text="@string/pasdeBillet" />
+
 </RelativeLayout>

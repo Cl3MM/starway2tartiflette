@@ -35,20 +35,20 @@ public class HorrairesRetour implements GaresDataModel {
 
 		@Override
 		public String heureAller() {
-			return this.hr.replace("H", ":");
+			return (hr.contains(":")) ? hr : hr.replace("H", ":");
 		}
 
 		@Override
 		public String heureArrivee() {
-			return this.hra.replace("H", ":");
+			return (hra.contains(":")) ? hra : hra.replace("H", ":");
 		}
 		public int heureArriveeOfTheDay() {
-			int index = hra.indexOf("H");
+			int index = heureArrivee().indexOf(":");
 			String heure = hra.substring(0, index);
 			return Integer.valueOf(heure);
 		}
 		public int minuteArriveeOfTheDay() {
-			int index = hra.indexOf("H");
+			int index = heureArrivee().indexOf(":");
 			String min = hra.substring(index+1, hra.length());
 			return Integer.valueOf(min);
 		}

@@ -4,7 +4,8 @@
     <color name="purple_light">#a276eb</color>
     <color name="purple_middle">#8658ce</color>
     <color name="purple_dark">#6a3ab2</color>
-
+    <color name="greyBilletInvalide">#808285</color>
+    
     <string name="tab_words">Words</string>
     <string name="tab_numbers">Numbers</string>
     <string name="app_name">Altibus</string>
@@ -48,8 +49,8 @@
 	<string name="appuyezIci">Appuyez ici pour Valider votre e-Billet</string>
 	<string name="jmjv">Je monte, je valide !</string>
 	<string name="validationDefinitive">Toute validation est définitive</string>
-	<string name="emptyString"></string>
-		<string name="emptyString"></string>
+	<string name="titreDejaValide">CE TITRE A DEJA ETE VALIDE</string>
+		<string name="nonValable">NON VALABLE (sauf autorisation du transporteur)</string>
 		<string name="emptyString"></string>
 			<string name="emptyString"></string>
 						
@@ -126,6 +127,11 @@
     <color name="blue_end">#2f6699</color>
     <color name="black">#000000</color>
     <color name="fuchia">#d8007a</color>
+    <color name="rougeInterdit">#fe0000</color>
+    
+    
+    
+    
     <string name="ok">Valider</string>
     <string name="tabAchatsBillet">Achats</string>
     <string name="tabHorraires">Horraires</string>
@@ -174,6 +180,9 @@
     
     <color name="paiementRef">#8e8e8e</color>
     <color name="paiementRefData">#e3e3e3</color>
+    <color name="darkFuchia">#440a2b</color>
+    <color name="lightFuchia">#ffd8ee</color>
+    <color name="greenBillet">#a9d64b</color>
     
     <color name="DarkRedBorder">#8b2e2b</color>
     <color name="searchEditTextHintColor">#aaa</color>

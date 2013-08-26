@@ -143,6 +143,7 @@ public abstract class ActivityPopUpFactory extends SherlockActivity implements O
 		arrayAdapter = buildArrayAdpater(itemListNames);
 		ListView listeDesGares = (ListView) findViewById(R.id.listDesGares);
 		listeDesGares.setAdapter(arrayAdapter);
+		listeDesGares.setEmptyView(findViewById(R.id.tvEmptyList));
 	}
 
 	protected void showProgressBar() {
@@ -162,14 +163,17 @@ public abstract class ActivityPopUpFactory extends SherlockActivity implements O
 
 		if (altibusDataModel != null) {
 			// Le xml est sérialisé
-			this.itemListNames = altibusDataModel.itemNames();
-			this.altibusData = altibusDataModel.objects();
+			itemListNames = altibusDataModel.itemNames();
+			altibusData = altibusDataModel.objects();
 			populateListView();
 			dismissProgressBar();
-		} else if (this.getClass().toString().equalsIgnoreCase(HorrairesPopUpActivity.class.toString())) {
+		} else if ( this instanceof HorrairesPopUpActivity) {
+			itemListNames = new ArrayList<String>();
+			altibusData = new HashMap<String, GaresDataModel>(); 
 			// HorraireDialog = Pas d'horrraire ce jour
 			returnCode = Config.PAS_D_HORRAIRES;
-			finish();
+			populateListView();
+			dismissProgressBar();
 		} else {
 			// Problème de sérialisation
 			Log.v(this.getClass().toString(), "Serializer faillure :(");

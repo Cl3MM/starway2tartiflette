@@ -70,6 +70,9 @@
         android:layout_alignLeft="@+id/tvGareArrivee"
         android:layout_below="@+id/tvDateDepart"
         android:layout_marginBottom="2dp"
+        android:layout_toLeftOf="@+id/tvHeureDepart"
+        android:maxLines="2"
+        android:paddingRight="5dp"
         android:text="Chambéry"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@drawable/text_green_to_white_selector" />
@@ -79,7 +82,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvGareDepart"
+        android:layout_toLeftOf="@+id/tvHeureArrivee"
         android:layout_toRightOf="@+id/imgRemove"
+        android:paddingRight="5dp"
         android:text="Aix-les-bains"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@drawable/text_green_to_white_selector" />
@@ -112,8 +117,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvGareArrivee"
+        android:layout_toLeftOf="@+id/tvHeureArrivee"
         android:layout_toRightOf="@+id/imgRemove"
-        android:gravity="right"
+        android:gravity="left"
+        android:maxLines="2"
         android:text="12 passagers"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@drawable/text_grey_to_white" />

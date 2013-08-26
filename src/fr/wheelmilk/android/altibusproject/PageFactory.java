@@ -8,6 +8,7 @@ import fr.wheelmilk.android.altibusproject.models.GaresDataModel;
 import fr.wheelmilk.android.altibusproject.models.GaresDepart;
 import fr.wheelmilk.android.altibusproject.models.HorrairesAller;
 import fr.wheelmilk.android.altibusproject.models.HorrairesParams;
+import fr.wheelmilk.android.altibusproject.models.HorrairesRetour;
 import fr.wheelmilk.android.altibusproject.support.Config;
 import fr.wheelmilk.android.altibusproject.support.Helper;
 import android.content.Intent;
@@ -78,7 +79,7 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 			Helper.grilledRare(getActivity(), getResources().getString(R.string.errorExtras));
 			break;
 		case Config.PAS_D_HORRAIRES:
-			Helper.grilledWellDone(getActivity(), getResources().getString(R.string.erreurPasDHorraire));
+//			Helper.grilledWellDone(getActivity(), getResources().getString(R.string.erreurPasDHorraire));
 			break;
 		case Config.SERIALIZATION_FAILURE:
 			Helper.grilledWellDone(getActivity(), getResources().getString(R.string.erreurSerialisation));
@@ -198,14 +199,13 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 		Date afterTomorrow = cal.getTime();
 		
 		tvDateAller.setTag(tomorrow);
-//		tvDateRetour.setTag(afterTomorrow);
-		
 		tvGareAller.setTag( new GaresDepart("AIX LES BAINS", 45.6884f, 5.9096f) );
 		tvGareAller.setText("AIX LES BAINS");
 		tvGareArrivee.setTag( new GaresArrivee("CHAMBERY", "CHA851") );
 		tvGareArrivee.setText("CHAMBERY");
 		tvHeureAller.setTag(new HorrairesAller("10H02", "10H40", "CHA91001"));
-//		tvHeureRetour.setTag(new HorrairesRetour("10H02", "10H40", "CHA91001"));
+		tvHeureRetour.setTag(new HorrairesRetour("10H02", "10H40", "CHA91001"));
+		tvDateRetour.setTag(afterTomorrow);
 	}
 
 	protected void fadeInAnimation() {

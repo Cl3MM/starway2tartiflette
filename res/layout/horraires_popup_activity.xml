@@ -207,5 +207,15 @@
         android:divider="@drawable/linearlayout_border_bottom"
         android:dividerHeight="1sp" >
     </ListView>
+        <TextView 
+        android:id="@+id/tvEmptyList"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_width="fill_parent"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textColor="@color/table_content"
+        android:layout_marginTop="25dp"
+        android:layout_height="wrap_content"
+        android:text="@string/erreurPasDHorraire" />
 </LinearLayout>
 </LinearLayout>

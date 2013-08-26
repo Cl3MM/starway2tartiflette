@@ -18,7 +18,7 @@
         android:layout_marginTop="10dp"
         android:maxLines="1"
         android:scrollHorizontally="true"
-        android:text="Jean Claude Tibéri a un gros zizi"
+        android:text="Jean Claude Vandamme casse des briques"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/black"
         android:textSize="32sp"
@@ -32,7 +32,8 @@
         android:layout_below="@+id/tvNom"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:background="@color/table_content"
+        android:background="@color/greyBilletInvalide"
+        android:maxLines="1"
         android:padding="5dp"
         android:text="1 Billet -26 ans - 2 Billets..."
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -45,25 +46,25 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/tvTypeBillet"
-        android:layout_marginBottom="10dp"
         android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="10dp" >
+        android:layout_marginRight="5dp" >
 
         <ImageView
             android:id="@+id/iQrCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="-15dp"
             android:src="@drawable/abs__progress_medium_holo" />
 
         <TextView
             android:id="@+id/tvGareDepart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="-5dp"
             android:layout_toRightOf="@+id/iQrCode"
-            android:maxLines="2"
+            android:maxLines="3"
             android:text="CHAMBERY"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/black"
@@ -76,9 +77,15 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
+            android:layout_marginBottom="-6dp"
+            android:layout_marginLeft="0dp"
+            android:background="#99DDDDDD"
+            android:padding="2dp"
             android:text="Non validé"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -89,7 +96,7 @@
         android:layout_below="@+id/relativeLayout2"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:background="@color/table_content"
+        android:background="@color/greyBilletInvalide"
         android:padding="5dp" >
 
         <TextView
@@ -150,37 +157,42 @@
             android:layout_height="48dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
             android:layout_centerVertical="true"
             android:src="@drawable/ic_action_infos_dark" />
+
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/relativeLayout4"
+        android:id="@+id/rlBtnComposte"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:background="@color/fuchia"
+        android:background="@drawable/pink_button"
+        android:clickable="true"
+        android:focusable="true"
         android:paddingBottom="15dp"
         android:paddingTop="15dp" >
 
         <TextView
-            android:id="@+id/textView7"
+            android:id="@+id/tvToHide"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             android:text="@string/appuyezIci"
             android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@drawable/pink_button_text"
             android:textSize="16sp"
             android:textStyle="bold" />
 
         <RelativeLayout
-            android:id="@+id/linearLayout001"
+            android:id="@+id/rlToHide1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textView7"
-            android:layout_centerInParent="true" >
+            android:layout_below="@+id/tvToHide"
+            android:layout_centerInParent="true">
 
             <ImageView
                 android:id="@+id/imageView2"
@@ -198,17 +210,99 @@
                 android:layout_toRightOf="@+id/imageView2"
                 android:text="@string/validationDefinitive"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/white" />
+                android:textColor="@drawable/pink_button_text" />
         </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlBilletComposte"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="62dp" >
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/ic_action_valid_light" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/imageView3"
+                android:text="Titre validé"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tvValideLe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView1"
+                android:layout_toRightOf="@+id/imageView3"
+                android:text="Le 31/12/2015 22:15"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+                <RelativeLayout
+                    android:visibility="gone"
+                    android:id="@+id/rlBilletPerime"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true" >
+
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="5dp"
+                        android:gravity="center"
+                        android:text="@string/titreDejaValide"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/rougeInterdit" />
+
+                    <TextView
+                        android:id="@+id/tvValideLe2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textView1"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="5dp"
+                        android:text="Le 31/12/2015 22:15"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvValideLe2"
+                        android:gravity="center"
+                        android:text="@string/nonValable"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textSize="14sp" />
+
+                </RelativeLayout>
+
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/tvJmJv"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/relativeLayout4"
-        android:layout_alignLeft="@+id/relativeLayout4"
-        android:background="@color/table_content"
+        android:layout_above="@+id/rlBtnComposte"
+        android:layout_alignLeft="@+id/rlBtnComposte"
+        android:background="@color/greyBilletInvalide"
         android:gravity="center"
         android:padding="3dp"
         android:text="@string/jmjv"

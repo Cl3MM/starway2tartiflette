@@ -21,6 +21,7 @@ public class Config {
 	public static final int PASSAGERS_RETOUR_CODE 	= 700;
 	public static final int EDITION_PASSAGERS_RETOUR_CODE 	= 800;
 	public static final int PAIEMENT_RETOUR_CODE 	= 900;
+	public static final int COMPOSTAGE_BILLET_RETOUR_CODE 	= 900;
 
 	public static final String[] CONTENT = new String[] { "Réservation",
 		"Horraires", "Mes billets", "Historique"

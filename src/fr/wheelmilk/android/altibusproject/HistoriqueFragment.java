@@ -11,6 +11,9 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 import fr.wheelmilk.android.altibusproject.models.Billet;
+import fr.wheelmilk.android.altibusproject.models.BilletDB;
+import fr.wheelmilk.android.altibusproject.support.Config;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,7 +24,7 @@ public class HistoriqueFragment extends ListeBilletsFragment implements ActionMo
 	private Object mMode;
 	private String edit;
 	private String delete;
-	private Billet billetCourant;
+	private BilletDB billetCourant;
 	
 	static HistoriqueFragment init(int val) {
 		HistoriqueFragment page = new HistoriqueFragment();
@@ -37,7 +40,21 @@ public class HistoriqueFragment extends ListeBilletsFragment implements ActionMo
 		edit 	= getResources().getString(R.string.editer);
 		delete 	= getResources().getString(R.string.supprimer);
 	}
-	
+	@Override
+	protected void onItemClicked(View v, int position) {
+		Log.v(LOG_TAG, "item Clicked :" + position);
+		Log.v(LOG_TAG, "Nom :" + billets.get(position).getNom());
+		Log.v(LOG_TAG, "Prenom :" + billets.get(position).getPrenom());
+		Log.v(LOG_TAG, "Nb :" + billets.get(position).getNb());
+		Intent i = new Intent(this.getActivity(), BilletCompostagePopUp.class);
+		i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
+		Bundle b = new Bundle();
+
+		b.putParcelable("billetDB", billets.get(position));
+		i.putExtras(b);
+		startActivityForResult(i, Config.COMPOSTAGE_BILLET_RETOUR_CODE);
+		this.getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+	}
 	@Override
 	public void startLoadFromDatabase() {
 		try { // get our dao
@@ -46,26 +63,26 @@ public class HistoriqueFragment extends ListeBilletsFragment implements ActionMo
 			cal.setTime(new Date());
 //			cal.add(Calendar.DAY_OF_YEAR, 1);
 			// query for all accounts that have that password
-			billets = (ArrayList<Billet>) billetsDao.query(
+			billets = (ArrayList<BilletDB>) billetsDao.query(
 							billetsDao.queryBuilder().orderBy("da", true).where()
 			         .lt("da", cal.getTime())
 			         .prepare());
 		} catch (SQLException e) {
 			e.printStackTrace();
-			billets = new ArrayList<Billet>();
+			billets = new ArrayList<BilletDB>();
 		}
 	}
 
-	@Override
-	protected void onItemClicked(View v, int position) {
-		Log.v(LOG_TAG, "item Clicked :" + position);
-		Log.v(LOG_TAG, "Nom :" + billets.get(position).getNom());
-		Log.v(LOG_TAG, "Prenom :" + billets.get(position).getPrenom());
-		Log.v(LOG_TAG, "Nb :" + billets.get(position).getNb());
-		billetCourant = billets.get(position);
-		
-    	mMode = getSherlockActivity().startActionMode(this);
-	}
+//	@Override
+//	protected void onItemClicked(View v, int position) {
+//		Log.v(LOG_TAG, "item Clicked :" + position);
+//		Log.v(LOG_TAG, "Nom :" + billets.get(position).getNom());
+//		Log.v(LOG_TAG, "Prenom :" + billets.get(position).getPrenom());
+//		Log.v(LOG_TAG, "Nb :" + billets.get(position).getNb());
+//		billetCourant = billets.get(position);
+//		
+//    	mMode = getSherlockActivity().startActionMode(this);
+//	}
 
     @Override
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
