@@ -14,8 +14,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.TextView;
-
 import com.actionbarsherlock.app.SherlockFragment;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
@@ -24,7 +22,7 @@ import fr.wheelmilk.android.altibusproject.support.Config;
 import fr.wheelmilk.android.altibusproject.support.DatabaseHelper;
 import fr.wheelmilk.android.altibusproject.support.Helper;
 
-public abstract class ListeBilletsFragment extends SherlockFragment {
+public abstract class ListeBilletsFragment extends SherlockFragment { //implements OnItemClickListener {
 	int fragVal;
 //	FragmentPagerAdapter pager;
 
@@ -74,19 +72,35 @@ public abstract class ListeBilletsFragment extends SherlockFragment {
 //		TextView tvBilletsHeader = (TextView) layoutView.findViewById(R.id.tvBilletsHeader);
 		lvBillets = (ListView) layoutView.findViewById(R.id.lvBillets);
 		lvBillets.setEmptyView(layoutView.findViewById(R.id.tvEmptyList));
+//		lvBillets.setItemsCanFocus(false);
 		lvBillets.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3) {
+//				PassagerActionMode am = new PassagerActionMode( v.getResources(), passagers.get(position) );
+//				mMode = startActionMode(am);
 				onItemClicked(v, position);
+				Log.v(LOG_TAG, "item Clicked :" + position);
 			}
 		});
+//				new OnItemClickListener() {
+//			@Override
+//			public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3) {
+//				Log.v(LOG_TAG, "item Clicked :" + position);
+//				onItemClicked(v, position);
+//			}
+//		});
 		
 		aaBillets = new BilletsArrayAdapter(getActivity(), R.layout.passagers_list_item, billets);
 		lvBillets.setAdapter(aaBillets);
 		addItemToLayoutOnCreate();
 		return layoutView;
 	}
-
+//	@Override
+//	public void onItemClick(AdapterView<?> av, View v, int position, long j) {
+//		Log.v(LOG_TAG, "item Clicked :" + position);
+//		onItemClicked(v, position);
+//	}
+	
 	protected void addItemToLayoutOnCreate() {
 		new UnsupportedOperationException("Please Override this method in child classes");
 	}
@@ -116,7 +130,7 @@ public abstract class ListeBilletsFragment extends SherlockFragment {
 		default:
 			switch(requestCode) {
 			case Config.COMPOSTAGE_BILLET_RETOUR_CODE:
-				startLoadFromDatabase();
+				updateView();
 			}
 		}
 	}
@@ -127,23 +141,17 @@ public abstract class ListeBilletsFragment extends SherlockFragment {
 		return databaseHelper;
 	}
 
-	public void updateView(boolean isNewlyCreated) {
-		TextView tv = (TextView) layoutView.findViewById(R.id.tvplop);
-		if (isNewlyCreated) tv.setText("tv Updaté");
-		if (billets != null) {
-			Log.v(getClass().toString(), "Billet :" + billets.size());
-		} else {
-			Log.v(getClass().toString(), "Pas de Billet");
-		}
+	public void updateView() {
 		startLoadFromDatabase();
-		Log.v(getClass().toString(), "Billet :" + billets.size());
+		aaBillets.clear();
+		aaBillets.addAll(billets);
 		aaBillets.notifyDataSetChanged();
 		lvBillets.invalidate();
 	}
 	@Override
 	public void onResume() {
 		super.onResume();
-		updateView(false);
+		updateView();
 	}
 	@Override
 	public void onPause() {

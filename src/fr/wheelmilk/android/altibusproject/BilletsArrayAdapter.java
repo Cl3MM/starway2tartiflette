@@ -2,7 +2,6 @@ package fr.wheelmilk.android.altibusproject;
 
 import java.util.ArrayList;
 
-import fr.wheelmilk.android.altibusproject.models.Billet;
 import fr.wheelmilk.android.altibusproject.models.BilletDB;
 import fr.wheelmilk.android.altibusproject.support.Helper;
 
@@ -25,7 +24,15 @@ public class BilletsArrayAdapter extends ArrayAdapter<BilletDB> {
             items = _items;
             context = _context;
     }
-    
+//    @Override
+//    public boolean areAllItemsEnabled() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isEnabled(int position) {
+//        return false;
+//    }
 	private class Holder {
 	    TextView tvGareDepart;
 	    TextView tvGareArrivee;	    

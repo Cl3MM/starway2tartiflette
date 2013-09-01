@@ -1,7 +1,6 @@
 package fr.wheelmilk.android.altibusproject.models;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TreeMap;
@@ -9,10 +8,6 @@ import java.util.TreeMap;
 import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
-
-import com.j256.ormlite.field.DataType;
-import com.j256.ormlite.field.DatabaseField;
 import com.loopj.android.http.RequestParams;
 
 public class Billet implements Parcelable {

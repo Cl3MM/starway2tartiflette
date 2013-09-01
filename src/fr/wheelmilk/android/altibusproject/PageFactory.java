@@ -118,6 +118,7 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 				break;
 			}
 		}
+		int i = 2;		
 	}
 
 	private void setHorrairesTvAfterPopUp(Intent data, TextView tv) {
@@ -153,7 +154,6 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-		onClick = new TimetableMainOnClickListener();
 
 		layoutView = inflateDialog(inflater, container);
 

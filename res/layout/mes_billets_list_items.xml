@@ -6,7 +6,6 @@
     android:layout_marginBottom="8dp"
     android:layout_marginTop="8dp"
     android:background="@drawable/passager_list_item_normal"
-    android:duplicateParentState="true"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:paddingBottom="8dp"
@@ -19,8 +18,8 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:background="@drawable/mes_billets_icon"
-        android:focusable="false"
-        android:focusableInTouchMode="false" />
+         android:focusable="false"
+         android:focusableInTouchMode="false"  />
 
     <LinearLayout
         android:id="@+id/llRemove"
@@ -139,3 +138,49 @@
         android:textStyle="italic" />
 
 </RelativeLayout>
+
+<!-- <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" -->
+<!--         android:layout_width="match_parent" -->
+<!--         android:orientation="vertical" -->
+<!--     android:layout_height="wrap_content"> -->
+    
+<!--         <TextView -->
+<!--         android:id="@+id/tvHeureArrivee" -->
+<!--         android:layout_width="wrap_content" -->
+<!--         android:layout_height="wrap_content"/> -->
+<!--         <TextView -->
+<!--         android:id="@+id/tvDateDepart" -->
+<!--         android:layout_width="wrap_content" -->
+<!--         android:layout_height="wrap_content"/> -->
+        
+<!-- <TextView -->
+<!--         android:id="@+id/tvGareArrivee" -->
+<!--         android:layout_width="wrap_content" -->
+<!--         android:layout_height="wrap_content"/> -->
+                
+<!-- <TextView -->
+<!--         android:id="@+id/tvGareDepart" -->
+<!--         android:layout_width="wrap_content" -->
+<!--         android:layout_height="wrap_content"/> -->
+                        
+<!-- <TextView -->
+<!--         android:id="@+id/tvMontant" -->
+<!--         android:layout_width="wrap_content" -->
+<!--         android:layout_height="wrap_content"/> -->
+                                
+<!-- <TextView -->
+<!--         android:id="@+id/tvHeureDepart" -->
+<!--         android:layout_width="wrap_content" -->
+<!--         android:layout_height="wrap_content"/> -->
+                                        
+<!-- <TextView -->
+<!--         android:id="@+id/tvNbPassagers" -->
+<!--         android:layout_width="wrap_content" -->
+<!--         android:layout_height="wrap_content"/> -->
+
+<!-- <TextView -->
+<!--         android:id="@+id/tvSummary" -->
+<!--         android:layout_width="wrap_content" -->
+<!--         android:layout_height="wrap_content"/> -->
+
+<!-- </LinearLayout> -->

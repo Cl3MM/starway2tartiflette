@@ -2,43 +2,34 @@ package fr.wheelmilk.android.altibusproject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
-import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
-
-import org.simpleframework.xml.Serializer;
-import org.simpleframework.xml.core.Persister;
-
-import com.actionbarsherlock.app.SherlockFragment;
+import java.util.Date;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+//import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 
 import com.viewpagerindicator.PageIndicator;
 
-import fr.wheelmilk.android.altibusproject.models.AltibusDataPays;
+import fr.wheelmilk.android.altibusproject.models.GaresArrivee;
+import fr.wheelmilk.android.altibusproject.models.GaresDepart;
+import fr.wheelmilk.android.altibusproject.models.HorrairesAller;
+import fr.wheelmilk.android.altibusproject.models.HorrairesRetour;
 import fr.wheelmilk.android.altibusproject.support.IconsTabPageIndicator;
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.AssetManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -49,7 +40,7 @@ public class AltibusMainActivity extends SherlockFragmentActivity {
 	AltibusFragmentAdapter mAdapter;
 	ViewPager mPager;
 	PageIndicator mIndicator;
-	private SlidingMenu slidingMenu ;
+//	private SlidingMenu slidingMenu ;
 	private static final int RESULT_SETTINGS = 1;
 	public ArrayList<String> countryPreferencesList;
 
@@ -72,7 +63,8 @@ public class AltibusMainActivity extends SherlockFragmentActivity {
 		setContentView(R.layout.simple_tabs);
 	    LocalBroadcastManager.getInstance(this).registerReceiver(
 	            mMessageReceiver, new IntentFilter("billetCreated"));
-
+	    LocalBroadcastManager.getInstance(this).registerReceiver(
+	            mMessageReceiver, new IntentFilter("nouvelAchat"));
 //		if (isOnline(this)) {
 //			Log.v("Altibus", "Internet connection found! Launching super asynchronous task...");
 //			Toast.makeText(this, "Internet connection found! Launching super asynchronous task...",
@@ -114,11 +106,34 @@ public class AltibusMainActivity extends SherlockFragmentActivity {
 		public void onReceive(Context context, Intent intent) {
 			String action = intent.getAction();
 			Log.v(getClass().toString(), "Received intent: " + action);
-			
-			int position = 2;
-			MesBilletsFragment f = (MesBilletsFragment) mAdapter.getRegisteredFragment(position);
-			f.updateView(true);
-			mPager.setCurrentItem(position, true);
+			if( action.equals("billetCreated") ) { 
+				// Un nouveau billet vient d'être crée, on scroll 
+				// jusqu'au fragment Mes billets et on met à jour la liste des billets.
+				int position = 2; // Fragment mes billets en position 2 
+				MesBilletsFragment f = (MesBilletsFragment) AltibusFragmentAdapter.getRegisteredFragment(position);
+				f.updateView();
+				mPager.setCurrentItem(position, true);
+			} else if (action.equals("nouvelAchat")) {
+				Bundle extras = intent.getExtras();
+				
+				Date da = new Date(extras.getLong("dateA"));
+				GaresDepart gd = extras.getParcelable("gareAl");
+				GaresArrivee ga = extras.getParcelable("gareAr");
+				HorrairesAller ha = extras.getParcelable("horraireA");
+				Date dr = null;
+				if (extras.containsKey("dateR")) { 
+					dr = new Date(extras.getLong("dateR"));
+				}
+				 HorrairesRetour hr = null;
+				if (extras.containsKey("horraireR")) {
+					hr = extras.getParcelable("horraireR");
+				}
+				
+				int position = 0; // Fragment mes billets en position 2 
+				PageAchat f = (PageAchat) AltibusFragmentAdapter.getRegisteredFragment(position);
+				f.createNewSearchFromPageHorraires(gd, ga, da, ha, dr, hr);
+				mPager.setCurrentItem(position, true);
+			}
 		}
 	};
 	private String getFragmentTag(int pos){
@@ -172,39 +187,7 @@ public class AltibusMainActivity extends SherlockFragmentActivity {
 		return null;
 	}
 
-	private void createOrUpdateCountryList() {
-		AssetManager assetManager = getAssets();
-		InputStream countryFile;
-		try {
-			countryFile = assetManager.open("countries.xml");
-		} catch (IOException e) {
-			e.printStackTrace();
-			countryFile = null;
-		}
-		
-		if (countryFile != null) {
-			Serializer serializer = new Persister();
-			Reader reader = null;
 
-			java.util.Scanner s = new java.util.Scanner(countryFile).useDelimiter("\\A");
-		    String file = (s.hasNext() ? s.next() : "");
-			StringReader strReader = new StringReader(file);
-
-			Log.v(this.getClass().toString(), file.replace("\n", " ").replace("\t", " ").replace("  ", " "));
-
-			reader = new InputStreamReader(countryFile);
-
-			AltibusDataPays countries = null;
-			
-			if (strReader != null) {
-				try {
-					 countries = serializer.read(AltibusDataPays.class, strReader);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -221,7 +204,7 @@ public class AltibusMainActivity extends SherlockFragmentActivity {
         if (item.getItemId() == R.id.prefs) {
         	startActivity(new Intent(this, UserPreferences.class));
         } else if (item.getItemId() == android.R.id.home) { // Sliding Menu
-            this.slidingMenu.toggle();
+//            this.slidingMenu.toggle();
         } else 
             return super.onOptionsItemSelected(item);
         return true;

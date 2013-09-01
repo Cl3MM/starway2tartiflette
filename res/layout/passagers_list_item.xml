@@ -68,6 +68,7 @@
         android:layout_below="@+id/tvDateDepart"
         android:layout_marginTop="4dp"
         android:layout_toLeftOf="@+id/llRemove"
+        android:duplicateParentState="true"
         android:gravity="right"
         android:text="@string/modifierPassagerPrincipal"
         android:textAppearance="?android:attr/textAppearanceSmall"

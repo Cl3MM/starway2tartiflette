@@ -1,9 +1,12 @@
 package fr.wheelmilk.android.altibusproject;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.loopj.android.http.RequestParams;
+
+import fr.wheelmilk.android.altibusproject.support.Config;
 
 public class GareArriveePopUp extends ActivityPopUpFactory {
 	private String gareDepart;
@@ -29,5 +32,8 @@ public class GareArriveePopUp extends ActivityPopUpFactory {
 		LinearLayout ll2 = (LinearLayout) findViewById(R.id.llBgToChange2);
 		ll1.setBackgroundColor(popupColor);
 		ll2.setBackgroundColor(popupColor);
+		if (popupColor == Color.parseColor(Config.POPUP_ORANGE_COLOR)) {
+			listeDesGares.setSelector(getResources().getDrawable(R.drawable.orange_horraire_list_selector));
+		}
 	}
 }

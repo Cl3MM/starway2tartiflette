@@ -134,7 +134,7 @@
     
     <string name="ok">Valider</string>
     <string name="tabAchatsBillet">Achats</string>
-    <string name="tabHorraires">Horraires</string>
+    <string name="tabhorraires">Horaires</string>
     <string name="tabMesBillets">Mes billets</string>
     <string name="tabHistorique">Historique</string>
     <string name="garesAllerTitle">Gares départ</string>
@@ -152,10 +152,10 @@
     <string name="horraireArrivee">Arrivée :</string>
     <string name="horraireAller">Heure aller</string>
     <string name="preferences">Préférences</string>
-    <string name="horrairesAller">Horraires aller</string>
+    <string name="horrairesAller">Horaires aller</string>
     <string name="horraireRetour">Heure retour</string>
-    <string name="horrairesRetour">Horraires retour</string>
-    <string name="rechercherHorraire">Choisir une heure</string>
+    <string name="horrairesRetour">Horaires retour</string>
+    <string name="rechercherhoraire">Choisir une heure</string>
 
     <string-array name="dummyList">
         <item>this</item>
@@ -214,6 +214,7 @@
     <string name="pref_user_adresse">Adresse</string>
     <string name="pref_user_set_adresse">Saisissez votre adresse</string>
     <string name="pref_user_adresse2">Adresse 2</string>
+    <string name="pref_user_adresse2_summary">Complément d\'adresse (optionnel)</string>
     <string name="pref_user_civilite">Civilité</string>
     <string name="pref_user_countries">Pays</string>
     <string name="pref_user_countries_summary">Choisissez votre pays</string>

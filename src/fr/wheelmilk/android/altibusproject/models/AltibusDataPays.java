@@ -25,7 +25,6 @@ public class AltibusDataPays {
 	    }
 		return liste;
 	}
-	
 	public String paysToString() {
 		StringBuilder s = new StringBuilder();
 		for(Pays item : listePays) {

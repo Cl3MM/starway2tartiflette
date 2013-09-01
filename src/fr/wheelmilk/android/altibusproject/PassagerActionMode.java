@@ -1,8 +1,6 @@
 package fr.wheelmilk.android.altibusproject;
 
 import android.content.res.Resources;
-import android.util.Log;
-
 import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;

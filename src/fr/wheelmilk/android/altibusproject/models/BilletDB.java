@@ -105,13 +105,13 @@ public class BilletDB implements Parcelable {
 	}
 	
 	public int heureArriveeOfTheDay(String horraire) {
-		if(horraire.contains(":")) horraire.replace(":", "H");
+		if(horraire.contains(":")) horraire = horraire.replace(":", "H");
 		int index = horraire.indexOf("H");
 		String heure = horraire.substring(0, index);
 		return Integer.valueOf(heure);
 	}
 	public int minuteArriveeOfTheDay(String horraire) {
-		if(horraire.contains(":")) horraire.replace(":", "H");
+		if(horraire.contains(":")) horraire = horraire.replace(":", "H");
 		int index = horraire.indexOf("H");
 		String min = horraire.substring(index+1, horraire.length());
 		return Integer.valueOf(min);

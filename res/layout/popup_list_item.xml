@@ -16,7 +16,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/table_content" >
+        android:textColor="@drawable/text_grey_to_white" >
 
     </TextView>
 

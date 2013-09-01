@@ -41,10 +41,6 @@ public class PassagersPopUp extends SherlockActivity implements OnClickListener,
 	
 	public void initialize( Bundle extras ) {
 		if (extras == null) { // Pas d'extras : nouveau passagers !
-			// TODO :
-			// Faire une verif pour éviter les paramètres par défaut.
-			// Ouvrir les preferencesActivity pour permettre à l'utilisateur de remplir ses infos
-	
 			Passager passagerPrincipal = new Passager(preferences.nom, preferences.prenom, preferences.age);
 			passagerPrincipal.createPassagerPrincipal(preferences.adresse, preferences.adresse2, preferences.codePostal, 
 					preferences.ville, preferences.pays, preferences.telephone, preferences.email);

@@ -163,6 +163,8 @@ public class HorrairesPopUpActivity extends ActivityPopUpFactory {
 			ll1.setBackgroundColor(popupColor);
 			LinearLayout ll2 = (LinearLayout) findViewById(R.id.llBgToChange2);
 			ll2.setBackgroundColor(popupColor);
+		} else {
+			listeDesGares.setSelector(getResources().getDrawable(R.drawable.orange_horraire_list_selector));
 		}
 	}
 }

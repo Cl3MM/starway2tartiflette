@@ -1,5 +1,8 @@
 package fr.wheelmilk.android.altibusproject;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import com.loopj.android.http.RequestParams;
 
 import android.content.DialogInterface;
@@ -96,8 +99,17 @@ public class PageAchat extends PageFactory implements OnWebserviceListenner, Dia
 			super.onClick(v);
 		}
 	}
+//	1377546388586
+//update billetdb
+//set da = 1377546388586
+//where id IN (1,2,3);
 
 	private void startPassagerActivity() {
+		Calendar c = Calendar.getInstance();
+		c.setTime(new Date());
+		c.add(Calendar.HOUR_OF_DAY, -1);
+		Log.v("Spéciale CLEM", "MEGA DATE LONG " + c.getTime().getTime());
+		Log.v("Spéciale CLEM", "MEGA DATE " + c.getTime());
 		Intent i = new Intent(getActivity(), PassagersPopUp.class);
 		i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		if (tvPassagers.getTag() != null) {
@@ -221,5 +233,36 @@ public class PageAchat extends PageFactory implements OnWebserviceListenner, Dia
 		tvDateRetour.setText(getString(R.string.rechercheDate));
 		reservation = null;
 		billet = new Billet();
+	}
+	
+	public void createNewSearchFromPageHorraires(GaresDepart _gd, GaresArrivee _ga, Date _da, HorrairesAller _ha, Date _dr, HorrairesRetour _hr) {
+		tvGareAller.setTag(_gd);
+		tvGareAller.setText(_gd.gareName());
+		tvGareArrivee.setTag(_ga);
+		tvGareArrivee.setText(_ga.gareName());
+		tvDateAller.setTag(_da);
+		tvDateAller.setText(Helper.prettifyDate(_da, null));
+		tvDateRetour.setTag(_dr);
+		tvHeureAller.setTag(_ha);
+		StringBuilder s = new StringBuilder(_ha.heureAller());
+		s.append(" - ").append(_ha.heureArrivee());
+		
+		tvHeureAller.setText(s);
+		
+		if (_dr != null) {
+			tvDateRetour.setText(Helper.prettifyDate(_dr, null));
+			llRetour.setVisibility(View.VISIBLE);
+		} else {
+			tvDateRetour.setText(getString(R.string.rechercheDate));			
+		}
+		tvHeureRetour.setTag(_hr);
+		if (_hr != null) {
+			s = new StringBuilder(_hr.heureAller());
+			s.append(" - ").append(_hr.heureArrivee());
+			tvHeureRetour.setText(s.toString());
+		} else {
+			tvHeureRetour.setText(getString(R.string.rechercherHorraire));
+		}
+		reservation = null;
 	}
 }

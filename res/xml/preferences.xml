@@ -53,8 +53,7 @@
                 android:key="prefUserVille"/>
         <ListPreference
             android:key="prefUserCountry"
-            android:entries="@array/syncFrequency"
-            android:entryValues="@array/syncFrequencyValues"
+            android:defaultValue="France"
             android:summary="@string/pref_user_countries_summary"
             android:title="@string/pref_user_countries" />
                 

@@ -2,7 +2,6 @@ package fr.wheelmilk.android.altibusproject;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.EnumMap;
@@ -15,9 +14,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -33,8 +30,6 @@ import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.UpdateBuilder;
 
-import fr.wheelmilk.android.altibusproject.layout.AutoResizeTextView;
-import fr.wheelmilk.android.altibusproject.layout.SingleLineTextView;
 import fr.wheelmilk.android.altibusproject.models.BilletDB;
 import fr.wheelmilk.android.altibusproject.support.Config;
 import fr.wheelmilk.android.altibusproject.support.DatabaseHelper;
@@ -167,11 +162,14 @@ public class BilletCompostagePopUp extends SherlockActivity implements OnClickLi
 		findViewById(R.id.rlToHide1).setVisibility(View.GONE);
 		findViewById(R.id.tvToHide).setVisibility(View.GONE);
 		findViewById(R.id.tvJmJv).setVisibility(View.GONE);
-
 		rlBtnComposte.setBackgroundColor(getResources().getColor(R.color.greenBillet));
 		findViewById(R.id.rlBilletPerime).setVisibility(View.GONE);
-		findViewById(R.id.tvNonValide).setVisibility(View.GONE);
-		findViewById(R.id.rlBilletComposte).setVisibility(View.VISIBLE);
+		TextView tvNonValide = (TextView) findViewById(R.id.tvNonValide);
+		tvNonValide.setText("");
+		tvNonValide.setBackgroundColor(0X00000000);
+		tvNonValide.setVisibility(View.GONE);
+
+        findViewById(R.id.rlBilletComposte).setVisibility(View.VISIBLE);
 		TextView tvValideLe = (TextView) findViewById(R.id.tvValideLe);
 		tvValideLe.setText(billet.getDateValidation());
 	}

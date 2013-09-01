@@ -27,7 +27,6 @@ public class TimetableFragment extends AbstractGenericFragment { //, TtAllerDlg.
 	}
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-	    ;
 		getActivity();
 		if (resultCode == Activity.RESULT_OK && requestCode == GARE_ALLER_CODE) {
 	      if (data.hasExtra("result")) {

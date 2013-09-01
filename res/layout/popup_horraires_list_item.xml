@@ -14,10 +14,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
             android:paddingRight="5dp"
             android:text="@string/horraireDepart"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/table_content" />
+            android:textColor="@drawable/text_grey_to_white" />
 
         <TextView
             android:id="@+id/horraireAllerTv"
@@ -42,7 +43,7 @@
             android:paddingRight="5dp"
             android:text=" - "
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/table_content" />
+            android:textColor="@drawable/text_grey_to_white" />
 
         <TextView
             android:id="@+id/tvHorraireArrivee"
@@ -53,7 +54,7 @@
             android:paddingRight="10dp"
             android:text="@string/horraireArrivee"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/table_content" />
+            android:textColor="@drawable/text_grey_to_white" />
 
         <TextView
             android:id="@+id/horraireArriveeTv"

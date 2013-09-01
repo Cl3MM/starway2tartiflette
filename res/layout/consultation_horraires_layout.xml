@@ -187,7 +187,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:gravity="right"
-                    android:text="@string/rechercherHorraire"
+                    android:text="@string/rechercherhoraire"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/orange_dark" />
             </LinearLayout>
@@ -254,7 +254,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/tvBtnAcheterAPartirDesHorraires"
                 android:layout_width="fill_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"

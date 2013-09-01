@@ -1,7 +1,6 @@
 package fr.wheelmilk.android.altibusproject;
 
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -9,17 +8,22 @@ import java.util.Date;
 import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.j256.ormlite.stmt.DeleteBuilder;
+import com.j256.ormlite.stmt.UpdateBuilder;
 
-import fr.wheelmilk.android.altibusproject.models.Billet;
 import fr.wheelmilk.android.altibusproject.models.BilletDB;
 import fr.wheelmilk.android.altibusproject.support.Config;
+import fr.wheelmilk.android.altibusproject.support.Helper;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 
-public class HistoriqueFragment extends ListeBilletsFragment implements ActionMode.Callback {
+public class HistoriqueFragment extends ListeBilletsFragment implements ActionMode.Callback, OnClickListener {
 	
 	private Object mMode;
 	private String edit;
@@ -46,14 +50,9 @@ public class HistoriqueFragment extends ListeBilletsFragment implements ActionMo
 		Log.v(LOG_TAG, "Nom :" + billets.get(position).getNom());
 		Log.v(LOG_TAG, "Prenom :" + billets.get(position).getPrenom());
 		Log.v(LOG_TAG, "Nb :" + billets.get(position).getNb());
-		Intent i = new Intent(this.getActivity(), BilletCompostagePopUp.class);
-		i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
-		Bundle b = new Bundle();
-
-		b.putParcelable("billetDB", billets.get(position));
-		i.putExtras(b);
-		startActivityForResult(i, Config.COMPOSTAGE_BILLET_RETOUR_CODE);
-		this.getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+		
+		billetCourant = billets.get(position);
+    	mMode = getSherlockActivity().startActionMode(this);
 	}
 	@Override
 	public void startLoadFromDatabase() {
@@ -102,17 +101,53 @@ public class HistoriqueFragment extends ListeBilletsFragment implements ActionMo
     }
 	@Override
 	public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	@Override
 	public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-		// TODO Auto-generated method stub
-		return false;
+    	if ( billetCourant != null ) {
+			Log.v(this.getClass().toString(), item.getTitle().toString());
+			Log.v(this.getClass().toString(), "Passager: " + billetCourant.toString());
+			if ( edit.equals( item.getTitle().toString() ) ) { // On edite lance l'activité d'édition de passager
+				Intent i = new Intent(this.getActivity(), BilletCompostagePopUp.class);
+				i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
+				Bundle b = new Bundle();
+				
+				b.putParcelable("billetDB", billetCourant);
+				i.putExtras(b);
+				startActivityForResult(i, Config.COMPOSTAGE_BILLET_RETOUR_CODE);
+				getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+				billetCourant = null;
+			} if ( delete.equals( item.getTitle().toString() ) ) {
+				SimpleAlertDialog dlg = new SimpleAlertDialog(getActivity(), "Etes vous sur de vouloir supprimer ce billet ?\n\nLa suppression sera irréverssible",
+						"Supprimer", "Annuler", this);
+				dlg.setTitle("Attention");
+				dlg.show();
+			}
+    	}
+        mode.finish();
+        return true;
+	}
+	private void deleteBillet(BilletDB _billet) {
+		try {
+			DeleteBuilder<BilletDB, Integer> deleteBuilder = billetsDao.deleteBuilder();
+			deleteBuilder.where().eq("id", _billet.getId());
+			deleteBuilder.delete();
+			updateView();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			Helper.grilledRare(getActivity(), "Impossible de supprimer le billet : problème avec la base de données");
+		}
 	}
 	@Override
 	public void onDestroyActionMode(ActionMode mode) {
-		// TODO Auto-generated method stub
 		
+	}
+	@Override
+	public void onClick(DialogInterface dlg, int which) {
+		if (which == DialogInterface.BUTTON_POSITIVE) {
+			if (billetCourant != null) deleteBillet(billetCourant);
+			billetCourant = null;
+		}		
 	}
 }

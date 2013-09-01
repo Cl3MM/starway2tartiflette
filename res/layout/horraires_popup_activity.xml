@@ -201,11 +201,14 @@
 
     <ListView
         android:id="@+id/listDesGares"
+        android:cacheColorHint="@color/table_background"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@drawable/linearlayout_border_bottom"
         android:divider="@drawable/linearlayout_border_bottom"
-        android:dividerHeight="1sp" >
+        android:dividerHeight="1sp" 
+        android:drawSelectorOnTop="false"
+        android:listSelector="@drawable/passager_list_selector" >
     </ListView>
         <TextView 
         android:id="@+id/tvEmptyList"

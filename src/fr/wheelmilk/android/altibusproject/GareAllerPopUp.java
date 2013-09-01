@@ -2,6 +2,9 @@ package fr.wheelmilk.android.altibusproject;
 
 import com.loopj.android.http.RequestParams;
 
+import fr.wheelmilk.android.altibusproject.support.Config;
+
+import android.graphics.Color;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -22,5 +25,8 @@ public class GareAllerPopUp extends ActivityPopUpFactory {
 		LinearLayout ll1 = (LinearLayout) findViewById(R.id.llBgToChange2);
 		ll1.setBackgroundColor(popupColor);
 
+		if (popupColor == Color.parseColor(Config.POPUP_ORANGE_COLOR)) {
+			listeDesGares.setSelector(getResources().getDrawable(R.drawable.orange_horraire_list_selector));
+		}
 	}
 }

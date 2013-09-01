@@ -1,15 +1,11 @@
 package fr.wheelmilk.android.altibusproject;
 
 import java.sql.SQLException;
-import java.util.List;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,11 +20,9 @@ import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 import com.loopj.android.http.RequestParams;
 
-import fr.wheelmilk.android.altibusproject.models.AltibusDataReservation;
 import fr.wheelmilk.android.altibusproject.models.Billet;
 import fr.wheelmilk.android.altibusproject.models.BilletDB;
 import fr.wheelmilk.android.altibusproject.models.ResultatPaiement;
-import fr.wheelmilk.android.altibusproject.models.Reservation;
 import fr.wheelmilk.android.altibusproject.support.Config;
 import fr.wheelmilk.android.altibusproject.support.DatabaseHelper;
 import fr.wheelmilk.android.altibusproject.support.Helper;
