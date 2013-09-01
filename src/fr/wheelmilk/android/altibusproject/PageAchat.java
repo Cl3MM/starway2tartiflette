@@ -261,7 +261,7 @@ public class PageAchat extends PageFactory implements OnWebserviceListenner, Dia
 			s.append(" - ").append(_hr.heureArrivee());
 			tvHeureRetour.setText(s.toString());
 		} else {
-			tvHeureRetour.setText(getString(R.string.rechercherHorraire));
+			tvHeureRetour.setText(getString(R.string.rechercherhoraire));
 		}
 		reservation = null;
 	}

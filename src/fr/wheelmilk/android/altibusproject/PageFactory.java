@@ -61,8 +61,8 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 		}
 	}
 	protected void resetTextViews() {
-		tvHeureAller.setText(getResources().getString(R.string.rechercherHorraire));
-		tvHeureRetour.setText(getResources().getString(R.string.rechercherHorraire));
+		tvHeureAller.setText(getResources().getString(R.string.rechercherhoraire));
+		tvHeureRetour.setText(getResources().getString(R.string.rechercherhoraire));
 		tvHeureAller.setTag(null);
 		tvHeureRetour.setTag(null);
 	}
@@ -97,7 +97,7 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 				if ( date != null ) {
 					tvDateAller.setText( Helper.prettifyDate(date, null) );
 					tvDateAller.setTag(date);
-					tvHeureAller.setText(getResources().getString(R.string.rechercherHorraire));
+					tvHeureAller.setText(getResources().getString(R.string.rechercherhoraire));
 					tvHeureAller.setTag(null);
 				}
 				break;
@@ -109,7 +109,7 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 				if ( date != null ) {
 					tvDateRetour.setText( Helper.prettifyDate(date, null) );
 					tvDateRetour.setTag(date);
-					tvHeureRetour.setText(getResources().getString(R.string.rechercherHorraire));
+					tvHeureRetour.setText(getResources().getString(R.string.rechercherhoraire));
 					tvHeureRetour.setTag(null);					
 				}
 				break;
@@ -262,9 +262,9 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 //			fadeOutAnimation(); 
 			llRetour.setVisibility(View.GONE);
 			tvHeureRetour.setTag(null);
-			tvHeureRetour.setText(getString(R.string.rechercherHorraire));
+			tvHeureRetour.setText(getString(R.string.rechercherhoraire));
 			tvDateRetour.setTag(null);
-			tvDateRetour.setText(getString(R.string.rechercherHorraire));
+			tvDateRetour.setText(getString(R.string.rechercherhoraire));
 			updateMontant();
 //			llRetour.startAnimation(new LinearLayoutVerticalScaleAnimation(1.0f, 1.0f, 1.0f, 0.0f, 500, llRetour, true));
 		} else {

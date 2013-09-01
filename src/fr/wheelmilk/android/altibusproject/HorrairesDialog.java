@@ -20,7 +20,7 @@ public class HorrairesDialog extends GaresDialog implements View.OnClickListener
 	HorrairesParams params;
 	
 	public HorrairesDialog(Activity activity, TextView tv, HorrairesParams params) {
-		super(activity, tv, activity.getResources().getString(R.string.tabHorraires));
+		super(activity, tv, activity.getResources().getString(R.string.tabhorraires));
 		this.params = params;
 	}
 	// http://www.altibus.com/sw/altibus/data.aspx?tip=garesarrivee7&gd=

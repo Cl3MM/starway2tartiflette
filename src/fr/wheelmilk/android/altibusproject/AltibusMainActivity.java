@@ -12,6 +12,7 @@ import java.util.Date;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 //import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 
@@ -22,6 +23,7 @@ import fr.wheelmilk.android.altibusproject.models.GaresDepart;
 import fr.wheelmilk.android.altibusproject.models.HorrairesAller;
 import fr.wheelmilk.android.altibusproject.models.HorrairesRetour;
 import fr.wheelmilk.android.altibusproject.support.IconsTabPageIndicator;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -91,7 +93,7 @@ public class AltibusMainActivity extends SherlockFragmentActivity {
 //        slidingMenu.setFadeDegree(0.35f);
 //        slidingMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
 //        slidingMenu.setMenu(R.layout.slidingmenu);
-//        
+        
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        createOrUpdateCountryList();
 		
@@ -215,7 +217,7 @@ public class AltibusMainActivity extends SherlockFragmentActivity {
 //        if ( slidingMenu.isMenuShowing()) {
 //            slidingMenu.toggle();
 //        }
-//        else {
+        else {
             super.onBackPressed();
 //        }
     }
