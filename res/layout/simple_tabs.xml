@@ -4,11 +4,11 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 <!-- 	<com.viewpagerindicator.TabPageIndicator -->
-	<fr.wheelmilk.android.altibusproject.support.IconsTabPageIndicator
-	    android:id="@+id/indicator"
-	    android:layout_height="58dp"
-	    android:layout_width="wrap_content"
-	    />
+<!-- 	<fr.wheelmilk.android.altibusproject.support.IconsTabPageIndicator -->
+<!-- 	    android:id="@+id/indicator" -->
+<!-- 	    android:layout_height="58dp" -->
+<!-- 	    android:layout_width="wrap_content" -->
+<!-- 	    /> -->
 	
 	<android.support.v4.view.ViewPager
 	    android:id="@+id/pager"

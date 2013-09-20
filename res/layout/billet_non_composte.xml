@@ -6,163 +6,6 @@
     android:background="@color/table_background"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/tvNom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="10dp"
-        android:maxLines="1"
-        android:scrollHorizontally="true"
-        android:text="Jean Claude Vandamme casse des briques"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/black"
-        android:textSize="32sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/tvTypeBillet"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/tvNom"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:background="@color/greyBilletInvalide"
-        android:maxLines="1"
-        android:padding="5dp"
-        android:text="1 Billet -26 ans - 2 Billets..."
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/white"
-        android:textStyle="bold" />
-
-    <RelativeLayout
-        android:id="@+id/relativeLayout2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/tvTypeBillet"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp" >
-
-        <ImageView
-            android:id="@+id/iQrCode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="-15dp"
-            android:src="@drawable/abs__progress_medium_holo" />
-
-        <TextView
-            android:id="@+id/tvGareDepart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="-5dp"
-            android:layout_toRightOf="@+id/iQrCode"
-            android:maxLines="3"
-            android:text="CHAMBERY"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/black"
-            android:textSize="28sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvNonValide"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerInParent="true"
-            android:layout_marginBottom="-6dp"
-            android:layout_marginLeft="0dp"
-            android:background="#99DDDDDD"
-            android:padding="2dp"
-            android:text="Non validé"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/black"
-            android:textStyle="bold" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/relativeLayout3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/relativeLayout2"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:background="@color/greyBilletInvalide"
-        android:padding="5dp" >
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:text="ALLER"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvDateAller"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="29/11/2013 16H57"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/rlInfos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/relativeLayout3"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="10dp" >
-
-        <TextView
-            android:id="@+id/tvReference"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:text="#CHA8622623"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/black"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvGareArrivee"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/tvReference"
-            android:text="Départ de Lyon Aéroport - Saint Exupéry"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/black" />
-
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_action_infos_dark" />
-
-    </RelativeLayout>
-
     <RelativeLayout
         android:id="@+id/rlBtnComposte"
         android:layout_width="fill_parent"
@@ -181,6 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="5dp"
+            android:gravity="center"
             android:text="@string/appuyezIci"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@drawable/pink_button_text"
@@ -192,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvToHide"
-            android:layout_centerInParent="true">
+            android:layout_centerInParent="true" >
 
             <ImageView
                 android:id="@+id/imageView2"
@@ -218,12 +62,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:visibility="gone"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="62dp" >
+            android:layout_marginLeft="62dp"
+            android:visibility="gone" >
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/superValidImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -235,65 +79,63 @@
                 android:id="@+id/textView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/imageView3"
-                android:text="Titre validé"
+                android:layout_toRightOf="@+id/superValidImage"
+                android:text="@string/titreComposte"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/tvValideLe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textView1"
-                android:layout_toRightOf="@+id/imageView3"
+                android:layout_toRightOf="@+id/superValidImage"
+                android:text="Le 31/12/2015 22:15"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlBilletPerime"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/titreDejaValide"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/rougeInterdit" />
+
+            <TextView
+                android:id="@+id/tvValideLe2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="5dp"
                 android:text="Le 31/12/2015 22:15"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textStyle="bold" />
 
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvValideLe2"
+                android:gravity="center"
+                android:text="@string/nonValable"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="14sp" />
         </RelativeLayout>
-
-                <RelativeLayout
-                    android:visibility="gone"
-                    android:id="@+id/rlBilletPerime"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true" >
-
-                    <TextView
-                        android:id="@+id/textView1"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginBottom="5dp"
-                        android:gravity="center"
-                        android:text="@string/titreDejaValide"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="@color/rougeInterdit" />
-
-                    <TextView
-                        android:id="@+id/tvValideLe2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/textView1"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginBottom="5dp"
-                        android:text="Le 31/12/2015 22:15"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/textView3"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/tvValideLe2"
-                        android:gravity="center"
-                        android:text="@string/nonValable"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textSize="14sp" />
-
-                </RelativeLayout>
-
     </RelativeLayout>
 
     <TextView
@@ -301,7 +143,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/rlBtnComposte"
-        android:layout_alignLeft="@+id/rlBtnComposte"
         android:background="@color/greyBilletInvalide"
         android:gravity="center"
         android:padding="3dp"
@@ -310,5 +151,170 @@
         android:textColor="@color/white"
         android:textSize="16sp"
         android:textStyle="bold" />
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/tvJmJv" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tvNom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="10dp"
+                android:maxLines="1"
+                android:scrollHorizontally="true"
+                android:text="Jean Claude Vandamme casse des briques"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/black"
+                android:textSize="32sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvTypeBillet"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@color/greyBilletInvalide"
+                android:maxLines="1"
+                android:padding="5dp"
+                android:text="1 Billet -26 ans - 2 Billets..."
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp" >
+
+                <RelativeLayout
+                    android:id="@+id/imageRelativeLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="-15dp" >
+
+                    <ImageView
+                        android:id="@+id/iQrCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:src="@drawable/abs__progress_medium_holo" />
+
+                    <TextView
+                        android:id="@+id/tvNonValide"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:background="#99DDDDDD"
+                        android:text="@string/nonComposte"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tvGareDepart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/imageRelativeLayout"
+                    android:maxLines="3"
+                    android:text="CHAMBERY"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/black"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@color/greyBilletInvalide"
+                android:padding="5dp" >
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="ALLER"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvDateAller"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="29/11/2013 16H57"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlInfos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="10dp" >
+
+                <TextView
+                    android:id="@+id/tvReference"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="#CHA8622623"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvGareArrivee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/tvReference"
+                    android:text="Départ de Lyon Aéroport - Saint Exupéry"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/black" />
+
+                <ImageView
+                    android:id="@+id/iClickableInfo"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerVertical="true"
+                    android:clickable="true"
+                    android:src="@drawable/ic_action_infos_dark" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

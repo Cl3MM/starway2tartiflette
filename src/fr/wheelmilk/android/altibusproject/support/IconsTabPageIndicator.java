@@ -1,12 +1,22 @@
 package fr.wheelmilk.android.altibusproject.support;
 
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import android.content.Context;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.AttributeSet;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.viewpagerindicator.IconPagerAdapter;
 import com.viewpagerindicator.PageIndicator;
 
 import fr.wheelmilk.android.altibusproject.R;
-
 /*
  * Copyright (C) 2011 The Android Open Source Project
  * Copyright (C) 2011 Jake Wharton
@@ -23,20 +33,6 @@ import fr.wheelmilk.android.altibusproject.R;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.AttributeSet;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.HorizontalScrollView;
-import android.widget.LinearLayout;
-
-import android.widget.TextView;
-
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 /**
  * This widget implements the dynamic action bar tab behavior that can change

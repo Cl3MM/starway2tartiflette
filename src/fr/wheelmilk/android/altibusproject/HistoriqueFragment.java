@@ -9,8 +9,6 @@ import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.j256.ormlite.stmt.DeleteBuilder;
-import com.j256.ormlite.stmt.UpdateBuilder;
-
 import fr.wheelmilk.android.altibusproject.models.BilletDB;
 import fr.wheelmilk.android.altibusproject.support.Config;
 import fr.wheelmilk.android.altibusproject.support.Helper;
@@ -21,7 +19,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
+import android.widget.TextView;
 
 public class HistoriqueFragment extends ListeBilletsFragment implements ActionMode.Callback, OnClickListener {
 	
@@ -43,6 +41,11 @@ public class HistoriqueFragment extends ListeBilletsFragment implements ActionMo
 	protected void addItemToLayoutOnCreate() {
 		edit 	= getResources().getString(R.string.editer);
 		delete 	= getResources().getString(R.string.supprimer);
+		TextView tvMes = (TextView) layoutView.findViewById(R.id.tvMes);
+		TextView tvBillets = (TextView) layoutView.findViewById(R.id.tvBillets);
+		tvMes.setText("Mon");
+//		tvMes.s
+		tvBillets.setText("Historique");
 	}
 	@Override
 	protected void onItemClicked(View v, int position) {
@@ -71,17 +74,6 @@ public class HistoriqueFragment extends ListeBilletsFragment implements ActionMo
 			billets = new ArrayList<BilletDB>();
 		}
 	}
-
-//	@Override
-//	protected void onItemClicked(View v, int position) {
-//		Log.v(LOG_TAG, "item Clicked :" + position);
-//		Log.v(LOG_TAG, "Nom :" + billets.get(position).getNom());
-//		Log.v(LOG_TAG, "Prenom :" + billets.get(position).getPrenom());
-//		Log.v(LOG_TAG, "Nb :" + billets.get(position).getNb());
-//		billetCourant = billets.get(position);
-//		
-//    	mMode = getSherlockActivity().startActionMode(this);
-//	}
 
     @Override
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {

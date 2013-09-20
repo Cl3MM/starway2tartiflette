@@ -72,7 +72,7 @@ public class Billet implements Parcelable {
 		params.put("ha", horrairesA.ha);
 		params.put("haa", horrairesA.haa);
 		params.put("nba", horrairesA.nba);
-		params.put("version", "999.9");
+		params.put("version", "A1.0");
 
 //		params.put("nba", );
 		if (horrairesR != null) {
@@ -85,7 +85,7 @@ public class Billet implements Parcelable {
 //		params.put("aa", "ne_pas_supprimer");
 		return params;
 	}
-	
+
 	public Billet(Parcel in) {
 		passagers = in.readParcelable(Passagers.class.getClassLoader());
 		gareA = in.readParcelable( GaresArrivee.class.getClassLoader());

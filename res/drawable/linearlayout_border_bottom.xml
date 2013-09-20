@@ -8,11 +8,6 @@
 <item android:bottom="1dp">
     <shape android:shape="rectangle">
         <solid android:color="@color/table_background" />
-<!--         <gradient -->
-<!--       android:startColor="#f1f1f2" -->
-<!--       android:centerColor="#e7e7e8" -->
-<!--       android:endColor="#cfcfcf" -->
-<!--       android:angle="270" /> -->
     </shape>
 </item>
 </layer-list>

@@ -2,8 +2,10 @@ package fr.wheelmilk.android.altibusproject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import android.content.Intent;
 import android.graphics.Color;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,6 +21,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
 import fr.wheelmilk.android.altibusproject.models.AltibusDataModel;
+import fr.wheelmilk.android.altibusproject.models.Gares4Geoloc;
 import fr.wheelmilk.android.altibusproject.models.GaresDataModel;
 import fr.wheelmilk.android.altibusproject.support.Config;
 
@@ -30,9 +33,12 @@ public abstract class ActivityPopUpFactory extends SherlockActivity implements O
 	protected LinearLayout llPopupContent;
 	protected ListView listeDesGares;
 	protected PopUpArrayAdapter arrayAdapter;
-	protected ArrayList<String> itemListNames;
+	protected ArrayList<Gares4Geoloc> garesWithDistance;
 	protected int returnCode;
 	protected HashMap<String, GaresDataModel> altibusData;
+	protected GeolocationManager mlocListener = null;
+	protected LocationManager locationManager;
+	protected AltibusDataModel altibusDataModel;
 
 	protected void startAsyncHTTPRequest() {
 		new UnsupportedOperationException("Please implement this method in subclasses");
@@ -49,7 +55,8 @@ public abstract class ActivityPopUpFactory extends SherlockActivity implements O
 	}
 	protected void setSuccessfulResult(int position) {
 //		result 		= arrayAdapter.items.get(position);
-		result 		= arrayAdapter.getItem(position);
+		Gares4Geoloc g = arrayAdapter.getItem(position);
+		result 		= g.name;
 		returnCode 	= RESULT_OK; 
 	}
 	protected void setPopUpLayout() {
@@ -58,6 +65,8 @@ public abstract class ActivityPopUpFactory extends SherlockActivity implements O
 	@Override
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
+		locationManager = null;
+
 		// requestWindowFeature(Window.FEATURE_NO_TITLE);
 		// getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 		// WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -67,6 +76,7 @@ public abstract class ActivityPopUpFactory extends SherlockActivity implements O
 
 		// get Extras from bundle and setup class attributes
 		initialize(getIntent().getExtras());
+
 		// on lance la requête au webservice
 		startAsyncHTTPRequest();
 
@@ -133,14 +143,14 @@ public abstract class ActivityPopUpFactory extends SherlockActivity implements O
 		overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
 	}
 
-	private PopUpArrayAdapter buildArrayAdpater( ArrayList<String> _arrayString) {
-		PopUpArrayAdapter _arrayAdapter = new PopUpArrayAdapter(this,
-		R.layout.popup_list_item, _arrayString);
+	protected PopUpArrayAdapter buildArrayAdpater( ArrayList<Gares4Geoloc> _arrayList) {
+		PopUpArrayAdapter _arrayAdapter = new PopUpArrayAdapter(this, false,
+		R.layout.popup_list_item, _arrayList, popupColor);
 		return _arrayAdapter;
 	}
 
-	protected void populateListView() {
-		arrayAdapter = buildArrayAdpater(itemListNames);
+	protected synchronized void populateListView() {
+		arrayAdapter = buildArrayAdpater(garesWithDistance);
 		ListView listeDesGares = (ListView) findViewById(R.id.listDesGares);
 		listeDesGares.setAdapter(arrayAdapter);
 		listeDesGares.setEmptyView(findViewById(R.id.tvEmptyList));
@@ -151,7 +161,7 @@ public abstract class ActivityPopUpFactory extends SherlockActivity implements O
 		llPopupContent.setVisibility(View.GONE);
 	}
 
-	protected void dismissProgressBar() {
+	protected synchronized void dismissProgressBar() {
 		llHeaderProgress.setVisibility(View.GONE);
 		llPopupContent.setVisibility(View.VISIBLE);
 	}
@@ -159,16 +169,16 @@ public abstract class ActivityPopUpFactory extends SherlockActivity implements O
 	@Override
 	public void onWebserviceSuccess(String xmlString) {
 
-		AltibusDataModel altibusDataModel = new AltibusSerializer(AltibusDataModel.class).serializeXml(xmlString);
+		altibusDataModel = new AltibusSerializer(AltibusDataModel.class).serializeXml(xmlString);
 
 		if (altibusDataModel != null) {
 			// Le xml est sérialisé
-			itemListNames = altibusDataModel.itemNames();
+			garesWithDistance = altibusDataModel.garesWithDistance();
 			altibusData = altibusDataModel.objects();
 			populateListView();
 			dismissProgressBar();
 		} else if ( this instanceof HorrairesPopUpActivity) {
-			itemListNames = new ArrayList<String>();
+			garesWithDistance = new ArrayList<Gares4Geoloc>();
 			altibusData = new HashMap<String, GaresDataModel>(); 
 			// HorraireDialog = Pas d'horrraire ce jour
 			returnCode = Config.PAS_D_HORRAIRES;

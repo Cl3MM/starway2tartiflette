@@ -154,7 +154,7 @@ public class BilletDB implements Parcelable {
 	}
 	public String getDateValidation() {
 		if (dateValidation != null) {
-			SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy HH:mm", Locale.FRANCE);
+			SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.FRANCE);
 			StringBuilder strDateValidation = new StringBuilder( "Le " );
 			strDateValidation.append(dateFormatter.format(dateValidation));
 			return strDateValidation.toString();

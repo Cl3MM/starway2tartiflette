@@ -21,7 +21,8 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="Theme.Example" parent="@style/Theme.Sherlock">
-        <item name="actionBarItemBackground">@drawable/selectable_background_example</item>
+<!--        <item name="android:actionBarItemBackground">@drawable/selectable_background_example</item> -->
+<!--        <item name="actionBarItemBackground">@drawable/selectable_background_example</item> -->
         <item name="popupMenuStyle">@style/PopupMenu.Example</item>
         <item name="dropDownListViewStyle">@style/DropDownListView.Example</item>
         <item name="actionBarTabStyle">@style/ActionBarTabStyle.Example</item>
@@ -36,7 +37,7 @@
 
     <style name="Theme.SuperLightExample" parent="@style/Theme.Altibus_light">
         <item name="vpiTabPageIndicatorStyle">@style/CustomLightTheme</item>
-        <item name="android:editTextStyle">@style/EditTextAltibus</item>
+        <item name="android:actionBarStyle">@style/ActionBar.Solid.Example</item>
     </style>
         
     <style name="CustomLightTheme" parent="@style/Widget.TabPageIndicator">
@@ -53,7 +54,7 @@
         <item name="android:showDividers">middle</item>
         <item name="android:dividerPadding">16dp</item>
         <item name="android:divider">@drawable/divider_1x10_444</item>
-        		
+
     </style>
 
 
@@ -65,6 +66,16 @@
         <item name="android:editTextStyle">@style/EditTextAltibus</item>
     </style>
 
+    <style name="Theme.SuperExampleMainActivity" parent="@style/Theme.SuperExample">
+        <item name="android:actionBarItemBackground">@drawable/selectable_background_example</item>
+        <item name="actionBarItemBackground">@drawable/selectable_background_example</item>
+        <item name="vpiTabPageIndicatorStyle">@style/CustomTheme</item>
+        <item name="homeAsUpIndicator">@drawable/indicator</item>
+        <item name="android:homeAsUpIndicator">@drawable/indicator</item>
+        <item name="android:actionBarStyle">@style/ActionBar.Solid.Example</item>
+        <item name="android:editTextStyle">@style/EditTextAltibus</item>
+    </style>
+    
     <style name="Theme.SuperDatePicker" parent="@style/Theme.Sherlock.Light.DarkActionBar">
         <item name="vpiTabPageIndicatorStyle">@style/CustomTheme</item>
         <item name="android:actionBarStyle">@style/ActionBar.Solid.SuperCalendar</item>

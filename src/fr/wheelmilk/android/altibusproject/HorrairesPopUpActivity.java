@@ -1,6 +1,11 @@
 package fr.wheelmilk.android.altibusproject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 
@@ -136,8 +141,28 @@ public class HorrairesPopUpActivity extends ActivityPopUpFactory {
 
 		// On remplit le TreeMap avec les horraires triés dans l'ordre (horrairesAller = { 12h30 => 13h00, 16h30 => 17h00 ... }
 		for (GaresDataModel value: altibusData.values()) {
+			
+			Calendar cal = Calendar.getInstance();
+			Date today = cal.getTime();
+			
 			if ( value.getClass().toString().equals(HorrairesAller.class.toString()) ) {
-				horrairesAller.put(value.heureAller(), value.heureArrivee()); // + "::" + value.gareName()
+				HorrairesAller hal = (HorrairesAller) value;
+				int min = hal.minuteArriveeOfTheDay();
+				int heure = hal.heureArriveeOfTheDay();
+				cal.setTime(params.dateAllerDate()); // set calendar to the departure date
+				cal.set(Calendar.HOUR_OF_DAY, heure);
+				cal.set(Calendar.MINUTE, min + 5);
+				Date da = cal.getTime();
+				
+				String log1 = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.FRANCE).format(da);
+				String log2 = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.FRANCE).format(today);
+
+				Log.v(getClass().toString(), "Date Aller: " + log1);
+				Log.v(getClass().toString(), "Today: " + log2);
+
+				if ( da.getTime() > today.getTime() ) {
+						horrairesAller.put(value.heureAller(), value.heureArrivee()); // + "::" + value.gareName()
+				}
 			} else {
 				horrairesRetour.put(value.heureAller(), value.heureArrivee()); // + "::" + value.gareName()
 			}

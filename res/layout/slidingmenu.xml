@@ -1,8 +1,235 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- <ListView xmlns:android="http://schemas.android.com/apk/res/android" -->
+<!--     android:id="@android:id/list" -->
+<!--     android:layout_width="match_parent" -->
+<!--     android:layout_height="match_parent" -->
+<!--     android:paddingLeft="48dp" -->
+<!--     android:paddingRight="48dp" /> -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-   android:layout_width="match_parent"
-   android:layout_height="match_parent"
-   android:orientation="vertical"
-   android:background="@color/table_content" >
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="10dp"
+    android:background="@color/table_background"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:background="@color/headerBackground"
+        android:paddingBottom="4dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="4dp" >
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:src="@drawable/ic_launcher" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/imageView2"
+            android:text="@string/altibusMenuTitle"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/white" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:src="@color/table_border" />
+
+    <RelativeLayout
+        android:id="@+id/rlMenuReservation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/slidingmenu_relativelayout_selector"
+        android:clickable="true" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/icon_reservation" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/imageView1"
+            android:gravity="center_vertical"
+            android:text="Réservation"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@drawable/white_button_text_selector" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:src="@drawable/ic_action_list_arrow" />
+
+    </RelativeLayout>
+
+<RelativeLayout
+    android:id="@+id/rlMenuHoraires"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/slidingmenu_relativelayout_selector"
+    android:clickable="true" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/icon_horaires" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_toRightOf="@+id/imageView1"
+            android:gravity="center_vertical"
+            android:text="Horaires"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@drawable/white_button_text_selector" />
+
+         <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:src="@drawable/ic_action_list_arrow" />
+
+    </RelativeLayout>
+
+<RelativeLayout
+    android:id="@+id/rlMenuMesBillets"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/slidingmenu_relativelayout_selector"
+    android:clickable="true" >
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/mes_billets_icon" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_toRightOf="@+id/imageView1"
+            android:gravity="center_vertical"
+            android:text="Mes Billets"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@drawable/white_button_text_selector" />
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:src="@drawable/ic_action_list_arrow" />
+    </RelativeLayout>
+
+<RelativeLayout
+    android:id="@+id/rlMenuHistorique"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/slidingmenu_relativelayout_selector"
+    android:clickable="true" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/icon_historique" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_toRightOf="@+id/imageView1"
+            android:gravity="center_vertical"
+            android:text="Historique"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@drawable/white_button_text_selector" />
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:src="@drawable/ic_action_list_arrow" />
+    </RelativeLayout>
+
+<RelativeLayout
+    android:id="@+id/rlMenuMonCompte"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/slidingmenu_relativelayout_selector"
+    android:clickable="true" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/passager_icon" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_toRightOf="@+id/imageView1"
+            android:gravity="center_vertical"
+            android:text="Mon Compte"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@drawable/white_button_text_selector" />
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:src="@drawable/ic_action_list_arrow" />
+    </RelativeLayout>
 
 </LinearLayout>

@@ -21,7 +21,7 @@ public class AltibusSerializer<T> {
 	      return classObjectToSerialize;
 	    }
 	public AltibusDataModel serializeXml( String xmlString ) {
-
+		Log.v(getClass().toString(), xmlString);
 		Serializer serializer = new Persister();
 		Reader reader = new StringReader(xmlString);
 			

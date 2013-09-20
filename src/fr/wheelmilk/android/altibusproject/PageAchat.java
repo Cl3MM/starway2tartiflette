@@ -5,6 +5,7 @@ import java.util.Date;
 
 import com.loopj.android.http.RequestParams;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,14 +39,17 @@ public class PageAchat extends PageFactory implements OnWebserviceListenner, Dia
 		if (requestCode == Config.PASSAGERS_RETOUR_CODE) {
 			if (data != null) setPassagersResult(data, tvPassagers);
 		} else if (requestCode == Config.PAIEMENT_RETOUR_CODE) {
-			Log.v(this.getClass().toString(), "Yeah, billet acheté !!!");
-			notifyBilletFragment();
-			harReset();
-			Log.v(this.getClass().toString(), "Hard Reset done...");
+			;
+			getActivity();
+			if( resultCode == Activity.RESULT_OK) {
+				notifyBilletFragment();
+				harReset();
+			}
 		} else {
 			super.onActivityResult(requestCode, resultCode, data);
 		}
 	}
+
 	public void setPassagersResult(Intent data, TextView tv) {
 		passagers = data.getParcelableExtra("passagers");
 		tv.setText(String.valueOf(passagers.size()));
@@ -139,7 +143,7 @@ public class PageAchat extends PageFactory implements OnWebserviceListenner, Dia
 		layoutView.findViewById(R.id.rlButtonNew).setOnClickListener(this);
 		tvPassagers = (TextView) layoutView.findViewById(R.id.tvPassagers);
 		tvMontant = (TextView) layoutView.findViewById(R.id.tvMontant);
-		tvMontant.setTextColor(getResources().getColor(R.color.greenFont));
+//		tvMontant.setTextColor(getResources().getColor(R.color.greenFont));
 		tvMontant.setText("");
 	}
 	static PageAchat init(int val) {
@@ -224,13 +228,13 @@ public class PageAchat extends PageFactory implements OnWebserviceListenner, Dia
 	public void harReset() {
 		resetTextViews();
 		tvGareAller.setTag(null);
-		tvGareAller.setText(getString(R.string.rechercheGare));
+		tvGareAller.setText(getString(R.string.rechercherGareDepart));
 		tvGareArrivee.setTag(null);
-		tvGareArrivee.setText(getString(R.string.rechercheGare));
+		tvGareArrivee.setText(getString(R.string.rechercherGareArrivee));
 		tvDateAller.setTag(null);
-		tvDateAller.setText(getString(R.string.rechercheDate));
+		tvDateAller.setText(getString(R.string.rechercheDateAller));
 		tvDateRetour.setTag(null);
-		tvDateRetour.setText(getString(R.string.rechercheDate));
+		tvDateRetour.setText(getString(R.string.rechercheDateRetour));
 		reservation = null;
 		billet = new Billet();
 	}
@@ -253,7 +257,7 @@ public class PageAchat extends PageFactory implements OnWebserviceListenner, Dia
 			tvDateRetour.setText(Helper.prettifyDate(_dr, null));
 			llRetour.setVisibility(View.VISIBLE);
 		} else {
-			tvDateRetour.setText(getString(R.string.rechercheDate));			
+			tvDateRetour.setText(getString(R.string.rechercheDateRetour));			
 		}
 		tvHeureRetour.setTag(_hr);
 		if (_hr != null) {
@@ -261,7 +265,7 @@ public class PageAchat extends PageFactory implements OnWebserviceListenner, Dia
 			s.append(" - ").append(_hr.heureArrivee());
 			tvHeureRetour.setText(s.toString());
 		} else {
-			tvHeureRetour.setText(getString(R.string.rechercherHorraire));
+			tvHeureRetour.setText(getString(R.string.rechercherhoraireRetour));
 		}
 		reservation = null;
 	}

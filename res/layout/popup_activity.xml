@@ -158,7 +158,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="@string/rechercheGare"
+                android:hint="@string/rechercherGare"
                 android:maxLines="1"
                 android:singleLine="true"
                 android:textColor="@color/table_content"

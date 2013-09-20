@@ -7,12 +7,15 @@ import java.util.Date;
 import java.util.EnumMap;
 import java.util.Locale;
 
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -35,7 +38,7 @@ import fr.wheelmilk.android.altibusproject.support.Config;
 import fr.wheelmilk.android.altibusproject.support.DatabaseHelper;
 import fr.wheelmilk.android.altibusproject.support.Helper;
 
-public class BilletCompostagePopUp extends SherlockActivity implements OnClickListener {
+public class BilletCompostagePopUp extends SherlockActivity implements OnClickListener, DialogInterface.OnClickListener {
 
 	protected DatabaseHelper databaseHelper = null;
 	protected int colorBlack = 0xFF000000;
@@ -45,6 +48,7 @@ public class BilletCompostagePopUp extends SherlockActivity implements OnClickLi
 	protected TextView tvNom;
 	protected TextView tvTypeBillet;
 	protected ImageView iQrCode;
+	protected ImageView iClickableInfo;
 	protected TextView tvGareArrivee;
 	protected TextView tvGareDepart;
 	protected TextView tvDateAller;
@@ -66,6 +70,8 @@ public class BilletCompostagePopUp extends SherlockActivity implements OnClickLi
 		tvNom = (TextView) findViewById(R.id.tvNom); 
 		tvTypeBillet = (TextView) findViewById(R.id.tvTypeBillet); 
 		iQrCode = (ImageView) findViewById(R.id.iQrCode); 
+		iClickableInfo = (ImageView) findViewById(R.id.iClickableInfo);
+		iClickableInfo.setOnClickListener(this);
 		tvGareArrivee = (TextView) findViewById(R.id.tvGareArrivee);
 		tvGareDepart = (TextView) findViewById(R.id.tvGareDepart);
 		tvDateAller = (TextView) findViewById(R.id.tvDateAller);
@@ -85,6 +91,7 @@ public class BilletCompostagePopUp extends SherlockActivity implements OnClickLi
 			showBilletPerime();
 		} else if (!billet.isValide()) {
 			rlBtnComposte.setOnClickListener(this);
+			tvNonValide.setText("Non valide");
 		} else {
 			showValidationLayout();
 		}
@@ -170,6 +177,17 @@ public class BilletCompostagePopUp extends SherlockActivity implements OnClickLi
 		tvNonValide.setVisibility(View.GONE);
 
         findViewById(R.id.rlBilletComposte).setVisibility(View.VISIBLE);
+
+		ImageView superValidImage = (ImageView) findViewById(R.id.superValidImage);
+
+        final Animation animation = new AlphaAnimation(1, 0); // Change alpha from fully visible to invisible
+        animation.setDuration(500); // duration - half a second
+        animation.setInterpolator(new LinearInterpolator()); // do not alter animation rate
+        animation.setRepeatCount(Animation.INFINITE); // Repeat animation infinitely
+        animation.setRepeatMode(Animation.REVERSE); // Reverse animation at the end so the button will fade back in
+
+        superValidImage.startAnimation(animation);
+
 		TextView tvValideLe = (TextView) findViewById(R.id.tvValideLe);
 		tvValideLe.setText(billet.getDateValidation());
 	}
@@ -184,29 +202,16 @@ public class BilletCompostagePopUp extends SherlockActivity implements OnClickLi
 	@Override
 	public void onClick(View v) {
 		if (v.getId() == R.id.rlBtnComposte) { // Compostage du billet
-
-			rlBtnComposte.setOnClickListener(null);
-			
-			UpdateBuilder<BilletDB, Integer> updateBuilder = billetsDao.updateBuilder();
-			Calendar cal = Calendar.getInstance();
-			Date dateValidation = new Date(cal.getTimeInMillis());
-			SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy HH:mm", Locale.FRANCE);
-			StringBuilder strDateValidation = new StringBuilder( "Le " );
-			strDateValidation.append(dateFormatter.format(dateValidation));
-			
-			try {
-				updateBuilder.updateColumnValue("dateValidation", dateValidation);
-				updateBuilder.updateColumnValue("valide", true);
-				updateBuilder.where().eq("id", billet.getId());
-				updateBuilder.update();
-			} catch (SQLException e) {
-				e.printStackTrace();
-				Helper.grilledRare(this, "Impossible de valider le billet : problème avec la base de données");
-			}
-			billet.setDateValidation(dateValidation);
-			showValidationLayout();
+			SimpleAlertDialog dlg = new SimpleAlertDialog(this, getString(R.string.valideDevantConducteur), getString(R.string.composter), getString(R.string.cancel), this);
+			dlg.setTitle("Composter le billet ?");
+			dlg.show();
+		} else if (v.getId() == R.id.iClickableInfo) {
+			SimpleAlertDialog dlg = new SimpleAlertDialog(this, getString(R.string.cgv));
+			dlg.setTitle("Conditions générales");
+			dlg.show();			
 		}
 	}
+
 	@Override
 	protected void onPause() {
 		super.onPause();
@@ -222,7 +227,6 @@ public class BilletCompostagePopUp extends SherlockActivity implements OnClickLi
 		try {
 			billetsDao = getHelper().getBilletDataDao();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			billetsDao = null;
 		}
@@ -249,4 +253,39 @@ public class BilletCompostagePopUp extends SherlockActivity implements OnClickLi
 		finish();
 		return false;
     }
+	@Override
+	public void onClick(DialogInterface dlg, int which) {
+		if (which == DialogInterface.BUTTON_POSITIVE) {
+			Calendar cal = Calendar.getInstance();
+			cal.setTime( billet.getDateAller() );
+			int jourAller = cal.get(Calendar.DAY_OF_YEAR);
+			
+			cal.setTime(new Date());
+			int today = cal.get(Calendar.DAY_OF_YEAR);
+			
+			if (jourAller == today) {
+				rlBtnComposte.setOnClickListener(null);
+				UpdateBuilder<BilletDB, Integer> updateBuilder = billetsDao.updateBuilder();
+				Date dateValidation = new Date(cal.getTimeInMillis());
+				SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.FRANCE);
+				StringBuilder strDateValidation = new StringBuilder( "Le " );
+				strDateValidation.append(dateFormatter.format(dateValidation));
+				
+				try {
+					updateBuilder.updateColumnValue("dateValidation", dateValidation);
+					updateBuilder.updateColumnValue("valide", true);
+					updateBuilder.where().eq("id", billet.getId());
+					updateBuilder.update();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					Helper.grilledRare(this, "Impossible de valider le billet : problème avec la base de données");
+				}
+				billet.setDateValidation(dateValidation);
+				showValidationLayout();
+			} else {
+				Helper.grilledWellDone(	this, "Le billet peut être composté seulement le jour du voyage");
+			}
+		}
+		dlg.dismiss();
+	}
 }

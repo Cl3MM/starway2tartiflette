@@ -3,10 +3,13 @@ package fr.wheelmilk.android.altibusproject.models;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TreeMap;
+
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.ElementListUnion;
 import org.simpleframework.xml.Root;
 
+import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -44,6 +47,27 @@ public class AltibusDataModel implements Parcelable {
 
 		for(GaresDataModel item : items) {
 			objectMap.put( item.gareName(), item );
+	    }
+		return objectMap;
+	}
+	
+	public TreeMap<Float, Gares4Geoloc> garesDeLaMuerte(Location loc, int distanceMaxInKilometers) {
+		TreeMap<Float, Gares4Geoloc> objectMap = new TreeMap<Float, Gares4Geoloc>();
+
+		for(GaresDataModel item : items) {
+			Gares4Geoloc g = new Gares4Geoloc( item.gareName(), item.location() );
+			if (g.getDistance(loc) != null) {
+				if (g.distanceFloat < (float) distanceMaxInKilometers * 1000) objectMap.put( g.distanceFloat, g);
+			}
+	    }
+		return objectMap;
+	}
+	
+	public ArrayList<Gares4Geoloc> garesWithDistance() {
+		ArrayList<Gares4Geoloc> objectMap = new ArrayList<Gares4Geoloc>();
+
+		for(GaresDataModel item : items) {
+			objectMap.add(new Gares4Geoloc( item.gareName(), item.location() ) );
 	    }
 		return objectMap;
 	}

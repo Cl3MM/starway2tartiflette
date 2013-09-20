@@ -10,6 +10,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
+import android.util.Log;
 import fr.wheelmilk.android.altibusproject.R;
 import fr.wheelmilk.android.altibusproject.support.Helper;
 
@@ -59,16 +60,15 @@ public class Passager implements Parcelable {
 	public boolean isValid(Resources mRes) {
 		errors = new ArrayList<String>();
 		boolean resultCode = true;
-		
-		if (TextUtils.isEmpty(nom) || nom.equals(R.string.saisirNom)) {
+		if (TextUtils.isEmpty(nom) || nom.equals(mRes.getString(R.string.saisirNom)) || nom.equals(mRes.getString(R.string.saisirNomPrenom))) {
 			errors.add(mRes.getString(R.string.erreurNom));
 			resultCode = false;
 		}
-		if (TextUtils.isEmpty(prenom) || prenom.equals(mRes.getString(R.string.saisirPrenom))) {
-			errors.add(mRes.getString(R.string.erreurPrenom));
-			resultCode = false;
-		}
-		if ( age < 4 || age > 120) {
+//		if (TextUtils.isEmpty(prenom) || prenom.equals(mRes.getString(R.string.saisirPrenom))) {
+//			errors.add(mRes.getString(R.string.erreurPrenom));
+//			resultCode = false;
+//		}
+		if ( age < 0 || age > 120) {
 			errors.add(mRes.getString(R.string.erreurAge));
 			resultCode = false;
 		}
@@ -96,10 +96,10 @@ public class Passager implements Parcelable {
 
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(cxt);
 		_params.put("nom", prefs.getString("prefUserLastName", cxt.getString(R.string.saisirNom)));
-		_params.put("prenom", prefs.getString("prefUserFirstName", cxt.getString(R.string.pref_user_last_name_summary)));
+		_params.put("prenom", prefs.getString("prefUserFirstName", cxt.getString(R.string.pref_user_first_name)));
 //		_params.put("age", prefs.getString("prefUserAge", cxt.getString(R.string.pref_user_last_name_summary)));
 		_params.put("adresse", prefs.getString("prefUserAddress", cxt.getString(R.string.pref_user_adresse)));
-		_params.put("adresse2", prefs.getString("prefUserAddress", "(null)"));
+		_params.put("adresse2", prefs.getString("prefUserAddress", ""));
 		
 //		adresse2 = prefs.getString("prefUserAddress2", cxt.getString(R.string.pref_user_adresse2));
 //		if (!TextUtils.isEmpty(adresse2) ) _params.put("adresse2", adresse2);
@@ -113,20 +113,20 @@ public class Passager implements Parcelable {
 	public boolean isPassagerPrincipalValid(Resources mRes) {
 		errors = new ArrayList<String>();
 		boolean resultCode = true;
-		
-		if (TextUtils.isEmpty(nom) || nom.equals(R.string.saisirNom)) {
-			errors.add(mRes.getString(R.string.erreurNom));
-		}
-		if (TextUtils.isEmpty(prenom) || prenom.equals(mRes.getString(R.string.saisirPrenom))) {
-			errors.add(mRes.getString(R.string.erreurPrenom));
-		}
-		if ( age < 4 || age > 120) {
-			errors.add(mRes.getString(R.string.erreurAge));
-		}
+		resultCode = isValid(mRes);
+//		if (TextUtils.isEmpty(nom) || nom.equals(R.string.saisirNom)) {
+//			errors.add(mRes.getString(R.string.erreurNom));
+//		}
+//		if (TextUtils.isEmpty(prenom) || prenom.equals(mRes.getString(R.string.saisirPrenom))) {
+//			errors.add(mRes.getString(R.string.erreurPrenom));
+//		}
+//		if ( age < 4 || age > 120) {
+//			errors.add(mRes.getString(R.string.erreurAge));
+//		}
 
 		if (email == null || TextUtils.isEmpty(email) ) 		errors.add(mRes.getString(R.string.erreurEmptyUserPrefEmail));
-		if (telephone == null || TextUtils.isEmpty(telephone)) 	errors.add(mRes.getString(R.string.erreurEmptyUserPrefTel));
-		if (adresse == null || TextUtils.isEmpty(adresse)) 		errors.add(mRes.getString(R.string.erreurEmptyUserPrefAdresse));
+//		if (telephone == null || TextUtils.isEmpty(telephone)) 	errors.add(mRes.getString(R.string.erreurEmptyUserPrefTel));
+//		if (adresse == null || TextUtils.isEmpty(adresse)) 		errors.add(mRes.getString(R.string.erreurEmptyUserPrefAdresse));
 		if (ville == null || TextUtils.isEmpty(ville)) 			errors.add(mRes.getString(R.string.erreurEmptyUserPrefVille));
 		if (codePostal == null || TextUtils.isEmpty(codePostal)) errors.add(mRes.getString(R.string.erreurEmptyUserPrefCodePostal));
 		if (pays == null || TextUtils.isEmpty(pays)) 			errors.add(mRes.getString(R.string.erreurEmptyUserPrefPays));
@@ -195,7 +195,7 @@ public class Passager implements Parcelable {
 			age = Integer.decode(_age);
 		} catch(NumberFormatException e) {
 			e.printStackTrace();
-			age = 0;
+			age = -1;
 		}
 	}
 	public boolean isEnfant() {

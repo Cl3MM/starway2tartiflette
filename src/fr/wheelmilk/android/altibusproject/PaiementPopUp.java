@@ -52,6 +52,7 @@ public class PaiementPopUp extends SherlockActivity implements OnClickListener, 
 		super.onCreate(bundle);
 		setContentView(R.layout.paiement_popup);
 
+
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		initialize(getIntent().getExtras());
@@ -264,7 +265,12 @@ public class PaiementPopUp extends SherlockActivity implements OnClickListener, 
 	}
 	@Override
 	public void onBackPressed() {
+		Log.v(getClass().toString(), "onBackPressed.....");
 		if( !isProceedingPayment && mDialog == null) super.onBackPressed();
+		else {
+			returnCode = RESULT_CANCELED;
+			finish();
+		}
 	}
 	private void notifyBilletFragment() {
 	    Intent intent = new Intent("billetCreated");

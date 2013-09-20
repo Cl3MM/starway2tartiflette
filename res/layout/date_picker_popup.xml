@@ -174,7 +174,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/white_button"
-        android:textColor="@drawable/white_button_text_selector" />
+        android:background="@drawable/white_and_orange_button"
+        android:minHeight="48dp"
+        android:textColor="@drawable/add_passager_button_text" />
 
 </RelativeLayout>

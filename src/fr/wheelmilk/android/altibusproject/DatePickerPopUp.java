@@ -8,7 +8,6 @@ import java.util.Locale;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
 
-import fr.wheelmilk.android.altibusproject.R;
 import fr.wheelmilk.android.altibusproject.support.Config;
 import android.content.Intent;
 import android.graphics.Color;

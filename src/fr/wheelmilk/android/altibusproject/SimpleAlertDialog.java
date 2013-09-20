@@ -43,7 +43,6 @@ public class SimpleAlertDialog extends AlertDialog {
 		}
 		builder.setMessage(mMessage);
 		builder.setTitle(R.string.attentionTT);
-
 		mDialog = builder.create();
 	}
 

@@ -12,6 +12,7 @@
 
  <!-- sliding menu -->
     <dimen name="slidingmenu_shadow_width">15dp</dimen>
-    <dimen name="slidingmenu_offset">60dp</dimen>
-    
+    <dimen name="slidingmenu_offset">100dp</dimen>
+    <dimen name="slidingmenuWidth">15dp</dimen>
+	<dimen name="slidingmenuOffset">100dp</dimen>
 </resources>

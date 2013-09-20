@@ -26,7 +26,8 @@ public abstract class ListeBilletsFragment extends SherlockFragment { //implemen
 	int fragVal;
 //	FragmentPagerAdapter pager;
 
-	private View layoutView;
+	boolean firstRun = true;
+	protected View layoutView;
 	protected final String LOG_TAG = getClass().getSimpleName();
 	private DatabaseHelper databaseHelper = null;
 	ArrayList<BilletDB> billets;
@@ -143,15 +144,24 @@ public abstract class ListeBilletsFragment extends SherlockFragment { //implemen
 
 	public void updateView() {
 		startLoadFromDatabase();
-		aaBillets.clear();
-		aaBillets.addAll(billets);
-		aaBillets.notifyDataSetChanged();
-		lvBillets.invalidate();
+		if (billets.size() > 0) {
+			aaBillets.clear();
+			for (BilletDB billet : billets) {
+				aaBillets.add(billet);
+			}
+//			aaBillets.addAll(billets);
+			aaBillets.notifyDataSetChanged();
+			lvBillets.invalidate();
+		}
 	}
 	@Override
 	public void onResume() {
 		super.onResume();
-		updateView();
+		if (firstRun) {
+			firstRun = false;
+		} else {
+			updateView();
+		}
 	}
 	@Override
 	public void onPause() {

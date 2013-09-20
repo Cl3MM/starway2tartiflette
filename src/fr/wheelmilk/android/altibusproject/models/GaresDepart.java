@@ -2,6 +2,7 @@ package fr.wheelmilk.android.altibusproject.models;
 
 import org.simpleframework.xml.Element;
 
+import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -78,4 +79,11 @@ public class GaresDepart implements GaresDataModel, Parcelable {
             return new GaresDepart[size];
         }
     };
+	@Override
+	public Location location() {
+		Location l = new Location("SuperGeolocator");
+		l.setLatitude(lat);
+		l.setLongitude(lon);
+		return l;
+	}
 }

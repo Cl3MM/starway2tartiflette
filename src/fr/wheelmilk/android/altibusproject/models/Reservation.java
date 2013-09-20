@@ -27,7 +27,7 @@ public class Reservation implements Parcelable {
 
 	public String getPrettyMontant() {
 		StringBuilder str = new StringBuilder();
-		str.append("Prix : ");
+		str.append(": ");
 		str.append( montant.replace("EUR", "€").replace(".", ",") );
 		return str.toString();
 	}

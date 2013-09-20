@@ -2,23 +2,20 @@ package fr.wheelmilk.android.altibusproject;
 
 import java.util.Calendar;
 import java.util.Date;
-import com.actionbarsherlock.app.SherlockFragment;
-import fr.wheelmilk.android.altibusproject.models.GaresArrivee;
-import fr.wheelmilk.android.altibusproject.models.GaresDataModel;
-import fr.wheelmilk.android.altibusproject.models.GaresDepart;
-import fr.wheelmilk.android.altibusproject.models.HorrairesAller;
-import fr.wheelmilk.android.altibusproject.models.HorrairesParams;
-import fr.wheelmilk.android.altibusproject.models.HorrairesRetour;
-import fr.wheelmilk.android.altibusproject.support.Config;
-import fr.wheelmilk.android.altibusproject.support.Helper;
+
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.view.animation.ScaleAnimation;
@@ -27,6 +24,17 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+
+import com.actionbarsherlock.app.SherlockFragment;
+
+import fr.wheelmilk.android.altibusproject.models.GaresArrivee;
+import fr.wheelmilk.android.altibusproject.models.GaresDataModel;
+import fr.wheelmilk.android.altibusproject.models.GaresDepart;
+import fr.wheelmilk.android.altibusproject.models.HorrairesAller;
+import fr.wheelmilk.android.altibusproject.models.HorrairesParams;
+import fr.wheelmilk.android.altibusproject.models.HorrairesRetour;
+import fr.wheelmilk.android.altibusproject.support.Config;
+import fr.wheelmilk.android.altibusproject.support.Helper;
 
 public abstract class PageFactory extends SherlockFragment implements View.OnClickListener {
 
@@ -51,18 +59,17 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 			GaresDataModel tag = data.getParcelableExtra("tag");
 			tv.setText(result);
 			tv.setTag(tag);
-			Log.v(this.getClass().toString(), "Je suis REMET A ZERO !!!");
 			// Remise à zéro des champs
 			if (tv.equals(tvGareAller)) {
-				tvGareArrivee.setText(getResources().getString(R.string.rechercherGare));
+				tvGareArrivee.setText(getResources().getString(R.string.rechercherGareArrivee));
 				tvGareArrivee.setTag(null);
 			}
 			resetTextViews();
 		}
 	}
 	protected void resetTextViews() {
-		tvHeureAller.setText(getResources().getString(R.string.rechercherHorraire));
-		tvHeureRetour.setText(getResources().getString(R.string.rechercherHorraire));
+		tvHeureAller.setText(getResources().getString(R.string.rechercherhoraireAller));
+		tvHeureRetour.setText(getResources().getString(R.string.rechercherhoraireRetour));
 		tvHeureAller.setTag(null);
 		tvHeureRetour.setTag(null);
 	}
@@ -97,7 +104,7 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 				if ( date != null ) {
 					tvDateAller.setText( Helper.prettifyDate(date, null) );
 					tvDateAller.setTag(date);
-					tvHeureAller.setText(getResources().getString(R.string.rechercherHorraire));
+					tvHeureAller.setText(getResources().getString(R.string.rechercherhoraireAller));
 					tvHeureAller.setTag(null);
 				}
 				break;
@@ -109,7 +116,7 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 				if ( date != null ) {
 					tvDateRetour.setText( Helper.prettifyDate(date, null) );
 					tvDateRetour.setTag(date);
-					tvHeureRetour.setText(getResources().getString(R.string.rechercherHorraire));
+					tvHeureRetour.setText(getResources().getString(R.string.rechercherhoraireRetour));
 					tvHeureRetour.setTag(null);					
 				}
 				break;
@@ -154,7 +161,6 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-
 		layoutView = inflateDialog(inflater, container);
 
 		layoutView.findViewById(R.id.llTimetableGareAller).setOnClickListener(this);
@@ -166,19 +172,19 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 		layoutView.findViewById(R.id.allerSimple).setOnClickListener(this);
 		layoutView.findViewById(R.id.allerRetour).setOnClickListener(this);
 
-		this.as = (ToggleButton) layoutView.findViewById(R.id.allerSimple);
-		this.ar = (ToggleButton) layoutView.findViewById(R.id.allerRetour);
-		this.tvGareAller = (TextView) layoutView.findViewById(R.id.tvTimetableGareAller);
-		this.tvGareArrivee = (TextView) layoutView.findViewById(R.id.tvTimetableGareArrivee);
-		this.tvDateAller = (TextView) layoutView.findViewById(R.id.tvTimetableDateAller);
-		this.tvDateRetour = (TextView) layoutView.findViewById(R.id.tvTimetableDateRetour);
-		this.tvHeureAller = (TextView) layoutView.findViewById(R.id.tvTimetableHorraireAller);
-		this.tvHeureRetour = (TextView) layoutView.findViewById(R.id.tvTimetableHorraireRetour);
+		as = (ToggleButton) layoutView.findViewById(R.id.allerSimple);
+		ar = (ToggleButton) layoutView.findViewById(R.id.allerRetour);
+		tvGareAller = (TextView) layoutView.findViewById(R.id.tvTimetableGareAller);
+		tvGareArrivee = (TextView) layoutView.findViewById(R.id.tvTimetableGareArrivee);
+		tvDateAller = (TextView) layoutView.findViewById(R.id.tvTimetableDateAller);
+		tvDateRetour = (TextView) layoutView.findViewById(R.id.tvTimetableDateRetour);
+		tvHeureAller = (TextView) layoutView.findViewById(R.id.tvTimetableHorraireAller);
+		tvHeureRetour = (TextView) layoutView.findViewById(R.id.tvTimetableHorraireRetour);
 
-		this.as.setChecked(true);
-		this.ar.setChecked(false);
+		as.setChecked(true);
+		ar.setChecked(false);
 
-		this.llRetour = (LinearLayout) layoutView.findViewById(R.id.llTimetableRetour);
+		llRetour = (LinearLayout) layoutView.findViewById(R.id.llTimetableRetour);
 		llRetour.setOnClickListener(this);
 		llRetour.setVisibility(View.GONE);
 		setDeveloppmentTestData();
@@ -199,13 +205,17 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 		Date afterTomorrow = cal.getTime();
 		
 		tvDateAller.setTag(tomorrow);
+		tvDateAller.setText(Helper.prettifyDate(tomorrow, null));
 		tvGareAller.setTag( new GaresDepart("AIX LES BAINS", 45.6884f, 5.9096f) );
 		tvGareAller.setText("AIX LES BAINS");
 		tvGareArrivee.setTag( new GaresArrivee("CHAMBERY", "CHA851") );
 		tvGareArrivee.setText("CHAMBERY");
 		tvHeureAller.setTag(new HorrairesAller("10H02", "10H40", "CHA91001"));
+		tvHeureAller.setText("10H02 - 10H40");
 		tvHeureRetour.setTag(new HorrairesRetour("10H02", "10H40", "CHA91001"));
+		tvHeureRetour.setText("10H02 - 10H40");
 		tvDateRetour.setTag(afterTomorrow);
+		tvDateRetour.setText(Helper.prettifyDate(afterTomorrow, null));
 	}
 
 	protected void fadeInAnimation() {
@@ -262,9 +272,9 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 //			fadeOutAnimation(); 
 			llRetour.setVisibility(View.GONE);
 			tvHeureRetour.setTag(null);
-			tvHeureRetour.setText(getString(R.string.rechercherHorraire));
+			tvHeureRetour.setText(getString(R.string.rechercherhoraireRetour));
 			tvDateRetour.setTag(null);
-			tvDateRetour.setText(getString(R.string.rechercherHorraire));
+			tvDateRetour.setText(getString(R.string.rechercheDateRetour));
 			updateMontant();
 //			llRetour.startAnimation(new LinearLayoutVerticalScaleAnimation(1.0f, 1.0f, 1.0f, 0.0f, 500, llRetour, true));
 		} else {
@@ -301,9 +311,8 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 		} else if (vid == R.id.allerRetour) {
 			toggleAllerRetour();
 		} else if (vid == R.id.llTimetableGareAller) {
-			// TODO : adapter la classe TtAllerDlg
-//			new TtAllerDlg(getActivity(), this).show();
-			startGareAllerPopUpActivity();
+			startGeolocSelector();
+//			startGareAllerPopUpActivity();
 		} else if (vid == R.id.llTimetableGareArrivee) {
 			startGareArriveePopUpActivity(v, gareAllerText);
 		} else if (vid == R.id.llTimetableDateAller) {
@@ -320,6 +329,23 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 		}
 	}
 
+	protected void startGeolocSelector() {
+		String title = getString(R.string.gareAcoteDlgTitle);
+		String choix1 = getString(R.string.voirGaresACote);
+		String choix2 = getString(R.string.voirToutesGares);
+		String[] choix = new String[] { choix1, choix2 };
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), android.R.style.Theme_Holo_Light_Dialog_NoActionBar));
+		builder.setTitle(title);
+		builder.setItems(choix,  new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int position) {
+				onGeolocMethodSelected(position);
+			}
+		});
+		Dialog dialog = builder.create();
+		dialog.show();
+	}
 	protected void startHorrairePopUpActivity(View v, String gareAllerText, String gareArriveeText, int code) {
 		if (this.tvGareAller.getTag() != null && !this.tvGareArrivee.getText().equals(getResources().getString(R.string.rechercherGare)) && this.tvGareArrivee.getTag() != null && this.tvDateAller.getTag() != null) {
 			// On récupère les tags des différents champs pour construire les paramètres à envoyer par intent à l'activité
@@ -361,7 +387,7 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 	protected void startDateAllerPickerActivity(View v, String gareAllerText, String gareArriveeText, int code) {
 		if (code == Config.DATE_ALLER_CODE) {
 			tvDateRetour.setTag(null);
-			tvDateRetour.setText(getResources().getString(R.string.rechercheDate));
+			tvDateRetour.setText(getResources().getString(R.string.rechercheDateRetour));
 		}
 		Intent i = new Intent(this.getActivity(), DatePickerPopUp.class);
 		i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -374,11 +400,12 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 		startActivityForResult(i, code);
 		this.getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 	}
-	protected void startGareAllerPopUpActivity() {
+	protected void startGareAllerPopUpActivity(boolean geoloc) {
 		Intent i = new Intent(getActivity(), GareAllerPopUp.class);
 		i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NO_ANIMATION);
 		i.putExtra("title", getString(R.string.garesAllerTitle));
 		i.putExtra("popupColor", popupColor);
+		i.putExtra("geoloc", geoloc);
 		startActivityForResult(i, Config.GARE_ALLER_CODE);
 		this.getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 	}
@@ -399,18 +426,56 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 	// Doit on chercher parmi les gares à proximité ?
 	// Position 0 = GPS
 	// Position 1 = toutes les gares
-	protected void onGAMethodSelected(int position) {
+	protected void onGeolocMethodSelected(int position) {
 		switch (position) {
 		// oui
 		case 0:
 			geoLocate();
+			break;
 			// non
 		case 1:
-			startGareAllerPopUpActivity();
+			startGareAllerPopUpActivity(false);
+			break;
 		}
 	}
 
 	protected void geoLocate() {
-		Helper.grilledRare(getActivity(), "En attente de Géolocalisation...");
+		LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE );
+		boolean statusOfGPS = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+		Log.v(getClass().toString(), "GPS :" + (statusOfGPS ? "ON" : "OFF"));
+		if (statusOfGPS) {
+			startGareAllerPopUpActivity(true);
+		} else {
+			buildAlertMessageNoGps();
+		}
 	}
+
+	private void buildAlertMessageNoGps() {
+		final AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), android.R.style.Theme_Holo_Light_Dialog_NoActionBar));
+		builder.setMessage(
+				"Souhaitez vous afficher l'écran des paramètres de Géolocalisation ?")
+				.setCancelable(false)
+				.setTitle("Votre GPS semble désactivé")
+				.setPositiveButton("Oui",
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick( final DialogInterface dialog, final int id) {
+								startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+							}
+						})
+				.setNegativeButton("Non merci", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(final DialogInterface dialog,
+							final int id) {
+						dialog.cancel();
+					}
+				});
+		final AlertDialog alert = builder.create();
+		alert.show();
+	}
+//	@Override
+//	public void onSaveInstanceState(Bundle outState) {
+//		super.onSaveInstanceState(outState);
+//		outState.putInt("mColorRes", mColorRes);
+//	}
 }

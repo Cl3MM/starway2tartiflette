@@ -25,6 +25,9 @@ public class HorrairesParams implements Parcelable {
 		this.gareAller = gareAller;
 		this.gareArrivee = gareArrivee;
 	}
+	public Date dateAllerDate() {
+		return dateAller;
+	}
 	public String gareAller() {
 		return this.gareAller;
 	}

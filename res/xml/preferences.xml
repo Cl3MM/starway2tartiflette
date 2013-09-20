@@ -5,49 +5,62 @@
         <EditTextPreference
                 android:title="@string/pref_user_last_name"
                 android:summary="@string/pref_user_last_name_summary"
-                android:defaultValue="@string/saisirNom"
+                android:defaultValue=""
+                android:inputType="textPersonName|textCapWords"
                 android:key="prefUserLastName"/>
         <EditTextPreference
-            	android:defaultValue="@string/saisirPrenom"
+            	android:defaultValue=""
                 android:title="@string/pref_user_first_name"
+                android:inputType="textPersonName|textCapWords"
                 android:summary="@string/pref_user_first_name_summary"
                 android:key="prefUserFirstName"/>
-        <EditTextPreference
-                android:title="@string/pref_user_age"
-                android:summary="@string/pref_user_set_age"
-                android:defaultValue="0"
-                android:key="prefUserAge"/>
+<!--         <EditTextPreference -->
+<!--                 android:title="@string/pref_user_age" -->
+<!--                 android:summary="@string/pref_user_set_age" -->
+<!--                 android:defaultValue="0" -->
+<!--                 android:key="prefUserAge"/> -->
+        <ListPreference
+            android:key="prefUserAge"
+            android:defaultValue="-1"
+            android:summary="@string/pref_user_set_age"
+            android:title="@string/pref_user_age" />
     </PreferenceCategory>
-     
     
-    <PreferenceCategory android:title="@string/pref_user_contact" >
+    <PreferenceCategory android:title="@string/pref_user_contact" 
+        android:key="cat_user_contact">
         <EditTextPreference
             	android:defaultValue=""
+            	android:inputType="phone"
                 android:title="@string/pref_user_telephone"
                 android:summary="@string/pref_user_set_telephone"
                 android:key="prefUserTelephone"/>
         <EditTextPreference
             	android:defaultValue=""
+            	android:inputType="textEmailAddress"
                 android:title="@string/pref_user_email"
                 android:summary="@string/pref_user_set_email"
                 android:key="prefUserEmail"/>
         <EditTextPreference
             	android:defaultValue=""
+                android:inputType="text|textCapWords"
                 android:title="@string/pref_user_adresse"
                 android:summary="@string/pref_user_set_adresse"
                 android:key="prefUserAddress"/>
         <EditTextPreference
             	android:defaultValue=""
+                android:inputType="text|textCapWords"
                 android:title="@string/pref_user_adresse2"
                 android:summary="@string/pref_user_set_adresse"
                 android:key="prefUserAddress2"/>
         <EditTextPreference
             	android:defaultValue=""
+                android:inputType="number"
                 android:title="@string/pref_user_code_postal"
                 android:summary="@string/pref_user_code_postal_summary"
                 android:key="prefUserCodePostal"/>
         <EditTextPreference
             	android:defaultValue=""
+            	android:inputType="text|textCapWords"
                 android:title="@string/pref_user_ville"
                 android:summary="@string/pref_user_ville_summary"
                 android:key="prefUserVille"/>
@@ -56,7 +69,13 @@
             android:defaultValue="France"
             android:summary="@string/pref_user_countries_summary"
             android:title="@string/pref_user_countries" />
-                
+
+<!--                 <CheckBoxPreference -->
+<!--             android:defaultValue="true" -->
+<!--                         android:summary="prout" -->
+<!--             android:title="prout" -->
+<!--             android:key="prefFirstTimeRun" > -->
+<!--         </CheckBoxPreference> -->
     </PreferenceCategory>
 
 <!--     <PreferenceCategory android:title="@string/pref_update_setting" > -->

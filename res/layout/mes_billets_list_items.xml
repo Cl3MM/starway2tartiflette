@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
     android:layout_marginTop="8dp"
-    android:background="@drawable/passager_list_item_normal"
+    android:background="@drawable/mes_billets_list_selector"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:paddingBottom="8dp"

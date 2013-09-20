@@ -47,6 +47,7 @@
 
     <EditText
         android:id="@+id/etNom"
+        android:gravity="right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -75,23 +76,24 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/table_content" />
 
-    <EditText
+    <TextView
         android:id="@+id/etAge"
+        android:gravity="right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/etNom"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
+        android:clickable="true"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_toRightOf="@+id/tvGareDepart"
-        android:ems="10"
-        android:inputType="number"
-        android:lines="1"
-        android:maxLines="1"
         android:textColor="@color/table_content"
         android:textColorHint="@color/hintColor" >
 
-    </EditText>
+    </TextView>
 
     <TextView
         android:id="@+id/textView4"
@@ -139,6 +141,7 @@
     </RelativeLayout>
 
     <EditText
+        android:gravity="right"
         android:id="@+id/etPrenom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

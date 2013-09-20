@@ -33,6 +33,8 @@
             android:id="@+id/vButtonAdd"
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="4dp"
             android:layout_marginRight="5dp"
             android:background="@drawable/add_passager_icon"
             android:duplicateParentState="true" />
@@ -41,10 +43,13 @@
             android:id="@+id/tvButtonAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/vButtonAdd"
             android:duplicateParentState="true"
             android:lines="1"
-            android:paddingRight="5dp"
+            android:paddingBottom="5dp"
+            android:paddingRight="8dp"
+            android:paddingTop="5dp"
             android:text="@string/ajouterPassager"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@drawable/add_passager_button_text" />

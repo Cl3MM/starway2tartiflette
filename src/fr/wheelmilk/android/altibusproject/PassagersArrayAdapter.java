@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import fr.wheelmilk.android.altibusproject.models.Passager;
 import android.app.Activity;
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +17,17 @@ public class PassagersArrayAdapter extends ArrayAdapter<Passager> {
 
     private ArrayList<Passager> items;
     private Context context;
-
+	private String nom;
+//	private String prenom;
+	private String saisirNom;
 
     public PassagersArrayAdapter(Context _context, int textViewResourceId, ArrayList<Passager> _passagers) {
             super(_context, textViewResourceId, _passagers);
             items = _passagers;
             context = _context;
+    		nom = context.getResources().getString(R.string.saisirNom);
+//    		prenom = context.getResources().getString(R.string.pref_user_last_name_summary);
+    		saisirNom = context.getResources().getString(R.string.saisirNomPrenom);
     }
     
 	private class PassagerHolder {
@@ -61,23 +67,30 @@ public class PassagersArrayAdapter extends ArrayAdapter<Passager> {
 			holder.vRemove.setVisibility(View.VISIBLE);
 			setSummary(p, v, holder);
 		}
-
-        holder.tvNom.setText( p.getFullName());
+		if (p.getNom().equalsIgnoreCase(nom) || TextUtils.isEmpty(p.getNom()) ) {// Pas de nom
+			holder.tvNom.setText(saisirNom);
+		} else {
+			holder.tvNom.setText( p.getFullName());
+		}
         holder.tvTitle.setText(getTitle(position));
-        holder.tvAge.setText( p.getAgeAsStringWithYear());
+
+        if (p.getAge() < 0) {
+			holder.tvAge.setText("");
+        } else { holder.tvAge.setText( p.getAgeAsStringWithYear());
+        }
 
 //        int pL = holder.rlRoot.getPaddingLeft();
 //        int pT = holder.rlRoot.getPaddingTop();
 //        int pR = holder.rlRoot.getPaddingRight();
 //        int pB = holder.rlRoot.getPaddingBottom();
-//
+
 //        holder.rlRoot.setBackgroundResource(R.drawable.passager_list_item_normal);
 //        holder.rlRoot.setPadding(pL, pT, pR, pB);
 
         return v;
 	}
 	private void setSummaryForMain(Passager p, View v, PassagerHolder holder) {
-		if (p.isValid(v.getResources())) {
+		if (p.isPassagerPrincipalValid(v.getResources())) {
 			holder.tvSummary.setTextColor(v.getResources().getColor(R.color.table_content));
 			holder.tvSummary.setText(v.getResources().getString(R.string.modifierPassagerPrincipal));
 		} else {

@@ -9,16 +9,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@+id/icon"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/tvDistance"
         android:gravity="center_vertical"
-        android:height="50dp"
         android:minHeight="50dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
+        android:text="Aigueblanche"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@drawable/text_grey_to_white" >
 
     </TextView>
+
+    <TextView
+        android:id="@+id/tvDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:layout_toLeftOf="@+id/icon"
+        android:gravity="center_vertical"
+        android:height="50dp"
+        android:minHeight="50dp"
+        android:text="13.5 km"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@drawable/text_grey_to_white" />
 
     <TextView
         android:id="@+id/icon"
@@ -26,9 +42,10 @@
         android:layout_height="18dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="5dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/ic_action_list_arrow"
         android:gravity="right" />
+
 
 </RelativeLayout>

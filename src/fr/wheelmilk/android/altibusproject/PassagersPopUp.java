@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
@@ -20,7 +21,6 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 import fr.wheelmilk.android.altibusproject.models.Passager;
-import fr.wheelmilk.android.altibusproject.models.PassagerSimpleASupprimer;
 import fr.wheelmilk.android.altibusproject.models.Passagers;
 import fr.wheelmilk.android.altibusproject.support.Config;
 import fr.wheelmilk.android.altibusproject.support.Helper;
@@ -91,6 +91,14 @@ public class PassagersPopUp extends SherlockActivity implements OnClickListener,
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
+		int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+		if (currentapiVersion >= 11) {
+			// Change la couleur du texte de l'action bar pour annuler le theme light
+			int titleId = Resources.getSystem().getIdentifier("action_bar_title", "id", "android");
+			TextView Tv = (TextView)findViewById(titleId);
+
+			Tv.setTextColor(getResources().getColor(R.color.table_background));			
+		}
 	}
 	public void displayPassagerCourant() {
 		if (passagerCourant == null) {
@@ -129,9 +137,9 @@ public class PassagersPopUp extends SherlockActivity implements OnClickListener,
 		UserPref p = new UserPref();
 		// On récupère le pref manager pour remplir le passager principal avec les valeur saisies dans "mon compte"
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		p.nom = prefs.getString("prefUserLastName", getResources().getString(R.string.saisirNom));
-		p.prenom = prefs.getString("prefUserFirstName", getResources().getString(R.string.pref_user_last_name_summary));
-		p.age = prefs.getString("prefUserAge", "0");
+		p.nom = prefs.getString("prefUserLastName", "");
+		p.prenom = prefs.getString("prefUserFirstName", "");
+		p.age = prefs.getString("prefUserAge", "-1");
 
 		p.adresse = prefs.getString("prefUserAddress", getResources().getString(R.string.pref_user_adresse));
 		p.adresse2 = prefs.getString("prefUserAddress2", getResources().getString(R.string.pref_user_adresse2));
@@ -147,7 +155,7 @@ public class PassagersPopUp extends SherlockActivity implements OnClickListener,
 		UserPref p = new UserPref();
 		p.nom = getResources().getString(R.string.saisirNom);
 		p.prenom = getResources().getString(R.string.pref_user_last_name_summary);
-		p.age = "0";
+		p.age = "-1";
 
 		return p;
 	}
@@ -173,7 +181,7 @@ public class PassagersPopUp extends SherlockActivity implements OnClickListener,
 					Helper.grilledWellDone(this, getResources().getString(R.string.displayFillUpMessage));
 					displayFillUpMessage = false;
 				}
-				passagers.add(new PassagerSimpleASupprimer( getDefaultPreferences().nom, getDefaultPreferences().prenom, getDefaultPreferences().age) );
+				passagers.add(new Passager( getDefaultPreferences().nom, getDefaultPreferences().prenom, getDefaultPreferences().age) );
 				refreshListView();
 			} else {
 				Helper.grilledRare(this, getResources().getString(R.string.pasPlusdeDouze));
@@ -284,6 +292,7 @@ public class PassagersPopUp extends SherlockActivity implements OnClickListener,
     public void onDestroyActionMode(ActionMode mode) {
     	mMode = null;
     	Log.v(this.getClass().toString(), "onDestroyActionMode");
+		refreshListView();
 		displayPassagerCourant();
     }
 

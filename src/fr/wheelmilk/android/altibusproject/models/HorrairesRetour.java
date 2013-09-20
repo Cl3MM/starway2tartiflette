@@ -2,6 +2,7 @@ package fr.wheelmilk.android.altibusproject.models;
 
 import org.simpleframework.xml.Element;
 
+import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -85,4 +86,8 @@ public class HorrairesRetour implements GaresDataModel {
 	            return new HorrairesRetour[size];
 	        }
 	    };
+		@Override
+		public Location location() {
+			return null;
+		}
 	}

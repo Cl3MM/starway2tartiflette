@@ -1,11 +1,16 @@
 package fr.wheelmilk.android.altibusproject;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
@@ -20,7 +25,7 @@ public class EditionPassager extends SherlockActivity implements OnClickListener
 	Passager passager;
 	EditText etNom;
 	EditText etPrenom;
-	EditText etAge;
+	TextView etAge;
 	
 
 	@Override
@@ -30,6 +35,15 @@ public class EditionPassager extends SherlockActivity implements OnClickListener
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
+		int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+		if (currentapiVersion >= 11) {
+			// Change la couleur du texte de l'action bar pour annuler le theme light
+			int titleId = Resources.getSystem().getIdentifier("action_bar_title", "id", "android");
+			TextView Tv = (TextView)findViewById(titleId);
+
+			Tv.setTextColor(getResources().getColor(R.color.table_background));			
+		}
+
 		// get Extras from bundle and setup class attributes
 		initialize(getIntent().getExtras());
 
@@ -38,12 +52,13 @@ public class EditionPassager extends SherlockActivity implements OnClickListener
 		
 		etNom = (EditText) findViewById(R.id.etNom); 
 		etPrenom = (EditText) findViewById(R.id.etPrenom); 
-		etAge = (EditText) findViewById(R.id.etAge); 
+		etAge = (TextView) findViewById(R.id.etAge); 
 		
+		etAge.setOnClickListener(this);
 		
 		etNom.setHint(getResources().getString(R.string.saisirNom));
 		etPrenom.setHint(getResources().getString(R.string.saisirPrenom));
-		etAge.setHint(getResources().getString(R.string.saisirAgeString));
+		etAge.setHint(getResources().getString(R.string.clickAge));
 
 		if( passager.isValid(getResources())) {
 			etNom.setText(passager.getNom());
@@ -80,20 +95,42 @@ public class EditionPassager extends SherlockActivity implements OnClickListener
 		finish();
 		return false;
     }
-
+	private CharSequence[] generateAgeList() {
+		CharSequence[] cs = new CharSequence[121];
+		for(int i = 0; i < 121; i++) {
+			cs[i] = String.valueOf(i);
+		}
+		return cs;
+	}
 	@Override
 	public void onClick(View v) {
-		// update Passager with textview content
-		passager.setAge(etAge.getText().toString());
-		passager.setNom(etNom.getText().toString());
-		passager.setPrenom(etPrenom.getText().toString());
+		int vid = v.getId();
 		
-		if (passager.isValid(getResources())) { // Si le passager saisi est valide alors on retourne à l'activité précédente
-			returnCode = RESULT_OK;
-			finish();
-		} else {
-			SimpleAlertDialog dialog = new SimpleAlertDialog(this, passager.errorMessages());
-			dialog.show();
+		if (vid == R.id.etAge) {
+			final AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar));
+			final CharSequence[] countries = generateAgeList();
+			builder.setTitle("Sélectionnez votre Age").setItems(countries, new DialogInterface.OnClickListener() {
+	               public void onClick(DialogInterface dialog, int which) {
+	                   // The 'which' argument contains the index position
+	                   // of the selected item
+	            	   etAge.setText(countries[which]);
+	               }
+	        });
+			final AlertDialog alert = builder.create();
+			alert.show();
+		} else if (vid == R.id.rlValidPassagers) {
+			// update Passager with textview content
+			passager.setAge(etAge.getText().toString());
+			passager.setNom(etNom.getText().toString());
+			passager.setPrenom(etPrenom.getText().toString());
+			
+			if (passager.isValid(getResources())) { // Si le passager saisi est valide alors on retourne à l'activité précédente
+				returnCode = RESULT_OK;
+				finish();
+			} else {
+				SimpleAlertDialog dialog = new SimpleAlertDialog(this, passager.errorMessages());
+				dialog.show();
+			}
 		}
 	}
 }
