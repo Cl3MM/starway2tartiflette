@@ -70,6 +70,7 @@ public class PageHorraires extends PageFactory {
 	    intent.putExtra("gareAl", (GaresDepart) tvGareAller.getTag());
 	    intent.putExtra("gareAr", (GaresArrivee) tvGareArrivee.getTag());
 	    intent.putExtra("horraireA", (HorrairesAller) tvHeureAller.getTag());
+	    intent.putExtra("allersimple", as.isChecked());
 	    Date da = (Date) tvDateAller.getTag();
 	    Date dr = null;
 	    intent.putExtra("dateA", da.getTime() );

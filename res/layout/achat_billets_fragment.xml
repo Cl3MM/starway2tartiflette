@@ -393,8 +393,6 @@
                 android:id="@+id/rlButtonPaiement"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/add_passager_button"
                 android:clickable="true"
@@ -406,6 +404,7 @@
                     android:id="@+id/rlCommandCenter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:duplicateParentState="true"
                     android:layout_centerInParent="true" >
 
                     <View

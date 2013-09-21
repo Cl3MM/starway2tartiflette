@@ -52,6 +52,7 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 	ToggleButton ar;
 	TimetableMainOnClickListener onClick;
 	protected View layoutView;
+	protected Bundle savedBundle = null;
 
 	public void setTagResult(Intent data, TextView tv) {
 		String result = data.getExtras().getString("result");
@@ -124,8 +125,7 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 				setHorrairesTvAfterPopUp(data, tvHeureRetour);
 				break;
 			}
-		}
-		int i = 2;		
+		}	
 	}
 
 	private void setHorrairesTvAfterPopUp(Intent data, TextView tv) {
@@ -145,10 +145,32 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	public void onCreate(Bundle bundle) {
+		super.onCreate(bundle);
+		if( bundle != null ) savedBundle = bundle;
+
 		setUpPopUpColor();
 		fragVal = getArguments() != null ? getArguments().getInt("val") : 1;
+	}
+	protected void loadInstance(Bundle bundle) {
+		Date da = null;
+		if (bundle.getLong("dateA") != -1) {
+			da = new Date(bundle.getLong("dateA"));
+		}
+		GaresDepart gd = bundle.getParcelable("gareAl");
+		GaresArrivee ga = bundle.getParcelable("gareAr");
+		HorrairesAller ha = bundle.getParcelable("horraireA");
+		boolean allerSimple = bundle.getBoolean("allersimple");
+		Date dr = null;
+		if (bundle.containsKey("dateR")) { 
+			dr = new Date(bundle.getLong("dateR"));
+		}
+		HorrairesRetour hr = null;
+		if (bundle.containsKey("horraireR")) {
+			hr = bundle.getParcelable("horraireR");
+		}
+		createNewSearchFromPageHorraires(gd, ga, da, ha, dr, hr, allerSimple);
+		savedBundle = null;
 	}
 
 	protected void setUpPopUpColor() {
@@ -189,6 +211,11 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 		llRetour.setVisibility(View.GONE);
 		setDeveloppmentTestData();
 		setUpChildrenPages();
+
+		// restoring fragment state after orientation change
+		if (savedBundle != null ) {
+			loadInstance(savedBundle);
+		}
 		return layoutView;
 	}
 	protected void setUpChildrenPages() {
@@ -270,17 +297,20 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 			as.setChecked(true);
 			ar.setChecked(false);
 //			fadeOutAnimation(); 
-			llRetour.setVisibility(View.GONE);
-			tvHeureRetour.setTag(null);
-			tvHeureRetour.setText(getString(R.string.rechercherhoraireRetour));
-			tvDateRetour.setTag(null);
-			tvDateRetour.setText(getString(R.string.rechercheDateRetour));
+			disableRetourField();
 			updateMontant();
 //			llRetour.startAnimation(new LinearLayoutVerticalScaleAnimation(1.0f, 1.0f, 1.0f, 0.0f, 500, llRetour, true));
 		} else {
 			as.setChecked(true);
 			ar.setChecked(false);
 		}
+	}
+	protected void disableRetourField() {
+		llRetour.setVisibility(View.GONE);
+		tvHeureRetour.setTag(null);
+		tvHeureRetour.setText(getString(R.string.rechercherhoraireRetour));
+		tvDateRetour.setTag(null);
+		tvDateRetour.setText(getString(R.string.rechercheDateRetour));
 	}
 	protected void updateMontant() {
 		new UnsupportedOperationException("Please implement this method in child classes");
@@ -303,8 +333,8 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 		String gareAllerText = (String) this.tvGareAller.getText();
 		String gareArriveeText = (String) this.tvGareArrivee.getText();
 
-		// Arrghhh Android 14 suxxx, I have to convert the switch statement to if-else 
-		// because of a problem cause by lookup of R.id.xxx
+		// Arrghhh Android 14 suxxx, I had to convert the switch statement to if-else 
+		// because of a problem caused by lookup of R.id.xxx
 		//
 		if (vid == R.id.allerSimple) {
 			toggleAllerSimple();
@@ -432,7 +462,7 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 		case 0:
 			geoLocate();
 			break;
-			// non
+		// non
 		case 1:
 			startGareAllerPopUpActivity(false);
 			break;
@@ -443,11 +473,8 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 		LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE );
 		boolean statusOfGPS = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 		Log.v(getClass().toString(), "GPS :" + (statusOfGPS ? "ON" : "OFF"));
-		if (statusOfGPS) {
-			startGareAllerPopUpActivity(true);
-		} else {
-			buildAlertMessageNoGps();
-		}
+		if (statusOfGPS) startGareAllerPopUpActivity(true);
+		else buildAlertMessageNoGps();
 	}
 
 	private void buildAlertMessageNoGps() {
@@ -473,9 +500,96 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 		final AlertDialog alert = builder.create();
 		alert.show();
 	}
-//	@Override
-//	public void onSaveInstanceState(Bundle outState) {
-//		super.onSaveInstanceState(outState);
-//		outState.putInt("mColorRes", mColorRes);
-//	}
+
+	@Override
+	public void onSaveInstanceState(Bundle data) {
+	   super.onSaveInstanceState(data);
+	   data.putString("action", "nouvelAchat");
+	   data.putParcelable("gareAl", (GaresDepart) tvGareAller.getTag());
+	   data.putParcelable("gareAr", (GaresArrivee) tvGareArrivee.getTag());
+	   data.putParcelable("horraireA", (HorrairesAller) tvHeureAller.getTag());
+	   data.putBoolean("allersimple", as.isChecked());
+	    Date da = (Date) tvDateAller.getTag();
+	    Date dr = null;
+	    if (da == null) data.putLong("dateA", -1 );
+	    else data.putLong("dateA", da.getTime() );
+
+		if (tvDateRetour.getTag() != null) {
+			dr = (Date) tvDateRetour.getTag();
+			data.putLong("dateR", dr.getTime());
+		}
+
+	    if ( tvHeureRetour.getTag() != null ) {
+	    	data.putParcelable("horraireR", (HorrairesRetour) tvHeureRetour.getTag());
+	    }	    
+	}
+	
+	/***
+	 * Remplit le fragment avec les données sauvegardées dans le bundle lors d'un changement d'orientation
+	 * ou lorsque l'on clique sur "Acheter le billet" dans l'écran Horraires
+	 * @param _gd
+	 * @param _ga
+	 * @param _da
+	 * @param _ha
+	 * @param _dr
+	 * @param _hr
+	 * @param allerSimple
+	 */
+	public void createNewSearchFromPageHorraires(GaresDepart _gd, GaresArrivee _ga, Date _da, 
+		HorrairesAller _ha, Date _dr, HorrairesRetour _hr, boolean allerSimple) {
+		tvGareAller.setTag(_gd);
+		if (_gd == null) tvGareAller.setText(getString(R.string.rechercherGareDepart));
+		else tvGareAller.setText(_gd.gareName());
+		
+		tvGareArrivee.setTag(_ga);
+		if (_ga == null) tvGareArrivee.setText(getString(R.string.rechercherGareArrivee));
+		else tvGareArrivee.setText(_ga.gareName());
+		
+		tvDateAller.setTag(_da);
+		if (_da == null) tvDateAller.setText(getString(R.string.rechercheDateAller));
+		else tvDateAller.setText(Helper.prettifyDate(_da, null));
+		
+		tvHeureAller.setTag(_ha);
+		if (_dr == null) 
+			tvHeureAller.setText(getString(R.string.rechercherhoraireAller));
+		else {
+			StringBuilder s = new StringBuilder(_ha.heureAller());
+			s.append(" - ").append(_ha.heureArrivee());
+			tvHeureAller.setText(s);
+		}		
+		
+		if (allerSimple) {
+			as.setChecked(true);
+			ar.setChecked(false);
+			disableRetourField();
+		} else {
+			as.setChecked(false);
+			ar.setChecked(true);
+			llRetour.setVisibility(View.VISIBLE);
+		}
+
+		tvHeureAller.setTag(_ha);
+		if (_ha == null) 
+			tvHeureAller.setText(getString(R.string.rechercherhoraireAller));
+		else {
+			StringBuilder s = new StringBuilder(_ha.heureAller());
+			s.append(" - ").append(_ha.heureArrivee());
+			tvHeureAller.setText(s);
+		}		
+		
+		tvDateRetour.setTag(_dr);
+		if (_dr == null) tvDateRetour.setText(getString(R.string.rechercheDateRetour));
+		else {
+			tvDateRetour.setText(Helper.prettifyDate(_dr, null));
+			llRetour.setVisibility(View.VISIBLE);
+		}
+		tvHeureAller.setTag(_ha);
+		if (_hr == null) 
+			tvHeureRetour.setText(getString(R.string.rechercherhoraireRetour));
+		else {
+			StringBuilder s = new StringBuilder(_hr.heureAller());
+			s.append(" - ").append(_hr.heureArrivee());
+			tvHeureRetour.setText(s);
+		}
+	}
 }

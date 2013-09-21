@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import fr.wheelmilk.android.altibusproject.models.AltibusDataReservation;
 import fr.wheelmilk.android.altibusproject.models.Billet;
@@ -33,6 +34,7 @@ public class PageAchat extends PageFactory implements OnWebserviceListenner, Dia
 	protected TextView tvMontant;
 	private AltibusDataReservation reservation;
 	SimpleAlertDialog mDialog;
+	private RelativeLayout rlButtonPaiement;
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -47,6 +49,16 @@ public class PageAchat extends PageFactory implements OnWebserviceListenner, Dia
 			}
 		} else {
 			super.onActivityResult(requestCode, resultCode, data);
+		}
+		setCommandButtonState();
+	}
+
+	private void setCommandButtonState() {
+		if( (!passagers.isEmpty() && tvGareAller.getTag() != null && tvGareArrivee.getTag() != null && tvDateAller.getTag() != null && tvHeureAller.getTag() != null) 
+				&& ( (ar.isChecked() && tvDateRetour.getTag() != null && tvHeureRetour.getTag() != null) || as.isChecked() ) ) {
+			rlButtonPaiement.setEnabled(true);
+		} else {
+			rlButtonPaiement.setEnabled(false);
 		}
 	}
 
@@ -145,6 +157,9 @@ public class PageAchat extends PageFactory implements OnWebserviceListenner, Dia
 		tvMontant = (TextView) layoutView.findViewById(R.id.tvMontant);
 //		tvMontant.setTextColor(getResources().getColor(R.color.greenFont));
 		tvMontant.setText("");
+		
+		rlButtonPaiement = (RelativeLayout) layoutView.findViewById(R.id.rlButtonPaiement);
+		rlButtonPaiement.setEnabled(false);
 	}
 	static PageAchat init(int val) {
 		PageAchat page = new PageAchat();
@@ -181,8 +196,12 @@ public class PageAchat extends PageFactory implements OnWebserviceListenner, Dia
 			billet.setReservation(reservation.reservation);
 			Log.v(this.getClass().toString(), "Montant: " + reservation.getMontant());
 			tvMontant.setText( reservation.getPrettyMontant() );
+			tvMontant.setTag( reservation.getMontant() );
+			rlButtonPaiement.setEnabled(true);
 		} else {
+			rlButtonPaiement.setEnabled(false);
 			tvMontant.setText( "" );
+			tvMontant.setTag(null);
 			// Problème de sérialisation
 			Log.v(this.getClass().toString(), "Serializer faillure :(");
 		}
@@ -190,9 +209,23 @@ public class PageAchat extends PageFactory implements OnWebserviceListenner, Dia
 	@Override
 	public void onWebserviceFailure() {
 		layoutView.findViewById(R.id.rlLoading).setVisibility(View.GONE);
+		Helper.grilledRare(getActivity(), "Délai d'attente au serveur dépassé. Veuillez réessayer.");
 		Log.v(this.getClass().toString(), "Webservice Failure :(");
 	}
-	
+	@Override
+	protected void toggleAllerRetour() {
+		if (as.isChecked() && ar.isChecked()) {
+			as.setChecked(false);
+			ar.setChecked(true);
+	//		fadeInAnimation();
+			llRetour.setVisibility(View.VISIBLE);
+			rlButtonPaiement.setEnabled(false);
+	//		llRetour.startAnimation(new LinearLayoutVerticalScaleAnimation(1.0f, 1.0f, 0.0f, 1.0f, 500, llRetour, false));
+		} else {
+			as.setChecked(false);
+			ar.setChecked(true);
+		}
+	}
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -235,38 +268,32 @@ public class PageAchat extends PageFactory implements OnWebserviceListenner, Dia
 		tvDateAller.setText(getString(R.string.rechercheDateAller));
 		tvDateRetour.setTag(null);
 		tvDateRetour.setText(getString(R.string.rechercheDateRetour));
+		
+		tvPassagers.setTag(null);
+		tvPassagers.setText(getString(R.string.entrezPassagers));
+		passagers = new Passagers();
+
+		rlButtonPaiement.setEnabled(false);
 		reservation = null;
 		billet = new Billet();
 	}
-	
-	public void createNewSearchFromPageHorraires(GaresDepart _gd, GaresArrivee _ga, Date _da, HorrairesAller _ha, Date _dr, HorrairesRetour _hr) {
-		tvGareAller.setTag(_gd);
-		tvGareAller.setText(_gd.gareName());
-		tvGareArrivee.setTag(_ga);
-		tvGareArrivee.setText(_ga.gareName());
-		tvDateAller.setTag(_da);
-		tvDateAller.setText(Helper.prettifyDate(_da, null));
-		tvDateRetour.setTag(_dr);
-		tvHeureAller.setTag(_ha);
-		StringBuilder s = new StringBuilder(_ha.heureAller());
-		s.append(" - ").append(_ha.heureArrivee());
-		
-		tvHeureAller.setText(s);
-		
-		if (_dr != null) {
-			tvDateRetour.setText(Helper.prettifyDate(_dr, null));
-			llRetour.setVisibility(View.VISIBLE);
-		} else {
-			tvDateRetour.setText(getString(R.string.rechercheDateRetour));			
-		}
-		tvHeureRetour.setTag(_hr);
-		if (_hr != null) {
-			s = new StringBuilder(_hr.heureAller());
-			s.append(" - ").append(_hr.heureArrivee());
-			tvHeureRetour.setText(s.toString());
-		} else {
-			tvHeureRetour.setText(getString(R.string.rechercherhoraireRetour));
-		}
+	@Override
+	public void createNewSearchFromPageHorraires(GaresDepart _gd, GaresArrivee _ga, Date _da, 
+			HorrairesAller _ha, Date _dr, HorrairesRetour _hr, boolean allerSimple) {
+		super.createNewSearchFromPageHorraires(_gd, _ga, _da, _ha, _dr, _hr, allerSimple);
 		reservation = null;
+	}
+	@Override
+	public void onSaveInstanceState(Bundle data) {
+		Log.v(getClass().toString(), "Saving instance...");
+		super.onSaveInstanceState(data);
+		data.putParcelable("passagers", passagers);
+	}
+	@Override
+	protected void loadInstance(Bundle savedInstanceState) {
+		passagers = savedInstanceState.getParcelable("passagers");
+		if (passagers != null) 
+			if (passagers.size() > 0) tvPassagers.setText(String.valueOf(passagers.size()));
+		super.loadInstance(savedInstanceState);
 	}
 }

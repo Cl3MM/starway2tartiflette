@@ -201,6 +201,7 @@ public class AltibusMainActivity extends SlidingFragmentActivity {
 				GaresDepart gd = extras.getParcelable("gareAl");
 				GaresArrivee ga = extras.getParcelable("gareAr");
 				HorrairesAller ha = extras.getParcelable("horraireA");
+				boolean allerSimple = extras.getBoolean("allersimple");
 				Date dr = null;
 				if (extras.containsKey("dateR")) { 
 					dr = new Date(extras.getLong("dateR"));
@@ -212,7 +213,7 @@ public class AltibusMainActivity extends SlidingFragmentActivity {
 				
 				int position = 0; // Fragment mes billets en position 2 
 				PageAchat f = (PageAchat) AltibusFragmentAdapter.getRegisteredFragment(position);
-				f.createNewSearchFromPageHorraires(gd, ga, da, ha, dr, hr);
+				f.createNewSearchFromPageHorraires(gd, ga, da, ha, dr, hr, allerSimple);
 				mPager.setCurrentItem(position, true);
 //				switchToMesBillets();
 			}

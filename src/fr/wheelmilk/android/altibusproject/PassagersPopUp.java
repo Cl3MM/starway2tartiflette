@@ -1,5 +1,7 @@
 package fr.wheelmilk.android.altibusproject;
 
+import java.util.Date;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -20,6 +22,10 @@ import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
+import fr.wheelmilk.android.altibusproject.models.GaresArrivee;
+import fr.wheelmilk.android.altibusproject.models.GaresDepart;
+import fr.wheelmilk.android.altibusproject.models.HorrairesAller;
+import fr.wheelmilk.android.altibusproject.models.HorrairesRetour;
 import fr.wheelmilk.android.altibusproject.models.Passager;
 import fr.wheelmilk.android.altibusproject.models.Passagers;
 import fr.wheelmilk.android.altibusproject.support.Config;
@@ -55,11 +61,18 @@ public class PassagersPopUp extends SherlockActivity implements OnClickListener,
 	@Override
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
+		
 		// On récupère le pref manager pour remplir le passager principal avec les valeur saisies dans "mon compte"
 		preferences = getUserPreferences();
 
 		initialize(getIntent().getExtras());
 		setContentView(R.layout.passagers_popup);
+
+		if( bundle != null ) {
+			Log.v(getClass().toString(), "Loading instance...");
+			passagers = bundle.getParcelable("passagers");
+			Log.v(getClass().toString(), "Nombre de passagers: " + passagers.size());
+		}
 
 		edit 	= getResources().getString(R.string.editer);
 		delete 	= getResources().getString(R.string.supprimer);
@@ -119,7 +132,6 @@ public class PassagersPopUp extends SherlockActivity implements OnClickListener,
 	    	mMode = startActionMode(this);
 //			finish();
 		}
-		
 	}
 	private class UserPref {
 		String nom;
@@ -313,10 +325,14 @@ public class PassagersPopUp extends SherlockActivity implements OnClickListener,
 	}
 	private void updatePassagers(Intent data) {
 		Passager p = data.getParcelableExtra("passager");
-		// TODO : comparer les passagers pour updater
-		// TODO : rafraichir que le passager modifié
 		passagers.set(p.getPosition(), p);
 		refreshListView();
 		passagerCourant = null;
+	}
+	@Override
+	public void onSaveInstanceState(Bundle data) {
+	   super.onSaveInstanceState(data);
+	   data.putParcelable("passagers", passagers);
+	   Log.v(getClass().toString(),"Saving Passagers instance");
 	}
 }

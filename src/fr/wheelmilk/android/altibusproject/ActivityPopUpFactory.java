@@ -91,7 +91,8 @@ public abstract class ActivityPopUpFactory extends SherlockActivity implements O
 		listeDesGares = (ListView) findViewById(R.id.listDesGares);
 //		LayoutAnimationController lac = new LayoutAnimationController(AnimationUtils.loadAnimation(this, R.anim.fadein));
 //	    lac.setDelay(0.02f);
-//	    listeDesGares.setLayoutAnimation(lac);  
+//	    listeDesGares.setLayoutAnimation(lac);
+		listeDesGares.setTextFilterEnabled(true);
 		listeDesGares.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
@@ -113,7 +114,9 @@ public abstract class ActivityPopUpFactory extends SherlockActivity implements O
 		filterGareAller.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+				Log.v(getClass().toString(), "CS: "+cs);
 				arrayAdapter.getFilter().filter(cs.toString().replace("\n", ""));
+				Log.v(getClass().toString(), arrayAdapter.getFilter().toString());
 			}
 			@Override
 			public void beforeTextChanged(CharSequence cs, int arg1, int arg2, int arg3) { }
