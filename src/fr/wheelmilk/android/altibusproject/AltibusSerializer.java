@@ -21,7 +21,6 @@ public class AltibusSerializer<T> {
 	      return classObjectToSerialize;
 	    }
 	public AltibusDataModel serializeXml( String xmlString ) {
-		Log.v(getClass().toString(), xmlString);
 		Serializer serializer = new Persister();
 		Reader reader = new StringReader(xmlString);
 			
@@ -37,8 +36,6 @@ public class AltibusSerializer<T> {
 
 		Serializer serializer = new Persister();
 		Reader reader = new StringReader(xmlString);
-		Log.v(this.getClass().toString(), "klass: " + getClassToSerialize().toString());
-//		Log.v(this.getClass().toString(), "klass: " + klass.toString());
 		try {
 			return serializer.read(getClassToSerialize(), reader, false);
 		} catch (Exception e) {
@@ -47,33 +44,3 @@ public class AltibusSerializer<T> {
 		}
 	}
 }
-//public class AltibusSerializer {
-//	Class<AltibusDataModel> klass; // Type of object to build
-//		
-//	public AltibusDataModel serializeXml( String xmlString ) {
-//
-//		Serializer serializer = new Persister();
-//		Reader reader = new StringReader(xmlString);
-//			
-//		try {
-//			return serializer.read(AltibusDataModel.class, reader, false);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			return null;
-//		}
-//	}
-//
-//	public <T> Object serializeXmlToObject( String xmlString ) {
-//
-//		Serializer serializer = new Persister();
-//		Reader reader = new StringReader(xmlString);
-//		Log.v(this.getClass().toString(), "klass: " + klass.getClass().toString());
-//		Log.v(this.getClass().toString(), "klass: " + klass.toString());
-//		try {
-//			return serializer.read(klass, reader, false);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			return null;
-//		}
-//	}
-//}

@@ -20,6 +20,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
+import com.loopj.android.http.RequestParams;
+
 import fr.wheelmilk.android.altibusproject.models.AltibusDataModel;
 import fr.wheelmilk.android.altibusproject.models.Gares4Geoloc;
 import fr.wheelmilk.android.altibusproject.models.GaresDataModel;
@@ -40,7 +42,7 @@ public abstract class ActivityPopUpFactory extends SherlockActivity implements O
 	protected LocationManager locationManager;
 	protected AltibusDataModel altibusDataModel;
 
-	protected void startAsyncHTTPRequest() {
+	protected void startHorairesAsyncHTTPRequest() {
 		new UnsupportedOperationException("Please implement this method in subclasses");
 	}
 
@@ -78,7 +80,7 @@ public abstract class ActivityPopUpFactory extends SherlockActivity implements O
 		initialize(getIntent().getExtras());
 
 		// on lance la requête au webservice
-		startAsyncHTTPRequest();
+		startHorairesAsyncHTTPRequest();
 
 		llHeaderProgress = (LinearLayout) findViewById(R.id.llHeaderProgress);
 		llPopupContent = (LinearLayout) findViewById(R.id.llPopupContent);
@@ -131,17 +133,18 @@ public abstract class ActivityPopUpFactory extends SherlockActivity implements O
 		return false;
     }
 	protected void onPreFinish() {
-		Intent data = new Intent();
-		Bundle b = new Bundle();
-		b.putParcelable("tag", altibusData.get(result));
-		data.putExtra("result", result);
-		data.putExtras(b);
-		setResult(returnCode, data);
+		if (returnCode == RESULT_OK) {
+			Intent data = new Intent();
+			Bundle b = new Bundle();
+			b.putParcelable("tag", altibusData.get(result));
+			data.putExtra("result", result);
+			data.putExtras(b);
+			setResult(returnCode, data);
+		} else setResult(returnCode);
 	}
 	@Override
 	public void finish() {
-		if (returnCode == RESULT_OK) onPreFinish();
-		else setResult(returnCode);
+		onPreFinish();
 		super.finish();
 		overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
 	}
@@ -168,10 +171,10 @@ public abstract class ActivityPopUpFactory extends SherlockActivity implements O
 		llHeaderProgress.setVisibility(View.GONE);
 		llPopupContent.setVisibility(View.VISIBLE);
 	}
-
 	@Override
 	public void onWebserviceSuccess(String xmlString) {
 
+		Log.v(getClass().toString(), xmlString);
 		altibusDataModel = new AltibusSerializer(AltibusDataModel.class).serializeXml(xmlString);
 
 		if (altibusDataModel != null) {

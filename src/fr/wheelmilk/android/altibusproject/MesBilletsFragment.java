@@ -1,6 +1,7 @@
 package fr.wheelmilk.android.altibusproject;
 
 import android.os.Bundle;
+import android.view.View;
 
 public class MesBilletsFragment extends ListeBilletsFragment {
 

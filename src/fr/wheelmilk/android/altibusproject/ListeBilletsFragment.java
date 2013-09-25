@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -22,7 +23,7 @@ import fr.wheelmilk.android.altibusproject.support.Config;
 import fr.wheelmilk.android.altibusproject.support.DatabaseHelper;
 import fr.wheelmilk.android.altibusproject.support.Helper;
 
-public abstract class ListeBilletsFragment extends SherlockFragment { //implements OnItemClickListener {
+public abstract class ListeBilletsFragment extends SherlockFragment implements OnClickListener { //implements OnItemClickListener {
 	int fragVal;
 //	FragmentPagerAdapter pager;
 
@@ -77,21 +78,12 @@ public abstract class ListeBilletsFragment extends SherlockFragment { //implemen
 		lvBillets.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3) {
-//				PassagerActionMode am = new PassagerActionMode( v.getResources(), passagers.get(position) );
-//				mMode = startActionMode(am);
 				onItemClicked(v, position);
 				Log.v(LOG_TAG, "item Clicked :" + position);
 			}
 		});
-//				new OnItemClickListener() {
-//			@Override
-//			public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3) {
-//				Log.v(LOG_TAG, "item Clicked :" + position);
-//				onItemClicked(v, position);
-//			}
-//		});
 		
-		aaBillets = new BilletsArrayAdapter(getActivity(), R.layout.passagers_list_item, billets);
+		aaBillets = new BilletsArrayAdapter(getActivity(), R.layout.passagers_list_item, billets, this);
 		lvBillets.setAdapter(aaBillets);
 		addItemToLayoutOnCreate();
 		return layoutView;
@@ -106,10 +98,6 @@ public abstract class ListeBilletsFragment extends SherlockFragment { //implemen
 		new UnsupportedOperationException("Please Override this method in child classes");
 	}
 	protected void onItemClicked(View v, int position) {
-		Log.v(LOG_TAG, "item Clicked :" + position);
-		Log.v(LOG_TAG, "Nom :" + billets.get(position).getNom());
-		Log.v(LOG_TAG, "Prenom :" + billets.get(position).getPrenom());
-		Log.v(LOG_TAG, "Nb :" + billets.get(position).getNb());
 		Intent i = new Intent(this.getActivity(), BilletCompostagePopUp.class);
 		i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
 		Bundle b = new Bundle();
@@ -171,5 +159,11 @@ public abstract class ListeBilletsFragment extends SherlockFragment { //implemen
 			OpenHelperManager.releaseHelper();
 			databaseHelper = null;
 		}
+	}
+
+	@Override
+	public void onClick(View arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }

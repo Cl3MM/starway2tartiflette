@@ -19,6 +19,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class HistoriqueFragment extends ListeBilletsFragment implements ActionMode.Callback, OnClickListener {
@@ -49,13 +50,41 @@ public class HistoriqueFragment extends ListeBilletsFragment implements ActionMo
 	}
 	@Override
 	protected void onItemClicked(View v, int position) {
-		Log.v(LOG_TAG, "item Clicked :" + position);
-		Log.v(LOG_TAG, "Nom :" + billets.get(position).getNom());
-		Log.v(LOG_TAG, "Prenom :" + billets.get(position).getPrenom());
-		Log.v(LOG_TAG, "Nb :" + billets.get(position).getNb());
 		
 		billetCourant = billets.get(position);
-    	mMode = getSherlockActivity().startActionMode(this);
+//    	mMode = getSherlockActivity().startActionMode(this);
+	}
+
+	@Override
+	public void onClick(View v) {
+		int vid = v.getId();
+		int position = lvBillets.getPositionForView(v);
+        if (position != ListView.INVALID_POSITION) {
+            Log.v(getClass().toString(), "Billet : " + aaBillets.getItem(position) );
+            billetCourant = aaBillets.getItem(position);
+        } else billetCourant = null;
+
+        if (billetCourant != null) 
+			if (vid == R.id.itrash) { //user pressed information button
+				SimpleAlertDialog dlg = new SimpleAlertDialog(getActivity(), getString(R.string.confirmDeleteOutdated),	getString(R.string.supprimer), getString(R.string.cancel), this);
+				Log.v(getClass().toString(), "Supprimer");
+				dlg.setTitle("Supprimer le billet ?");
+				dlg.show();
+			} else if ( vid == R.id.iSee) { // user pressed trash button
+				Log.v(getClass().toString(), "Voir");
+		        if (position != ListView.INVALID_POSITION) {
+		            Log.v(getClass().toString(), "Billet : " + aaBillets.getItem(position) );
+		        }
+				Intent i = new Intent(this.getActivity(), BilletCompostagePopUp.class);
+				i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
+				Bundle b = new Bundle();
+				
+				b.putParcelable("billetDB", billetCourant);
+				i.putExtras(b);
+				startActivityForResult(i, Config.COMPOSTAGE_BILLET_RETOUR_CODE);
+				getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+				billetCourant = null;
+			}
 	}
 	@Override
 	public void startLoadFromDatabase() {
@@ -98,8 +127,8 @@ public class HistoriqueFragment extends ListeBilletsFragment implements ActionMo
 	@Override
 	public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
     	if ( billetCourant != null ) {
-			Log.v(this.getClass().toString(), item.getTitle().toString());
-			Log.v(this.getClass().toString(), "Passager: " + billetCourant.toString());
+			Log.v(getClass().toString(), item.getTitle().toString());
+			Log.v(getClass().toString(), "Passager: " + billetCourant.toString());
 			if ( edit.equals( item.getTitle().toString() ) ) { // On edite lance l'activité d'édition de passager
 				Intent i = new Intent(this.getActivity(), BilletCompostagePopUp.class);
 				i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -111,7 +140,7 @@ public class HistoriqueFragment extends ListeBilletsFragment implements ActionMo
 				getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 				billetCourant = null;
 			} if ( delete.equals( item.getTitle().toString() ) ) {
-				SimpleAlertDialog dlg = new SimpleAlertDialog(getActivity(), "Etes vous sur de vouloir supprimer ce billet ?\n\nLa suppression sera irréverssible",
+				SimpleAlertDialog dlg = new SimpleAlertDialog(getActivity(), getString(R.string.confirmDeleteOutdated),
 						"Supprimer", "Annuler", this);
 				dlg.setTitle("Attention");
 				dlg.show();

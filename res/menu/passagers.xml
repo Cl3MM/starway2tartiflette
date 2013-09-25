@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/addPassager" android:icon="@drawable/ic_action_add_passager" android:title="@string/addPassager" android:showAsAction="always"/>
+    <item android:id="@+id/item_text"
+        android:title="@string/emptyString" 
+        android:showAsAction="always"
+        android:actionLayout="@layout/ab_passagers"/>
+    <item android:id="@+id/delPassager" android:icon="@drawable/ic_action_delete_passager_light" android:title="@string/supprimer" android:showAsAction="always"/>
+    <item android:id="@+id/editPassager" android:icon="@drawable/ic_action_edit_passager" android:title="@string/editer" android:showAsAction="always"/>
 </menu>

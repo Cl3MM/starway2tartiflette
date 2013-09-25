@@ -8,7 +8,7 @@ import android.os.Parcelable;
 @Element(name="reservation")
 public class Reservation implements Parcelable {
 
-	public Reservation(	@Element(name = "montant") String _montant, 	@Element(name = "refReservation") String _refReservation) {
+	public Reservation(	@Element(name = "montant") String _montant, @Element(name = "refReservation") String _refReservation) {
 		refReservation = _refReservation;
 		montant = _montant;
 	}

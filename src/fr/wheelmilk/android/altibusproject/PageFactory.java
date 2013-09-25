@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.loopj.android.http.RequestParams;
 
 import fr.wheelmilk.android.altibusproject.models.GaresArrivee;
 import fr.wheelmilk.android.altibusproject.models.GaresDataModel;
@@ -79,6 +80,8 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 		String result = null;
 		GaresDataModel tag = null;
 		Date date = null;
+		String gareAllerText = (String) tvGareAller.getText();
+		String gareArriveeText = (String) tvGareArrivee.getText();
 		switch(resultCode) {
 		case Config.WEBSERVICE_FAILLURE:
 			Helper.grilledRare(getActivity(), getResources().getString(R.string.errorWebservice));
@@ -107,6 +110,7 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 					tvDateAller.setTag(date);
 					tvHeureAller.setText(getResources().getString(R.string.rechercherhoraireAller));
 					tvHeureAller.setTag(null);
+					startHorrairePopUpActivity(gareAllerText, gareArriveeText, Config.HEURE_ALLER_CODE);
 				}
 				break;
 			case Config.HEURE_ALLER_CODE:
@@ -118,7 +122,8 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 					tvDateRetour.setText( Helper.prettifyDate(date, null) );
 					tvDateRetour.setTag(date);
 					tvHeureRetour.setText(getResources().getString(R.string.rechercherhoraireRetour));
-					tvHeureRetour.setTag(null);					
+					tvHeureRetour.setTag(null);
+					startHorrairePopUpActivity(gareAllerText, gareArriveeText, Config.HEURE_RETOUR_CODE);
 				}
 				break;
 			case Config.HEURE_RETOUR_CODE:
@@ -330,8 +335,8 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 	@Override
 	public void onClick(View v) {
 		int vid = v.getId();
-		String gareAllerText = (String) this.tvGareAller.getText();
-		String gareArriveeText = (String) this.tvGareArrivee.getText();
+		String gareAllerText = (String) tvGareAller.getText();
+		String gareArriveeText = (String) tvGareArrivee.getText();
 
 		// Arrghhh Android 14 suxxx, I had to convert the switch statement to if-else 
 		// because of a problem caused by lookup of R.id.xxx
@@ -350,9 +355,9 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 		} else if (vid == R.id.llTimetableDateRetour) {
 			startDateAllerPickerActivity(v, gareAllerText, gareArriveeText, Config.DATE_RETOUR_CODE);
 		} else if (vid == R.id.llTimetableHorraireAller) {
-			startHorrairePopUpActivity(v, gareAllerText, gareArriveeText, Config.HEURE_ALLER_CODE);
+			startHorrairePopUpActivity(gareAllerText, gareArriveeText, Config.HEURE_ALLER_CODE);
 		} else if (vid == R.id.llTimetableHorraireRetour) {
-			startHorrairePopUpActivity(v, gareAllerText, gareArriveeText, Config.HEURE_RETOUR_CODE);
+			startHorrairePopUpActivity(gareAllerText, gareArriveeText, Config.HEURE_RETOUR_CODE);
 		} 
 			else {
 			Helper.grilledRare(getActivity(), "Erreur inconnue");
@@ -376,38 +381,57 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 		Dialog dialog = builder.create();
 		dialog.show();
 	}
-	protected void startHorrairePopUpActivity(View v, String gareAllerText, String gareArriveeText, int code) {
-		if (this.tvGareAller.getTag() != null && !this.tvGareArrivee.getText().equals(getResources().getString(R.string.rechercherGare)) && this.tvGareArrivee.getTag() != null && this.tvDateAller.getTag() != null) {
+	protected void startHorrairePopUpActivity(String gareAllerText, String gareArriveeText, int code) {
+		if (tvGareAller.getTag() != null && !tvGareArrivee.getText().equals(getResources().getString(R.string.rechercherGare)) && tvGareArrivee.getTag() != null && tvDateAller.getTag() != null) {
 			// On récupère les tags des différents champs pour construire les paramètres à envoyer par intent à l'activité
 			Date da = (Date) tvDateAller.getTag();
-			Date dr = null; 
-			if (this.tvDateRetour.getTag() != null) dr = (Date) this.tvDateRetour.getTag();
+			Date dr = null;
+			if (tvDateRetour.getTag() != null) dr = (Date) tvDateRetour.getTag();
 			if (code == Config.HEURE_RETOUR_CODE && dr == null) {
 				Helper.grilledRare(getActivity(), getResources().getString(R.string.erreurDateRetour));
 			} else {
-				GaresArrivee rt = (GaresArrivee) this.tvGareArrivee.getTag();
-				
-				// Construction des paramètres à envoyer
-				HorrairesParams params = new HorrairesParams(da, dr, rt, gareAllerText, gareArriveeText);				
-	
-				// Création de l'intent
-				Intent i = new Intent(this.getActivity(), HorrairesPopUpActivity.class);
-				i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
-	
-				// Sérialisation des paramètres
-				Bundle b = new Bundle();
-				b.putParcelable("params", params);
-				i.putExtras(b);
-				i.putExtra("popupColor", popupColor);
-				if (code == Config.HEURE_ALLER_CODE) {
-					i.putExtra("title", getResources().getString(R.string.horrairesAller));
-				} else {
-					i.putExtra("title", getResources().getString(R.string.horraireRetour));
+				GaresArrivee rt = (GaresArrivee) tvGareArrivee.getTag();
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(new Date());
+				cal.set(Calendar.HOUR_OF_DAY, 0);
+				cal.set(Calendar.MINUTE, 0);
+				cal.add(Calendar.DAY_OF_YEAR, 2);
+				long afterTomorrow = cal.getTimeInMillis();
+				cal.setTime(da);
+				long dateAller = cal.getTimeInMillis();
+				long dateRetour = afterTomorrow + 10;
+				if(dr != null) {
+					cal.setTime(dr);
+					dateRetour = cal.getTimeInMillis();
 				}
-				i.putExtra("code", code);
-				//  Démarage de l'activité
-				startActivityForResult(i, code);
-				getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+
+				
+				// Delai de 48h si la gare est une station
+				if(rt != null && rt.isStation && ( dateAller < afterTomorrow ) || ( dr != null && dateRetour < afterTomorrow)) {
+					Helper.grilledRare(getActivity(), getString(R.string.desoleDelai));
+				} else {
+					// Construction des paramètres à envoyer
+					HorrairesParams params = new HorrairesParams(da, dr, rt, gareAllerText, gareArriveeText);				
+		
+					// Création de l'intent
+					Intent i = new Intent(getActivity(), HorrairesPopUpActivity.class);
+					i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
+		
+					// Sérialisation des paramètres
+					Bundle b = new Bundle();
+					b.putParcelable("params", params);
+					i.putExtras(b);
+					i.putExtra("popupColor", popupColor);
+					if (code == Config.HEURE_ALLER_CODE) {
+						i.putExtra("title", getResources().getString(R.string.horrairesAller));
+					} else {
+						i.putExtra("title", getResources().getString(R.string.horraireRetour));
+					}
+					i.putExtra("code", code);
+					//  Démarage de l'activité
+					startActivityForResult(i, code);
+					getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+				}
 			}
 		} else {
 			Helper.grilledRare(getActivity(), getResources().getString(R.string.erreurChampsNonRemplis));
@@ -419,7 +443,7 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 			tvDateRetour.setTag(null);
 			tvDateRetour.setText(getResources().getString(R.string.rechercheDateRetour));
 		}
-		Intent i = new Intent(this.getActivity(), DatePickerPopUp.class);
+		Intent i = new Intent(getActivity(), DatePickerPopUp.class);
 		i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
 		i.putExtra("title", getResources().getString(R.string.dateDepart));
 		i.putExtra("gareDepart", gareAllerText);
@@ -428,7 +452,7 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 		i.putExtra("popupColor", popupColor);
 		i.putExtra("date", (Date) tvDateAller.getTag());
 		startActivityForResult(i, code);
-		this.getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+		getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 	}
 	protected void startGareAllerPopUpActivity(boolean geoloc) {
 		Intent i = new Intent(getActivity(), GareAllerPopUp.class);
@@ -437,19 +461,19 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 		i.putExtra("popupColor", popupColor);
 		i.putExtra("geoloc", geoloc);
 		startActivityForResult(i, Config.GARE_ALLER_CODE);
-		this.getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+		getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 	}
 	protected void startGareArriveePopUpActivity(View v, String gareAllerText) {
 		if (TextUtils.isEmpty(gareAllerText) || gareAllerText.equals(getString(R.string.rechercherGare)) || tvGareAller.getTag() == null) {
 			Helper.grilledRare(getActivity(), getString(R.string.errorGareAller));
 		} else {
-			Intent i = new Intent(this.getActivity(), GareArriveePopUp.class);
+			Intent i = new Intent(getActivity(), GareArriveePopUp.class);
 			i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
 			i.putExtra("title", getString(R.string.garesArriveeTitle));
 			i.putExtra("gareDepart", gareAllerText);
 			i.putExtra("popupColor", popupColor);
 			startActivityForResult(i, Config.GARE_ARRIVEE_CODE);
-			this.getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+			getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 		}
 	}
 

@@ -48,7 +48,7 @@ public class GareAllerPopUp extends ActivityPopUpFactory implements OnGPSLocatio
 	}
 
 	@Override
-	protected void startAsyncHTTPRequest() {
+	protected void startHorairesAsyncHTTPRequest() {
 		RequestParams params = new RequestParams();
 		params.put("tip", "gps7");
 		new AltibusWebservice<ActivityPopUpFactory>(this, "sw/altibus/data.aspx?", params);

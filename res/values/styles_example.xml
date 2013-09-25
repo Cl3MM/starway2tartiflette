@@ -27,6 +27,7 @@
         <item name="dropDownListViewStyle">@style/DropDownListView.Example</item>
         <item name="actionBarTabStyle">@style/ActionBarTabStyle.Example</item>
         <item name="actionDropDownStyle">@style/DropDownNav.Example</item>
+                <item name="android:editTextStyle">@style/EditTextAltibus</item>
         <!-- <item name="actionBarStyle">@style/ActionBar.Solid.Example</item> -->
         <item name="actionModeBackground">@drawable/cab_background_top_example</item>
         <item name="actionModeSplitBackground">@drawable/cab_background_bottom_example</item>
@@ -38,6 +39,7 @@
     <style name="Theme.SuperLightExample" parent="@style/Theme.Altibus_light">
         <item name="vpiTabPageIndicatorStyle">@style/CustomLightTheme</item>
         <item name="android:actionBarStyle">@style/ActionBar.Solid.Example</item>
+                <item name="android:editTextStyle">@style/EditTextAltibus</item>
     </style>
         
     <style name="CustomLightTheme" parent="@style/Widget.TabPageIndicator">

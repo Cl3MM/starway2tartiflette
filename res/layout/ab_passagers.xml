@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/expand_activities_button"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_gravity="left"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:paddingLeft="4dp"
+    android:addStatesFromChildren="true">
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:layout_gravity="left"
+        android:gravity="left"
+        android:textStyle="bold"
+        android:text="Passager 2" />
+    <TextView
+        android:id="@+id/text2"
+        android:layout_below="@+id/text"
+        android:layout_width="150dp"
+        android:textSize="13sp"
+        android:textColor="@color/white"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:gravity="left"
+        android:text="Choisissez une action" />
+</RelativeLayout>

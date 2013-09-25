@@ -1,13 +1,17 @@
 package fr.wheelmilk.android.altibusproject;
 
+import java.util.ArrayList;
 import java.util.Date;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -129,10 +133,47 @@ public class PassagersPopUp extends SherlockActivity implements OnClickListener,
 			passagerCourant = passagers.get(position);
 	    	passagerCourant.setPosition(position);
 			displayPassagerCourant();
-	    	mMode = startActionMode(this);
-//			finish();
+
+			AlertDialog.Builder builder = new AlertDialog.Builder( new ContextThemeWrapper(this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar) );
+			builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+	           @Override
+	           public void onClick(DialogInterface dialog, int id) {
+	        	   dialog.dismiss();
+		          }
+		       });
+
+			builder.setItems(R.array.editPassager, new DialogInterface.OnClickListener() {
+	               public void onClick(DialogInterface dialog, int which) {
+            	   dialog.dismiss();
+	               passagerSelectAction(which);
+	           }
+		    });
+			builder.setTitle(R.string.passagerDlgEditionTitle);
+			AlertDialog dlg = builder.create();
+			dlg.show();
 		}
 	}
+
+	protected void passagerSelectAction(int which) {
+		Log.v(getClass().toString(), "Position: " + String.valueOf(which));
+    	displayPassagerCourant();
+    	if ( passagerCourant != null ) {
+    		if ( which == 0 ) { // On edite lance l'activité d'édition de passager
+    			Intent i = new Intent(this, EditionPassager.class);
+    			i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
+				Bundle b = new Bundle();
+				b.putParcelable("passager", passagerCourant);
+				i.putExtras(b);
+    			startActivityForResult(i, Config.EDITION_PASSAGERS_RETOUR_CODE);
+    			overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+    		} else { // On supprime le passager de la liste et on raffraichi
+    			passagers.remove(passagerCourant.getPosition());
+    			refreshListView();
+    		}
+    	}
+    	passagerCourant = null;
+	}
+
 	private class UserPref {
 		String nom;
 		String prenom;
@@ -248,15 +289,16 @@ public class PassagersPopUp extends SherlockActivity implements OnClickListener,
         //Used to put dark icons on light action bar
 //        boolean isLight = SampleList.THEME == R.style.Theme_Sherlock_Light;
     	Resources mRes = this.getResources();
-        menu.add(delete)
-//      .setIcon(isLight ? R.drawable.ic_search_inverse : R.drawable.ic_search)
-        .setIcon(mRes.getDrawable(R.drawable.ic_action_delete_passager_light))
-        .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-
-        menu.add(edit)
-        .setIcon(mRes.getDrawable(R.drawable.ic_action_edit_passager))
-        .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-
+		getSupportMenuInflater().inflate(R.menu.passagers, menu);
+    	MenuItem item = menu.findItem(R.id.item_text);
+    	TextView itemText = (TextView) item.getActionView().findViewById(R.id.text);
+    	if (passagerCourant != null) {
+    		int position = passagerCourant.getPosition() + 1;
+    		StringBuilder s = new StringBuilder("Passager ");
+    		s.append( String.valueOf(position));
+    		s.append(" selectionné");
+        	itemText.setText(s.toString());
+    	} else itemText.setText("");
         return true;
     }
 
@@ -267,11 +309,7 @@ public class PassagersPopUp extends SherlockActivity implements OnClickListener,
 
     @Override
     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-    	Log.v(this.getClass().toString(), "onActionItemClicked 1");
-		displayPassagerCourant();
-
-//    	Toast.makeText(mActivity, "Got click: " + item, Toast.LENGTH_SHORT).show();
-//    	if (item.getTitleCondensed())
+    	displayPassagerCourant();
     	if ( passagerCourant != null ) {
     		Log.v(this.getClass().toString(), item.getTitle().toString());
     		Log.v(this.getClass().toString(), "Passager: " + passagerCourant.toString());

@@ -29,6 +29,10 @@ public class GaresArrivee implements GaresDataModel {
 	@Element
 	public String rt;
 	
+	public boolean isStation = false;
+	public void setIsStation(boolean _isStation) {
+		isStation = _isStation;
+	}
 	@Override
 	public String gareName() {
 		return this.ga;
@@ -62,11 +66,13 @@ public class GaresArrivee implements GaresDataModel {
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(ga);
 		dest.writeString(rt);
+		dest.writeInt(isStation ? 1 : 0);
 	}
 	
     public void readFromParcel(Parcel in) {
         ga = in.readString();
         rt = in.readString();
+        isStation = in.readInt() == 1 ? true : false;
     }
 	
     public static final Parcelable.Creator<GaresArrivee> CREATOR = new Parcelable.Creator<GaresArrivee>() {

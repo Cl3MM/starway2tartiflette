@@ -9,8 +9,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class BilletsArrayAdapter extends ArrayAdapter<BilletDB> {
@@ -18,11 +21,13 @@ public class BilletsArrayAdapter extends ArrayAdapter<BilletDB> {
     private ArrayList<BilletDB> items;
     private Context context;
 //    private int itemColor;
+	private OnClickListener mListener;
 
-    public BilletsArrayAdapter(Context _context, int textViewResourceId, ArrayList<BilletDB> _items) {
+    public BilletsArrayAdapter(Context _context, int textViewResourceId, ArrayList<BilletDB> _items, OnClickListener _mListener) {
             super(_context, textViewResourceId, _items);
             items = _items;
             context = _context;
+            mListener = _mListener;
     }
 //    @Override
 //    public boolean areAllItemsEnabled() {
@@ -42,14 +47,24 @@ public class BilletsArrayAdapter extends ArrayAdapter<BilletDB> {
 	    TextView tvMontant;
 	    TextView tvNbPassagers;
 	    TextView tvAction;
+	    ImageView iSee;
+	    ImageView iTrash;
+//	    LinearLayout llAction;
 	}
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View v = convertView;
 		Holder holder = new Holder();
+		BilletDB b = getItem(position);
+		boolean isPerime = b.isPerime();
+
 		if (v == null) {
 			LayoutInflater inflater = ((Activity)context).getLayoutInflater();
-            v = inflater.inflate(R.layout.mes_billets_list_items, parent, false);
+			if (isPerime) 
+				v = inflater.inflate(R.layout.historique_list_items, parent, false);
+			else 
+				v = inflater.inflate(R.layout.mes_billets_list_items, parent, false);
+
             holder.tvGareDepart = (TextView) v.findViewById(R.id.tvGareDepart);
 			holder.tvGareArrivee = (TextView) v.findViewById(R.id.tvGareArrivee);
 			holder.tvHeureDepart = (TextView) v.findViewById(R.id.tvHeureDepart);
@@ -58,12 +73,19 @@ public class BilletsArrayAdapter extends ArrayAdapter<BilletDB> {
 			holder.tvMontant = (TextView) v.findViewById(R.id.tvMontant);
 			holder.tvNbPassagers = (TextView) v.findViewById(R.id.tvNbPassagers);
 			holder.tvAction = (TextView) v.findViewById(R.id.tvSummary);
-			
+
+			if (isPerime) {
+				holder.iSee = (ImageView) v.findViewById(R.id.iSee);
+				holder.iTrash = (ImageView) v.findViewById(R.id.itrash);
+				holder.iSee.setOnClickListener(mListener);
+				holder.iTrash.setOnClickListener(mListener);
+			}
+//			holder.llAction = (LinearLayout) v.findViewById(R.id.llActions);
 			v.setTag(holder);
 		} else {
 			holder = (Holder) v.getTag();
 		}
-        BilletDB b = getItem(position);
+        
         holder.tvGareDepart.setText(b.getGareDepart());
         holder.tvGareArrivee.setText(b.getGareRetour());
         holder.tvHeureArrivee.setText(b.getHaa());
@@ -72,7 +94,11 @@ public class BilletsArrayAdapter extends ArrayAdapter<BilletDB> {
         holder.tvDateDepart.setText(Helper.prettifyDate(b.getDateAller(), null));
         holder.tvNbPassagers.setText(b.getTypeBillet());
         
-        if (b.isPerime()) holder.tvAction.setText(R.string.billetPerime);
+        if (isPerime) {
+        	holder.tvAction.setText(R.string.billetPerime);
+//        	if (holder.llAction.getVisibility() == View.GONE)
+//        		holder.llAction.setVisibility(View.VISIBLE);
+        }
         else {
         	if (b.isValide()) holder.tvAction.setText(R.string.billetComposte);
         	else holder.tvAction.setText(R.string.cliquerPourEditer);

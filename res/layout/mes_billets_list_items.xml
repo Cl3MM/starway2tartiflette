@@ -18,8 +18,8 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:background="@drawable/mes_billets_icon"
-         android:focusable="false"
-         android:focusableInTouchMode="false"  />
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
 
     <LinearLayout
         android:id="@+id/llRemove"
@@ -138,49 +138,155 @@
         android:textStyle="italic" />
 
 </RelativeLayout>
+<!-- <?xml version="1.0" encoding="utf-8"?> -->
+<!-- <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" -->
+<!-- android:id="@+id/rlRoot" -->
+<!-- android:layout_width="match_parent" -->
+<!-- android:layout_height="wrap_content" -->
+<!-- android:layout_marginBottom="8dp" -->
+<!-- android:layout_marginTop="8dp" -->
+<!-- android:background="@drawable/mes_billets_list_selector" -->
+<!-- android:gravity="center_horizontal" -->
+<!-- android:orientation="vertical" -->
+<!-- android:paddingBottom="8dp" -->
+<!-- android:paddingTop="8dp" > -->
 
-<!-- <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" -->
-<!--         android:layout_width="match_parent" -->
-<!--         android:orientation="vertical" -->
-<!--     android:layout_height="wrap_content"> -->
-    
-<!--         <TextView -->
-<!--         android:id="@+id/tvHeureArrivee" -->
-<!--         android:layout_width="wrap_content" -->
-<!--         android:layout_height="wrap_content"/> -->
-<!--         <TextView -->
-<!--         android:id="@+id/tvDateDepart" -->
-<!--         android:layout_width="wrap_content" -->
-<!--         android:layout_height="wrap_content"/> -->
-        
-<!-- <TextView -->
-<!--         android:id="@+id/tvGareArrivee" -->
-<!--         android:layout_width="wrap_content" -->
-<!--         android:layout_height="wrap_content"/> -->
-                
-<!-- <TextView -->
-<!--         android:id="@+id/tvGareDepart" -->
-<!--         android:layout_width="wrap_content" -->
-<!--         android:layout_height="wrap_content"/> -->
-                        
-<!-- <TextView -->
-<!--         android:id="@+id/tvMontant" -->
-<!--         android:layout_width="wrap_content" -->
-<!--         android:layout_height="wrap_content"/> -->
-                                
-<!-- <TextView -->
-<!--         android:id="@+id/tvHeureDepart" -->
-<!--         android:layout_width="wrap_content" -->
-<!--         android:layout_height="wrap_content"/> -->
-                                        
-<!-- <TextView -->
-<!--         android:id="@+id/tvNbPassagers" -->
-<!--         android:layout_width="wrap_content" -->
-<!--         android:layout_height="wrap_content"/> -->
 
-<!-- <TextView -->
-<!--         android:id="@+id/tvSummary" -->
-<!--         android:layout_width="wrap_content" -->
-<!--         android:layout_height="wrap_content"/> -->
+<!-- <View -->
+<!-- android:id="@+id/imgRemove" -->
+<!-- android:layout_width="24dp" -->
+<!-- android:layout_height="24dp" -->
+<!-- android:layout_marginLeft="5dp" -->
+<!-- android:layout_marginRight="5dp" -->
+<!-- android:background="@drawable/mes_billets_icon" -->
+<!-- android:focusable="false" -->
+<!-- android:focusableInTouchMode="false"  /> -->
 
+
+<!-- <LinearLayout -->
+<!-- android:id="@+id/llRemove" -->
+<!-- android:layout_width="wrap_content" -->
+<!-- android:layout_height="fill_parent" -->
+<!-- android:layout_alignParentRight="true" -->
+<!-- android:layout_centerVertical="true" -->
+<!-- android:layout_marginLeft="5dp" -->
+<!-- android:layout_marginRight="5dp" -->
+<!-- android:gravity="center" -->
+<!-- android:orientation="vertical" > -->
+
+
+<!-- <View -->
+<!-- android:id="@+id/view2" -->
+<!-- android:layout_width="18dp" -->
+<!-- android:layout_height="18dp" -->
+<!-- android:background="@drawable/ic_action_list_arrow" /> -->
 <!-- </LinearLayout> -->
+
+
+<!-- <TextView -->
+<!-- android:id="@+id/tvHeureArrivee" -->
+<!-- android:layout_width="wrap_content" -->
+<!-- android:layout_height="wrap_content" -->
+<!-- android:layout_alignBaseline="@+id/tvGareArrivee" -->
+<!-- android:layout_toLeftOf="@+id/llRemove" -->
+<!-- android:gravity="right" -->
+<!-- android:paddingLeft="5dp" -->
+<!-- android:text="20:45" -->
+<!-- android:textAppearance="?android:attr/textAppearanceSmall" -->
+<!-- android:textColor="@drawable/text_grey_to_white" /> -->
+
+
+<!-- <TextView -->
+<!-- android:id="@+id/tvDateDepart" -->
+<!-- android:layout_width="wrap_content" -->
+<!-- android:layout_height="wrap_content" -->
+<!-- android:layout_alignLeft="@+id/tvGareDepart" -->
+<!-- android:layout_alignTop="@+id/imgRemove" -->
+<!-- android:layout_marginBottom="4dp" -->
+<!-- android:text="Mercredi 20 Septembre 2013" -->
+<!-- android:textAppearance="?android:attr/textAppearanceSmall" -->
+<!-- android:textColor="@drawable/text_grey_to_white" /> -->
+
+
+<!-- <TextView -->
+<!-- android:id="@+id/tvGareDepart" -->
+<!-- android:layout_width="wrap_content" -->
+<!-- android:layout_height="wrap_content" -->
+<!-- android:layout_alignLeft="@+id/tvGareArrivee" -->
+<!-- android:layout_below="@+id/tvDateDepart" -->
+<!-- android:layout_marginBottom="2dp" -->
+<!-- android:layout_toLeftOf="@+id/tvHeureDepart" -->
+<!-- android:maxLines="2" -->
+<!-- android:paddingRight="5dp" -->
+<!-- android:text="Chambéry" -->
+<!-- android:textAppearance="?android:attr/textAppearanceSmall" -->
+<!-- android:textColor="@drawable/text_green_to_white_selector" /> -->
+
+
+<!-- <TextView -->
+<!-- android:id="@+id/tvGareArrivee" -->
+<!-- android:layout_width="wrap_content" -->
+<!-- android:layout_height="wrap_content" -->
+<!-- android:layout_below="@+id/tvGareDepart" -->
+<!-- android:layout_toLeftOf="@+id/tvHeureArrivee" -->
+<!-- android:layout_toRightOf="@+id/imgRemove" -->
+<!-- android:paddingRight="5dp" -->
+<!-- android:text="Aix-les-bains" -->
+<!-- android:textAppearance="?android:attr/textAppearanceSmall" -->
+<!-- android:textColor="@drawable/text_green_to_white_selector" /> -->
+
+
+<!-- <TextView -->
+<!-- android:id="@+id/tvHeureDepart" -->
+<!-- android:layout_width="wrap_content" -->
+<!-- android:layout_height="wrap_content" -->
+<!-- android:layout_alignBaseline="@+id/tvGareDepart" -->
+<!-- android:layout_alignBottom="@+id/tvGareDepart" -->
+<!-- android:layout_toLeftOf="@+id/llRemove" -->
+<!-- android:gravity="right" -->
+<!-- android:paddingLeft="5dp" -->
+<!-- android:text="20:12" -->
+<!-- android:textAppearance="?android:attr/textAppearanceSmall" -->
+<!-- android:textColor="@drawable/text_grey_to_white" /> -->
+
+
+<!-- <TextView -->
+<!-- android:id="@+id/tvMontant" -->
+<!-- android:layout_width="wrap_content" -->
+<!-- android:layout_height="wrap_content" -->
+<!-- android:layout_alignRight="@+id/tvHeureArrivee" -->
+<!-- android:layout_below="@+id/tvGareArrivee" -->
+<!-- android:text="135,6€" -->
+<!-- android:textAppearance="?android:attr/textAppearanceSmall" -->
+<!-- android:textColor="@drawable/text_green_to_white_selector" /> -->
+
+
+<!-- <TextView -->
+<!-- android:id="@+id/tvNbPassagers" -->
+<!-- android:layout_width="wrap_content" -->
+<!-- android:layout_height="wrap_content" -->
+<!-- android:layout_below="@+id/tvGareArrivee" -->
+<!-- android:layout_toLeftOf="@+id/tvHeureArrivee" -->
+<!-- android:layout_toRightOf="@+id/imgRemove" -->
+<!-- android:gravity="left" -->
+<!-- android:maxLines="2" -->
+<!-- android:text="12 passagers" -->
+<!-- android:textAppearance="?android:attr/textAppearanceSmall" -->
+<!-- android:textColor="@drawable/text_grey_to_white" /> -->
+
+
+<!-- <TextView -->
+<!-- android:id="@+id/tvSummary" -->
+<!-- android:layout_width="wrap_content" -->
+<!-- android:layout_height="wrap_content" -->
+<!-- android:layout_alignRight="@+id/tvMontant" -->
+<!-- android:layout_below="@+id/tvMontant" -->
+<!-- android:gravity="right" -->
+<!-- android:text="@string/cliquerPourEditer" -->
+<!-- android:textAppearance="?android:attr/textAppearanceSmall" -->
+<!-- android:textColor="@drawable/text_grey_to_white" -->
+<!-- android:textSize="11sp" -->
+<!-- android:textStyle="italic" /> -->
+
+
+<!-- </RelativeLayout> -->

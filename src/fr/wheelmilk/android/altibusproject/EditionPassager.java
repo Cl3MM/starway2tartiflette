@@ -26,7 +26,6 @@ public class EditionPassager extends SherlockActivity implements OnClickListener
 	EditText etNom;
 	EditText etPrenom;
 	TextView etAge;
-	
 
 	@Override
 	public void onCreate(Bundle bundle) {

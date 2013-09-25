@@ -48,7 +48,8 @@
         <activity android:name="UserPreferences" 
             android:label="Altibus"
             android:theme="@style/Theme.SuperLightExample"/>
-        <activity android:name="PassagersPopUp" 
+        <activity android:name="PassagersPopUp"
+            android:uiOptions="splitActionBarWhenNarrow"
             android:label="Altibus"
             android:theme="@style/Theme.SuperLightExample"/>
         <activity android:name="EditionPassager" 

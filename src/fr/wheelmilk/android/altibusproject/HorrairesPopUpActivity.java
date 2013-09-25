@@ -123,9 +123,9 @@ public class HorrairesPopUpActivity extends ActivityPopUpFactory {
 		code 	= extras.getInt("code");
 	}
 	@Override
-	protected void startAsyncHTTPRequest() {
+	protected void startHorairesAsyncHTTPRequest() {
 		RequestParams _params = new RequestParams();
-		 _params.put("tip", "horaires");
+		 _params.put("tip", "horaires7");
 		 _params.put("da", this.params.dateAller() );
 		 if (params.dateRetour() != null) {
 			 _params.put("dr", params.dateRetour() );
@@ -134,6 +134,7 @@ public class HorrairesPopUpActivity extends ActivityPopUpFactory {
 		 Log.v(this.getClass().toString(), _params.toString());
 		new AltibusWebservice<HorrairesPopUpActivity>(this, "sw/altibus/data.aspx?", _params);
 	}
+
 	protected ArrayList<HorrairesMapping> sortAndCreateArrayAdapter() {
 		//tri des horraires
 		TreeMap<String, String> horrairesAller 		= new TreeMap<String, String>();
