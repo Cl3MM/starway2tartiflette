@@ -190,21 +190,25 @@ public class PageAchat extends PageFactory implements OnWebserviceListenner, Dia
 	@Override
 	public void onWebserviceSuccess(String xmlString) {
 		Log.v(this.getClass().toString(), xmlString);
-		reservation = (AltibusDataReservation) new AltibusSerializer(AltibusDataReservation.class).serializeXmlToObject(xmlString);
-		layoutView.findViewById(R.id.rlLoading).setVisibility(View.GONE);
-		if (reservation != null) {
-			billet.setReservation(reservation.reservation);
-			Log.v(this.getClass().toString(), "Montant: " + reservation.getMontant());
-			tvMontant.setText( reservation.getPrettyMontant() );
-			tvMontant.setTag( reservation.getMontant() );
-			rlButtonPaiement.setEnabled(true);
+		if(xmlString.contains(">ERREUR<")) {
+			Helper.grilledRare(getActivity(), getString(R.string.erreurRefReservation));
 		} else {
-			rlButtonPaiement.setEnabled(false);
-			tvMontant.setText( "" );
-			tvMontant.setTag(null);
-			// Problème de sérialisation
-			Log.v(this.getClass().toString(), "Serializer faillure :(");
+			reservation = (AltibusDataReservation) new AltibusSerializer(AltibusDataReservation.class).serializeXmlToObject(xmlString);
+			if (reservation != null) {
+				billet.setReservation(reservation.reservation);
+				Log.v(this.getClass().toString(), "Montant: " + reservation.getMontant());
+				tvMontant.setText( reservation.getPrettyMontant() );
+				tvMontant.setTag( reservation.getMontant() );
+				rlButtonPaiement.setEnabled(true);
+			} else {
+				rlButtonPaiement.setEnabled(false);
+				tvMontant.setText( "" );
+				tvMontant.setTag(null);
+				// Problème de sérialisation
+				Log.v(this.getClass().toString(), "Serializer faillure :(");
+			}
 		}
+		layoutView.findViewById(R.id.rlLoading).setVisibility(View.GONE);
 	}
 	@Override
 	public void onWebserviceFailure() {

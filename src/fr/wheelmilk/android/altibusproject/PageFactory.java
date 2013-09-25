@@ -51,10 +51,11 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 	LinearLayout llRetour;
 	ToggleButton as;
 	ToggleButton ar;
-	TimetableMainOnClickListener onClick;
+
 	protected View layoutView;
 	protected Bundle savedBundle = null;
 
+	
 	public void setTagResult(Intent data, TextView tv) {
 		String result = data.getExtras().getString("result");
 		if ( result != null ) {
@@ -105,12 +106,13 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 				break;
 			case Config.DATE_ALLER_CODE:
 				date = (Date) data.getSerializableExtra("result");
+				boolean isBackPressed = data.getBooleanExtra("backPressed", false);
 				if ( date != null ) {
 					tvDateAller.setText( Helper.prettifyDate(date, null) );
 					tvDateAller.setTag(date);
 					tvHeureAller.setText(getResources().getString(R.string.rechercherhoraireAller));
 					tvHeureAller.setTag(null);
-					startHorrairePopUpActivity(gareAllerText, gareArriveeText, Config.HEURE_ALLER_CODE);
+					if (!isBackPressed) startHorrairePopUpActivity(gareAllerText, gareArriveeText, Config.HEURE_ALLER_CODE);
 				}
 				break;
 			case Config.HEURE_ALLER_CODE:

@@ -165,8 +165,17 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/llTitleLayout"
-        android:layout_marginTop="10dp"
         android:gravity="center" />
+    <TextView
+        android:id="@+id/tvInfoJour"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/datePickerPopUp"
+        android:gravity="center"
+        android:padding="4dp"
+        android:text="@string/emptyString"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/table_content" />
 
     <Button
         android:id="@+id/btnDatePicker"

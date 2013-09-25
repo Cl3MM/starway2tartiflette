@@ -9,6 +9,7 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
 
 import fr.wheelmilk.android.altibusproject.support.Config;
+import fr.wheelmilk.android.altibusproject.support.Helper;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -25,12 +26,14 @@ public class DatePickerPopUp extends SherlockActivity implements View.OnClickLis
 	private String title;
 	private String gareDepart;
 	private String gareArrivee;
+	private TextView tvInfoJour;
 	private int popupColor;
 	private Date date = null;
 	private int code;
 	protected final int DATE_ALLER_CODE 	= 300;
 	protected final int HEURE_ALLER_CODE 	= 400;
 	protected final int DATE_RETOUR_CODE 	= 500;
+	private boolean backPressed = false;
 
 	public void initialize( Bundle extras) {
 		gareDepart 	= extras.getString("gareDepart");
@@ -62,9 +65,11 @@ public class DatePickerPopUp extends SherlockActivity implements View.OnClickLis
 		TextView tvDepart = (TextView) findViewById(R.id.horrairesTvGareDepart);
 		TextView tvArrivee = (TextView) findViewById(R.id.horrairesTvGareArrivee);
 		Button btn = (Button) findViewById(R.id.btnDatePicker);
-		
+		tvInfoJour = (TextView) findViewById(R.id.tvInfoJour);
+		tvInfoJour.setText(Helper.prettifyDate(date, null));
 		tvDepart.setTextColor(popupColor);
 		tvArrivee.setTextColor(popupColor);
+
 		
 		if ( code == Config.DATE_ALLER_CODE ) {
 			LinearLayout llDateAller = (LinearLayout) findViewById(R.id.llDateAller);
@@ -135,7 +140,8 @@ public class DatePickerPopUp extends SherlockActivity implements View.OnClickLis
 	public void finish() {
 		Intent data = new Intent();
 		data.putExtra("result", date);
-		setResult(RESULT_OK, data);
+		if(backPressed) data.putExtra("backPressed", true);
+		setResult(RESULT_OK, data);			
 		super.finish();
 		overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
 	}
@@ -145,6 +151,13 @@ public class DatePickerPopUp extends SherlockActivity implements View.OnClickLis
 		DatePicker dp = (DatePicker) v.findViewById(R.id.datePickerPopUp);
 		Calendar cal = Calendar.getInstance();
 		cal.set(dp.getYear(), dp.getMonth(), dp.getDayOfMonth());
-		date = cal.getTime();		
+		date = cal.getTime();
+		tvInfoJour.setText(Helper.prettifyDate(date, null));
 	}
+
+	@Override
+    public void onBackPressed() {
+		backPressed = true;
+       	finish();
+    }
 }

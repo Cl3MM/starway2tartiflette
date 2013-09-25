@@ -72,28 +72,11 @@ public class AltibusMainActivity extends SlidingFragmentActivity {
 	            mMessageReceiver, new IntentFilter("billetCreated"));
 	    LocalBroadcastManager.getInstance(this).registerReceiver(
 	            mMessageReceiver, new IntentFilter("nouvelAchat"));
-	    
-	   
-//	    LocationListener mlocListener = new GeolocationManager(this);
-//	    LocationManager mlocManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-//
-//	    mlocManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 0, 0, mlocListener);
-	    
-//		if (isOnline(this)) {
-//			Log.v("Altibus", "Internet connection found! Launching super asynchronous task...");
-//			Toast.makeText(this, "Internet connection found! Launching super asynchronous task...",
-//					Toast.LENGTH_SHORT).show();
-//		} else {
-//			Toast.makeText(this, "Internet connection not found.",
-//					Toast.LENGTH_SHORT).show();
-//		}
     
 		mAdapter = new AltibusFragmentAdapter(getSupportFragmentManager());
 		mPager = (ViewPager) findViewById(R.id.pager);
 		mPager.setOffscreenPageLimit(3);
-//		mIndicator = (IconsTabPageIndicator) findViewById(R.id.indicator);
-//		((IconsTabPageIndicator) mIndicator)
-//				.setTabIconLocation(IconsTabPageIndicator.LOCATION_UP);
+
 		mPager.setAdapter(mAdapter);
 		mPager.setCurrentItem(0);
 //		mIndicator.setViewPager(mPager);
@@ -223,55 +206,6 @@ public class AltibusMainActivity extends SlidingFragmentActivity {
 	private String getFragmentTag(int pos){
 	    return "android:switcher:"+R.id.pager+":"+pos;
 	}
-	private StringBuilder getXml(String url) {
-
-		HttpURLConnection connection = null;
-		BufferedReader rd = null;
-		StringBuilder sb = null;
-		String line = null;
-
-		URL serverAddress = null;
-
-		try {
-			serverAddress = new URL(url);
-			// set up out communications stuff
-			connection = null;
-
-			// Set up the initial connection
-			connection = (HttpURLConnection) serverAddress.openConnection();
-			connection.setRequestMethod("GET");
-			connection.setDoOutput(true);
-			connection.setReadTimeout(5000);
-
-			connection.connect();
-
-			// read the result from the server
-			rd = new BufferedReader(new InputStreamReader( connection.getInputStream()));
-			sb = new StringBuilder();
-
-			while ((line = rd.readLine()) != null) {
-				sb.append(line + '\n');
-			}
-
-			return sb;
-
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (ProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			// close the connection, set all objects to null
-			connection.disconnect();
-			rd = null;
-			sb = null;
-			connection = null;
-		}
-		return null;
-	}
-
-
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -296,13 +230,6 @@ public class AltibusMainActivity extends SlidingFragmentActivity {
 
 	@Override
     public void onBackPressed() {
-//		if (mContent != null) {
-//			Bundle args = mContent.getArguments();
-//			int val = args.getInt("val");
-//			if (val != 0) {
-//				switchContent(PageAchat.init(0));
-//			}
-//		} else {
         if ( sm.isMenuShowing()) {
             sm.toggle();
         } else if (exitCounter == null) {

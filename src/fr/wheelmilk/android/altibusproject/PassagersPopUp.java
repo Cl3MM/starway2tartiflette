@@ -96,8 +96,6 @@ public class PassagersPopUp extends SherlockActivity implements OnClickListener,
 		lvPassagers.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3) {
-//				PassagerActionMode am = new PassagerActionMode( v.getResources(), passagers.get(position) );
-//				mMode = startActionMode(am);
 				onItemClicked(v, position);
 			}
 		});

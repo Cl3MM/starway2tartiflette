@@ -1,6 +1,7 @@
 package fr.wheelmilk.android.altibusproject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import android.content.Intent;
@@ -26,6 +27,7 @@ import fr.wheelmilk.android.altibusproject.models.AltibusDataModel;
 import fr.wheelmilk.android.altibusproject.models.Gares4Geoloc;
 import fr.wheelmilk.android.altibusproject.models.GaresDataModel;
 import fr.wheelmilk.android.altibusproject.support.Config;
+import fr.wheelmilk.android.altibusproject.support.Helper;
 
 public abstract class ActivityPopUpFactory extends SherlockActivity implements OnWebserviceListenner {
 	protected LinearLayout llHeaderProgress;
@@ -197,7 +199,6 @@ public abstract class ActivityPopUpFactory extends SherlockActivity implements O
 			finish();
 		}
 	}
-
 	@Override
 	public void onWebserviceFailure() {
 		returnCode = Config.WEBSERVICE_FAILLURE;

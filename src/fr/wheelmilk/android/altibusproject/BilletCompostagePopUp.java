@@ -10,6 +10,7 @@ import java.util.Locale;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.AlphaAnimation;
@@ -86,6 +87,11 @@ public class BilletCompostagePopUp extends SherlockActivity implements OnClickLi
 		tvGareArrivee.setText(billet.getGareArriveeBillet());
 		RotateAnimation rotate= (RotateAnimation)AnimationUtils.loadAnimation(this,R.anim.rotation_45);
 		tvNonValide.setAnimation(rotate);
+		
+		tvTypeBillet.setSelected(true);
+//		tvNom.setMovementMethod(new ScrollingMovementMethod());
+//		tvTypeBillet.setMovementMethod(new ScrollingMovementMethod());
+//		tvGareDepart.setMovementMethod(new ScrollingMovementMethod());
 		
 		if (billet.isPerime()) {
 			showBilletPerime();

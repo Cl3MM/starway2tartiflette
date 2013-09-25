@@ -163,35 +163,52 @@
             android:layout_height="match_parent"
             android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/tvNom"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="10dp"
-                android:maxLines="1"
-                android:scrollHorizontally="true"
-                android:text="Jean Claude Vandamme casse des briques"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/black"
-                android:textSize="32sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvTypeBillet"
+            <HorizontalScrollView
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent" >
+
+                <TextView
+                    android:id="@+id/tvNom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
+                    android:maxLines="1"
+                    android:scrollHorizontally="true"
+                    android:text="Jean Claude Vandamme casse des briques"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/black"
+                    android:textSize="32sp"
+                    android:textStyle="bold" />
+            </HorizontalScrollView>
+
+            <HorizontalScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:background="@color/greyBilletInvalide"
-                android:maxLines="1"
-                android:padding="5dp"
-                android:text="1 Billet -26 ans - 2 Billets..."
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/white"
-                android:textStyle="bold" />
+                android:background="@color/greyBilletInvalide" >
+
+                <TextView
+                    android:id="@+id/tvTypeBillet"
+                    android:layout_width="1000dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:padding="5dp"
+                    android:scrollHorizontally="true"
+                    android:text="1 Billet -26 ans - 2 Billets..."
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+            </HorizontalScrollView>
+
+            <!-- android:singleLine="true" -->
+            <!-- android:ellipsize="marquee" -->
+            <!-- android:marqueeRepeatLimit="marquee_forever" -->
+            <!-- android:focusable="false" -->
 
             <RelativeLayout
                 android:id="@+id/relativeLayout2"
@@ -226,23 +243,27 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="@color/black"
                         android:textStyle="bold" />
-
                 </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/tvGareDepart"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <HorizontalScrollView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/imageRelativeLayout"
-                    android:maxLines="3"
-                    android:text="CHAMBERY"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/black"
-                    android:textSize="28sp"
-                    android:textStyle="bold" />
+                    android:layout_toRightOf="@+id/imageRelativeLayout" >
 
+                    <TextView
+                        android:id="@+id/tvGareDepart"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="3"
+                        android:scrollHorizontally="true"
+                        android:text="CHAMBERY"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/black"
+                        android:textSize="28sp"
+                        android:textStyle="bold" />
+                </HorizontalScrollView>
             </RelativeLayout>
 
             <RelativeLayout
