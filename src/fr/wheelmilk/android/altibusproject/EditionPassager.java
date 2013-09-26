@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
+import com.antidots.android.altibus.R;
 
 import fr.wheelmilk.android.altibusproject.models.Passager;
 import fr.wheelmilk.android.altibusproject.support.Config;

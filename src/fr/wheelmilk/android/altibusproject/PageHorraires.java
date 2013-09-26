@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.antidots.android.altibus.R;
 
 public class PageHorraires extends PageFactory {
 
@@ -43,7 +44,7 @@ public class PageHorraires extends PageFactory {
 	public void onClick(View v) {
 		int vid = v.getId();
 		if (vid == R.id.tvBtnAcheterAPartirDesHorraires) {
-			Log.v(getClass().toString(), "Bouton Acheter à partir des horraires cliqué");
+			 if (Config.DEBUG == 1) Log.v(getClass().toString(), "Bouton Acheter à partir des horraires cliqué");
 		    if (tvGareAller.getTag() != null && !this.tvGareArrivee.getText().equals(getResources().getString(R.string.rechercherGare)) && 
 		    		tvGareArrivee.getTag() != null && tvDateAller.getTag() != null) {
 		    	sendInfoToPageAchat();
@@ -64,7 +65,7 @@ public class PageHorraires extends PageFactory {
 	}
 
 	private void sendLocationBroadcast(Intent intent){
-		Log.v(getClass().toString(), "Sending Update broadcast");
+		 if (Config.DEBUG == 1) Log.v(getClass().toString(), "Sending Update broadcast");
 
 		intent.putExtra("action", "nouvelAchat");
 	    intent.putExtra("gareAl", (GaresDepart) tvGareAller.getTag());

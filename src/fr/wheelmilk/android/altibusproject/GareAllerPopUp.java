@@ -3,6 +3,7 @@ package fr.wheelmilk.android.altibusproject;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
+import com.antidots.android.altibus.R;
 import com.loopj.android.http.RequestParams;
 
 import fr.wheelmilk.android.altibusproject.models.Gares4Geoloc;
@@ -73,7 +74,7 @@ public class GareAllerPopUp extends ActivityPopUpFactory implements OnGPSLocatio
 	        latitude = loc.getLatitude();
 	        longitude = loc.getLongitude();
 			String text = "My current location is: " +	"Latitud = " + loc.getLatitude() +	"Longitud = " + loc.getLongitude();
-			Log.v(getClass().toString(), text);
+			 if (Config.DEBUG == 1) Log.v(getClass().toString(), text);
 			isGpsOk = true;
 			acquiringGPS = false;
 			dismissProgressBar();

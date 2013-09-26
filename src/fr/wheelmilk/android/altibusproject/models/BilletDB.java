@@ -100,7 +100,6 @@ public class BilletDB implements Parcelable {
 		cal.set(Calendar.MINUTE, minuteArriveeOfTheDay(horraire));
 		cal.set(Calendar.SECOND, 0);
 		cal.set(Calendar.MILLISECOND, 0);
-		Log.v(getClass().toString(), "Nouvelle Date incluant l'arrivée : " + cal.getTime());
 		return cal.getTime();
 	}
 	

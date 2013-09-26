@@ -3,6 +3,8 @@ package fr.wheelmilk.android.altibusproject;
 import android.util.Log;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
+import fr.wheelmilk.android.altibusproject.support.Config;
+
 public class GaresAsyncHttpResponseHandler<T extends OnWebserviceListenner> extends AsyncHttpResponseHandler {
 	T parent;
 	
@@ -12,14 +14,14 @@ public class GaresAsyncHttpResponseHandler<T extends OnWebserviceListenner> exte
 
     @Override
     public void onSuccess(String xmlString) {
-    	Log.v(GaresAsyncHttpResponseHandler.class.toString(), "Webservice Success !!");
+    	 if (Config.DEBUG == 1) Log.v(GaresAsyncHttpResponseHandler.class.toString(), "Webservice Success !!");
     	parent.onWebserviceSuccess(xmlString);
     }
 
     @Override
     public void onFailure(Throwable e, String response) {
     	// Response failed :(
-    	Log.v(GaresAsyncHttpResponseHandler.class.toString(), "Webservice Faillure !!");
+    	 if (Config.DEBUG == 1) Log.v(GaresAsyncHttpResponseHandler.class.toString(), "Webservice Faillure !!");
     	parent.onWebserviceFailure();
     }
 }

@@ -1,10 +1,14 @@
 package fr.wheelmilk.android.altibusproject.support;
 
-import fr.wheelmilk.android.altibusproject.R;
+import com.antidots.android.altibus.R;
 
 public class Config {
 
 	public static final boolean CALENDAR_VIEW 	= false;
+	
+	public static final int DEBUG = 0;	
+	
+	
 	
 	public static final int WEBSERVICE_FAILLURE = -100;
 	public static final int EXTRA_FAILURE 		= -200;

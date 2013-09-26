@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.viewpagerindicator.IconPagerAdapter;
 import com.viewpagerindicator.PageIndicator;
 
-import fr.wheelmilk.android.altibusproject.R;
+import com.antidots.android.altibus.R;
 /*
  * Copyright (C) 2011 The Android Open Source Project
  * Copyright (C) 2011 Jake Wharton

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import com.antidots.android.altibus.R;
 
 public class PassagersArrayAdapter extends ArrayAdapter<Passager> {
 

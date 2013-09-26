@@ -26,8 +26,10 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.MenuItem;
+import com.antidots.android.altibus.R;
 
 import fr.wheelmilk.android.altibusproject.models.AltibusDataPays;
+import fr.wheelmilk.android.altibusproject.support.Config;
 import fr.wheelmilk.android.altibusproject.support.Helper;
 import fr.wheelmilk.android.altibusproject.support.Support;
 
@@ -125,7 +127,7 @@ public class UserPreferences extends SherlockPreferenceActivity implements OnSha
 
 	    Support s = new Support(this);
 	    boolean prefWarning = s.isSet("prefWarning");
-	    Log.v(getClass().toString(), prefWarning ? "First Run" : "Second Run");
+	 if (Config.DEBUG == 1)     Log.v(getClass().toString(), prefWarning ? "First Run" : "Second Run");
 
 	    if( prefWarning) {
 	    	SimpleAlertDialog dlg = new SimpleAlertDialog(this, getString(R.string.pressBackToSave));
@@ -144,7 +146,7 @@ public class UserPreferences extends SherlockPreferenceActivity implements OnSha
     @Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
             String key) {
-    	Log.v(getClass().toString(), "KEY: " +key);
+    	 if (Config.DEBUG == 1) Log.v(getClass().toString(), "KEY: " +key);
     	Preference p = findPreference(key);
     	
     	if (p.getKey().equals("prefUserEmail")) {

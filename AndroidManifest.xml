@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="fr.wheelmilk.android.altibusproject"
+    package="com.antidots.android.altibus"
     android:versionCode="1"
     android:versionName="1.0" >
 	<uses-permission android:name="android.permission.INTERNET" />
@@ -11,6 +11,7 @@
         android:targetSdkVersion="17" />
 
     <application
+        android:debuggable="false"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -27,38 +28,38 @@
         </activity>
         <activity
 			android:theme="@style/Theme.SuperExample"
-            android:name="GareAllerPopUp"
+            android:name="fr.wheelmilk.android.altibusproject.GareAllerPopUp"
             android:label="Altibus" >
         </activity>
         <activity
             android:theme="@style/Theme.SuperExample"
-            android:name="GareArriveePopUp"
+            android:name="fr.wheelmilk.android.altibusproject.GareArriveePopUp"
             android:label="Altibus" >
         </activity>
         <activity
             android:theme="@style/Theme.SuperDatePicker"
-            android:name="DatePickerPopUp"
+            android:name="fr.wheelmilk.android.altibusproject.DatePickerPopUp"
             android:label="Altibus" >
         </activity>
         <activity
             android:theme="@style/Theme.SuperExample"
-            android:name="HorrairesPopUpActivity"
+            android:name="fr.wheelmilk.android.altibusproject.HorrairesPopUpActivity"
             android:label="Altibus" >
         </activity>
-        <activity android:name="UserPreferences" 
+        <activity android:name="fr.wheelmilk.android.altibusproject.UserPreferences" 
             android:label="Altibus"
             android:theme="@style/Theme.SuperLightExample"/>
-        <activity android:name="PassagersPopUp"
+        <activity android:name="fr.wheelmilk.android.altibusproject.PassagersPopUp"
             android:uiOptions="splitActionBarWhenNarrow"
             android:label="Altibus"
             android:theme="@style/Theme.SuperLightExample"/>
-        <activity android:name="EditionPassager" 
+        <activity android:name="fr.wheelmilk.android.altibusproject.EditionPassager" 
             android:label="Altibus"
             android:theme="@style/Theme.SuperLightExample"/>
-        <activity android:name="PaiementPopUp" 
+        <activity android:name="fr.wheelmilk.android.altibusproject.PaiementPopUp" 
             android:label="Altibus"
             android:theme="@style/Theme.SuperExample"/>
-        <activity android:name="BilletCompostagePopUp" 
+        <activity android:name="fr.wheelmilk.android.altibusproject.BilletCompostagePopUp" 
             android:label="Altibus"
             android:theme="@style/Theme.SuperExample"/>
 

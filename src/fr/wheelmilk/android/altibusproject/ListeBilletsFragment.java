@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import com.actionbarsherlock.app.SherlockFragment;
+import com.antidots.android.altibus.R;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 import fr.wheelmilk.android.altibusproject.models.BilletDB;
@@ -79,7 +80,7 @@ public abstract class ListeBilletsFragment extends SherlockFragment implements O
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3) {
 				onItemClicked(v, position);
-				Log.v(LOG_TAG, "item Clicked :" + position);
+				 if (Config.DEBUG == 1) Log.v(LOG_TAG, "item Clicked :" + position);
 			}
 		});
 		
@@ -154,7 +155,7 @@ public abstract class ListeBilletsFragment extends SherlockFragment implements O
 	@Override
 	public void onPause() {
 		super.onPause();
-		Log.v(getClass().toString(), "onPause");
+		 if (Config.DEBUG == 1) Log.v(getClass().toString(), "onPause");
 		if (databaseHelper != null) {
 			OpenHelperManager.releaseHelper();
 			databaseHelper = null;

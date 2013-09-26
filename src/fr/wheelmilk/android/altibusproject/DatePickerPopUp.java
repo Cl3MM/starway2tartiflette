@@ -7,6 +7,7 @@ import java.util.Locale;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
+import com.antidots.android.altibus.R;
 
 import fr.wheelmilk.android.altibusproject.support.Config;
 import fr.wheelmilk.android.altibusproject.support.Helper;
@@ -40,6 +41,7 @@ public class DatePickerPopUp extends SherlockActivity implements View.OnClickLis
 		gareArrivee = extras.getString("gareArrivee");
 		title 		= extras.getString("title");
 		date	   	= (Date) extras.getSerializable("date");
+		if (date == null) date = new Date();
 		code	   	= extras.getInt("code");
 		String color = extras.getString("popupColor");
 		popupColor = Color.parseColor( color );
@@ -133,7 +135,7 @@ public class DatePickerPopUp extends SherlockActivity implements View.OnClickLis
 	}
 	@Override
 	public void onClick(View v) {
-		Log.v(this.getClass().toString(), date.toString());
+		 if (Config.DEBUG == 1) Log.v(this.getClass().toString(), date.toString());
 		finish();
 	}
 	@Override

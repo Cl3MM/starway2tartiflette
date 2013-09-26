@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.loopj.android.http.*;
 
+import fr.wheelmilk.android.altibusproject.support.Config;
+
 public class AltibusRestClient {
 //	  private static final String BASE_URL = "http://www.altibus.com/sw/altibus/";
 	  private static final String BASE_URL = "http://www.altibus.com/";
@@ -16,17 +18,17 @@ public class AltibusRestClient {
 	  private static AsyncHttpClient client = new AsyncHttpClient();
 
 	  public static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-		  Log.v("AltibusRestClient", getAbsoluteUrl(url)+params.toString() );
+		 if (Config.DEBUG == 1)   Log.v("AltibusRestClient", getAbsoluteUrl(url)+params.toString() );
 	      client.get(getAbsoluteUrl(url), params, responseHandler);
 	  }
 
 	  public static void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-		  Log.v("AltibusRestClient", getAbsoluteUrl(url)+params.toString() );
+		 if (Config.DEBUG == 1)   Log.v("AltibusRestClient", getAbsoluteUrl(url)+params.toString() );
 		  client.post(getAbsoluteUrl(url), params, responseHandler);
 	  }
 
 	  public static void postSSL(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-		  Log.v("AltibusRestClient", getAbsoluteUrl(url)+params.toString() );
+		 if (Config.DEBUG == 1)   Log.v("AltibusRestClient", getAbsoluteUrl(url)+params.toString() );
 		  client.post(getAbsoluteSSLUrl(url), params, responseHandler);
 	  }
 	  

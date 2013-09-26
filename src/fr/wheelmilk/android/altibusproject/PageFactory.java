@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.antidots.android.altibus.R;
 import com.loopj.android.http.RequestParams;
 
 import fr.wheelmilk.android.altibusproject.models.GaresArrivee;
@@ -216,7 +217,7 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 		llRetour = (LinearLayout) layoutView.findViewById(R.id.llTimetableRetour);
 		llRetour.setOnClickListener(this);
 		llRetour.setVisibility(View.GONE);
-		setDeveloppmentTestData();
+//		setDeveloppmentTestData();
 		setUpChildrenPages();
 
 		// restoring fragment state after orientation change
@@ -498,7 +499,7 @@ public abstract class PageFactory extends SherlockFragment implements View.OnCli
 	protected void geoLocate() {
 		LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE );
 		boolean statusOfGPS = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-		Log.v(getClass().toString(), "GPS :" + (statusOfGPS ? "ON" : "OFF"));
+		 if (Config.DEBUG == 1) Log.v(getClass().toString(), "GPS :" + (statusOfGPS ? "ON" : "OFF"));
 		if (statusOfGPS) startGareAllerPopUpActivity(true);
 		else buildAlertMessageNoGps();
 	}

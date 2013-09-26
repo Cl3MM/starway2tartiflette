@@ -36,7 +36,7 @@ class AltibusFragmentAdapter extends FragmentStatePagerAdapter implements
 //	}
 	@Override
 	public Fragment getItem(int position) {
-		Log.v(getClass().toString(), "getItem Position: " + position );
+		 if (Config.DEBUG == 1) Log.v(getClass().toString(), "getItem Position: " + position );
 		switch (position) {
 		case 0: // Fragment # 0 - This will show image
 			return PageAchat.init(position);
@@ -72,7 +72,7 @@ class AltibusFragmentAdapter extends FragmentStatePagerAdapter implements
 	// Feinte pour chopper le Fragment actif dans le Viewpager
 	@Override
 	public Object instantiateItem(ViewGroup container, int position) {
-		Log.v(getClass().toString(), "instantiateItem: " + position );
+		 if (Config.DEBUG == 1) Log.v(getClass().toString(), "instantiateItem: " + position );
 		Fragment fragment = (Fragment) super.instantiateItem(container, position);
 		registeredFragments.put(position, fragment);
 		return fragment;

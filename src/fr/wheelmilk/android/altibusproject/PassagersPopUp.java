@@ -25,6 +25,7 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.antidots.android.altibus.R;
 
 import fr.wheelmilk.android.altibusproject.models.GaresArrivee;
 import fr.wheelmilk.android.altibusproject.models.GaresDepart;
@@ -56,7 +57,7 @@ public class PassagersPopUp extends SherlockActivity implements OnClickListener,
 					preferences.ville, preferences.pays, preferences.telephone, preferences.email);
 			passagers = new Passagers();
 			passagers.add(passagerPrincipal);
-			Log.v(this.getClass().toString(), passagerPrincipal.toString());
+			 if (Config.DEBUG == 1) Log.v(this.getClass().toString(), passagerPrincipal.toString());
 		 } else {
 			passagers = extras.getParcelable("passagers");
 		 }
@@ -73,9 +74,9 @@ public class PassagersPopUp extends SherlockActivity implements OnClickListener,
 		setContentView(R.layout.passagers_popup);
 
 		if( bundle != null ) {
-			Log.v(getClass().toString(), "Loading instance...");
+			 if (Config.DEBUG == 1) Log.v(getClass().toString(), "Loading instance...");
 			passagers = bundle.getParcelable("passagers");
-			Log.v(getClass().toString(), "Nombre de passagers: " + passagers.size());
+			 if (Config.DEBUG == 1) Log.v(getClass().toString(), "Nombre de passagers: " + passagers.size());
 		}
 
 		edit 	= getResources().getString(R.string.editer);
@@ -117,13 +118,13 @@ public class PassagersPopUp extends SherlockActivity implements OnClickListener,
 	}
 	public void displayPassagerCourant() {
 		if (passagerCourant == null) {
-			Log.v(this.getClass().toString(), "Passager: Aucun");
+			 if (Config.DEBUG == 1) Log.v(this.getClass().toString(), "Passager: Aucun");
 		} else {
-			Log.v(this.getClass().toString(), "Passager: " + passagerCourant.toString());
+			 if (Config.DEBUG == 1) Log.v(this.getClass().toString(), "Passager: " + passagerCourant.toString());
 		}
 	}
 	protected void onItemClicked(View v, int position) {
-		Log.v(this.getClass().toString(), "Position: " + position);
+		 if (Config.DEBUG == 1) Log.v(this.getClass().toString(), "Position: " + position);
 		if (position == 0 ) { // Passager principal, on lance l'écran des paramètres
 			startActivity(new Intent(this, UserPreferences.class));
 		} else {
@@ -153,7 +154,7 @@ public class PassagersPopUp extends SherlockActivity implements OnClickListener,
 	}
 
 	protected void passagerSelectAction(int which) {
-		Log.v(getClass().toString(), "Position: " + String.valueOf(which));
+		 if (Config.DEBUG == 1) Log.v(getClass().toString(), "Position: " + String.valueOf(which));
     	displayPassagerCourant();
     	if ( passagerCourant != null ) {
     		if ( which == 0 ) { // On edite lance l'activité d'édition de passager
@@ -240,7 +241,7 @@ public class PassagersPopUp extends SherlockActivity implements OnClickListener,
 		} // Validation des passagers et retour à l'activité précédente 
 		  else if (vid == R.id.rlValidPassagers) { 
 			if (passagers.isValid(getResources())) { // Si tous les infos passagers ont été rempli correctement
-				Log.v(this.getClass().toString(), "onClick: Passagers valides");
+				 if (Config.DEBUG == 1) Log.v(this.getClass().toString(), "onClick: Passagers valides");
 				returnCode = RESULT_OK;
 				finish();
 			} else {
@@ -309,8 +310,8 @@ public class PassagersPopUp extends SherlockActivity implements OnClickListener,
     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
     	displayPassagerCourant();
     	if ( passagerCourant != null ) {
-    		Log.v(this.getClass().toString(), item.getTitle().toString());
-    		Log.v(this.getClass().toString(), "Passager: " + passagerCourant.toString());
+    		 if (Config.DEBUG == 1) Log.v(this.getClass().toString(), item.getTitle().toString());
+    		 if (Config.DEBUG == 1) Log.v(this.getClass().toString(), "Passager: " + passagerCourant.toString());
     		if ( edit.equals( item.getTitle().toString() ) ) { // On edite lance l'activité d'édition de passager
     			Intent i = new Intent(this, EditionPassager.class);
     			i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -326,7 +327,7 @@ public class PassagersPopUp extends SherlockActivity implements OnClickListener,
     			refreshListView();
     		}
     	}    	
-    	Log.v(this.getClass().toString(), "onActionItemClicked 2");
+    	 if (Config.DEBUG == 1) Log.v(this.getClass().toString(), "onActionItemClicked 2");
 		displayPassagerCourant();
     	passagerCourant = null;
         mode.finish();
@@ -339,7 +340,7 @@ public class PassagersPopUp extends SherlockActivity implements OnClickListener,
     @Override
     public void onDestroyActionMode(ActionMode mode) {
     	mMode = null;
-    	Log.v(this.getClass().toString(), "onDestroyActionMode");
+    	 if (Config.DEBUG == 1) Log.v(this.getClass().toString(), "onDestroyActionMode");
 		refreshListView();
 		displayPassagerCourant();
     }
@@ -369,6 +370,6 @@ public class PassagersPopUp extends SherlockActivity implements OnClickListener,
 	public void onSaveInstanceState(Bundle data) {
 	   super.onSaveInstanceState(data);
 	   data.putParcelable("passagers", passagers);
-	   Log.v(getClass().toString(),"Saving Passagers instance");
+	 if (Config.DEBUG == 1)    Log.v(getClass().toString(),"Saving Passagers instance");
 	}
 }

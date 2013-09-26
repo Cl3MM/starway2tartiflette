@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.antidots.android.altibus.R;
 
 public class BilletsArrayAdapter extends ArrayAdapter<BilletDB> {
 

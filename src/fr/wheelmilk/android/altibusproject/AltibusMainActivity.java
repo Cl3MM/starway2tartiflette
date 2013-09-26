@@ -12,6 +12,7 @@ import java.util.Date;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.antidots.android.altibus.R;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 //import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
@@ -23,6 +24,7 @@ import fr.wheelmilk.android.altibusproject.models.GaresArrivee;
 import fr.wheelmilk.android.altibusproject.models.GaresDepart;
 import fr.wheelmilk.android.altibusproject.models.HorrairesAller;
 import fr.wheelmilk.android.altibusproject.models.HorrairesRetour;
+import fr.wheelmilk.android.altibusproject.support.Config;
 import fr.wheelmilk.android.altibusproject.support.Helper;
 import fr.wheelmilk.android.altibusproject.support.Support;
 import android.content.BroadcastReceiver;
@@ -141,7 +143,7 @@ public class AltibusMainActivity extends SlidingFragmentActivity {
 	    super.onPostCreate(savedInstanceState);
 	    Support s = new Support(this);
 	    boolean firstSlide = s.isSet("firstSlide");
-	    Log.v(getClass().toString(), firstSlide ? "First Run" : "Second Run");
+	 if (Config.DEBUG == 1)     Log.v(getClass().toString(), firstSlide ? "First Run" : "Second Run");
 	    if (firstSlide) {
 		    new Handler().postDelayed(new Runnable() {
 		        @Override
@@ -169,7 +171,7 @@ public class AltibusMainActivity extends SlidingFragmentActivity {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			String action = intent.getAction();
-			Log.v(getClass().toString(), "Received intent: " + action);
+			 if (Config.DEBUG == 1) Log.v(getClass().toString(), "Received intent: " + action);
 			if( action.equals("billetCreated") ) { 
 				// Un nouveau billet vient d'être crée, on scroll 
 				// jusqu'au fragment Mes billets et on met à jour la liste des billets.
@@ -237,7 +239,7 @@ public class AltibusMainActivity extends SlidingFragmentActivity {
         	Helper.grilledRare(this, "Appuyez une seconde fois pour quitter");
         } else if (exitCounter != null) {
         	Date now = new Date();
-        	Log.v(getClass().toString(), "Temps écoulé : "  + (now.getTime() - exitCounter.getTime() ) );
+        	 if (Config.DEBUG == 1) Log.v(getClass().toString(), "Temps écoulé : "  + (now.getTime() - exitCounter.getTime() ) );
         	if (now.getTime() - exitCounter.getTime() < 1000)
         		super.onBackPressed();
         	else exitCounter = null;        	
@@ -270,7 +272,7 @@ public class AltibusMainActivity extends SlidingFragmentActivity {
 		} catch (Exception e) {
 			System.out
 					.println("CheckConnectivity Exception: " + e.getMessage());
-			Log.v("connectivity", e.toString());
+			 if (Config.DEBUG == 1) Log.v("connectivity", e.toString());
 		}
 		return connected;
 	}

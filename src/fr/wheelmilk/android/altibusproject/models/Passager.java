@@ -11,7 +11,7 @@ import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
-import fr.wheelmilk.android.altibusproject.R;
+import com.antidots.android.altibus.R;
 import fr.wheelmilk.android.altibusproject.support.Helper;
 
 public class Passager implements Parcelable {

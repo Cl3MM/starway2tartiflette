@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.antidots.android.altibus.R;
 import com.loopj.android.http.RequestParams;
 import fr.wheelmilk.android.altibusproject.models.GaresDataModel;
 import fr.wheelmilk.android.altibusproject.models.HorrairesAller;
@@ -131,7 +132,7 @@ public class HorrairesPopUpActivity extends ActivityPopUpFactory {
 			 _params.put("dr", params.dateRetour() );
 		 }
 		 _params.put("rt", params.route() );
-		 Log.v(this.getClass().toString(), _params.toString());
+		 if (Config.DEBUG == 1)  Log.v(this.getClass().toString(), _params.toString());
 		new AltibusWebservice<HorrairesPopUpActivity>(this, "sw/altibus/data.aspx?", _params);
 	}
 
@@ -158,8 +159,8 @@ public class HorrairesPopUpActivity extends ActivityPopUpFactory {
 				String log1 = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.FRANCE).format(da);
 				String log2 = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.FRANCE).format(today);
 
-				Log.v(getClass().toString(), "Date Aller: " + log1);
-				Log.v(getClass().toString(), "Today: " + log2);
+				 if (Config.DEBUG == 1) Log.v(getClass().toString(), "Date Aller: " + log1);
+				 if (Config.DEBUG == 1) Log.v(getClass().toString(), "Today: " + log2);
 
 				if ( da.getTime() > today.getTime() ) {
 						horrairesAller.put(value.heureAller(), value.heureArrivee()); // + "::" + value.gareName()

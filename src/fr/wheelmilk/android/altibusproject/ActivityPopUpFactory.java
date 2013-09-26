@@ -1,7 +1,6 @@
 package fr.wheelmilk.android.altibusproject;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 import android.content.Intent;
@@ -21,13 +20,12 @@ import android.widget.AdapterView.OnItemClickListener;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
-import com.loopj.android.http.RequestParams;
+import com.antidots.android.altibus.R;
 
 import fr.wheelmilk.android.altibusproject.models.AltibusDataModel;
 import fr.wheelmilk.android.altibusproject.models.Gares4Geoloc;
 import fr.wheelmilk.android.altibusproject.models.GaresDataModel;
 import fr.wheelmilk.android.altibusproject.support.Config;
-import fr.wheelmilk.android.altibusproject.support.Helper;
 
 public abstract class ActivityPopUpFactory extends SherlockActivity implements OnWebserviceListenner {
 	protected LinearLayout llHeaderProgress;
@@ -118,9 +116,9 @@ public abstract class ActivityPopUpFactory extends SherlockActivity implements O
 		filterGareAller.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
-				Log.v(getClass().toString(), "CS: "+cs);
+				 if (Config.DEBUG == 1) Log.v(getClass().toString(), "CS: "+cs);
 				arrayAdapter.getFilter().filter(cs.toString().replace("\n", ""));
-				Log.v(getClass().toString(), arrayAdapter.getFilter().toString());
+				 if (Config.DEBUG == 1) Log.v(getClass().toString(), arrayAdapter.getFilter().toString());
 			}
 			@Override
 			public void beforeTextChanged(CharSequence cs, int arg1, int arg2, int arg3) { }
@@ -176,7 +174,7 @@ public abstract class ActivityPopUpFactory extends SherlockActivity implements O
 	@Override
 	public void onWebserviceSuccess(String xmlString) {
 
-		Log.v(getClass().toString(), xmlString);
+		 if (Config.DEBUG == 1) Log.v(getClass().toString(), xmlString);
 		altibusDataModel = new AltibusSerializer(AltibusDataModel.class).serializeXml(xmlString);
 
 		if (altibusDataModel != null) {
@@ -194,7 +192,7 @@ public abstract class ActivityPopUpFactory extends SherlockActivity implements O
 			dismissProgressBar();
 		} else {
 			// Problème de sérialisation
-			Log.v(this.getClass().toString(), "Serializer faillure :(");
+			 if (Config.DEBUG == 1) Log.v(this.getClass().toString(), "Serializer faillure :(");
 			returnCode = Config.SERIALIZATION_FAILURE;
 			finish();
 		}

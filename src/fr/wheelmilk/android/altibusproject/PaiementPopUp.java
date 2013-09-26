@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
+import com.antidots.android.altibus.R;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 import com.loopj.android.http.RequestParams;
@@ -74,7 +75,7 @@ public class PaiementPopUp extends SherlockActivity implements OnClickListener, 
 		tvMontant.setText(s);
 		tvRefReservation.setText(billet.getRefReservation());
 		
-		setTestData();
+//		setTestData();
 	}
 	private void setTestData() {
 		etAnnee.setText("13");
@@ -150,7 +151,7 @@ public class PaiementPopUp extends SherlockActivity implements OnClickListener, 
 			params.put("c", code);
 			params.put("r", billet.getRefReservation());
 			
-			Log.v(this.getClass().toString(), params.toString());
+			 if (Config.DEBUG == 1) Log.v(this.getClass().toString(), params.toString());
 			rlLoading.setVisibility(View.VISIBLE);
 			AltibusRestClient.postSSL("iphone/cybermut/etp1.aspx?", params, new GaresAsyncHttpResponseHandler(this));
 		} else {
@@ -203,19 +204,19 @@ public class PaiementPopUp extends SherlockActivity implements OnClickListener, 
 	}
 	@Override
 	public void onWebserviceSuccess(String xmlString) {
-		Log.v(getClass().toString(), xmlString);
+		 if (Config.DEBUG == 1) Log.v(getClass().toString(), xmlString);
 		resultatPaiement = (ResultatPaiement) new AltibusSerializer(ResultatPaiement.class).serializeXmlToObject(xmlString);
 		if (resultatPaiement != null) {
 			afterPaymentValidation();
-			Log.v(this.getClass().toString(), "Numéro de reservation: " +  resultatPaiement.getReference());
+			 if (Config.DEBUG == 1) Log.v(this.getClass().toString(), "Numéro de reservation: " +  resultatPaiement.getReference());
 		} else {
 			rlLoading.setVisibility(View.GONE);
 			Helper.grilledRare(this, getString(R.string.erreurSerialisation));
-			Log.v(this.getClass().toString(), "Serializer faillure :(");
+			 if (Config.DEBUG == 1) Log.v(this.getClass().toString(), "Serializer faillure :(");
 		}
 	}
 	private void afterPaymentValidation() {
-		if (resultatPaiement.getCdr() == -5 ) { // Paiement OK
+		if (resultatPaiement.getCdr() == 1 ) { // Paiement OK
 			returnCode = RESULT_OK;
 			saveBilletToDB();
 			mDialog = new SimpleAlertDialog(this, getString(R.string.paymentSuccess), getString(R.string.ok), null, this);
@@ -231,20 +232,20 @@ public class PaiementPopUp extends SherlockActivity implements OnClickListener, 
 	}
 	private void saveBilletToDB() {
 
-		Log.v(getClass().toString(), "Billet :" + billet.toString());
+		 if (Config.DEBUG == 1) Log.v(getClass().toString(), "Billet :" + billet.toString());
 		if (billetsDao == null) {
 			Helper.grilledRare(this, "Impossible de sauvegarder le billet dans la base de données");
-			Log.v(getClass().toString(), "Impossible de sauvegarder le billet dans la base de données");
-			Log.v(getClass().toString(), "Billet : " + billet.toString());
+			 if (Config.DEBUG == 1) Log.v(getClass().toString(), "Impossible de sauvegarder le billet dans la base de données");
+			 if (Config.DEBUG == 1) Log.v(getClass().toString(), "Billet : " + billet.toString());
 		} else {
 			try {
-				Log.v(getClass().toString(), "Saving ticket to DB...");
+				 if (Config.DEBUG == 1) Log.v(getClass().toString(), "Saving ticket to DB...");
 				BilletDB billetDB = new BilletDB(billet, false);
 				billetsDao.create(billetDB);
 				
 				// Creation Billet Retour
 				if(billet.hasHorraireRetour()) {
-					Log.v(getClass().toString(), "Saving return ticket to DB...");
+					 if (Config.DEBUG == 1) Log.v(getClass().toString(), "Saving return ticket to DB...");
 					billetDB = new BilletDB(billet, true);
 					billetsDao.create(billetDB);
 				}
@@ -255,7 +256,7 @@ public class PaiementPopUp extends SherlockActivity implements OnClickListener, 
 	}
 	@Override
 	public void onWebserviceFailure() {
-		Log.v(getClass().toString(), "Failure :'(");
+		 if (Config.DEBUG == 1) Log.v(getClass().toString(), "Failure :'(");
 	}
 	@Override
 	public void onClick(DialogInterface dlg, int which) {
@@ -265,7 +266,7 @@ public class PaiementPopUp extends SherlockActivity implements OnClickListener, 
 	}
 	@Override
 	public void onBackPressed() {
-		Log.v(getClass().toString(), "onBackPressed.....");
+		 if (Config.DEBUG == 1) Log.v(getClass().toString(), "onBackPressed.....");
 		if( !isProceedingPayment && mDialog == null) super.onBackPressed();
 		else {
 			returnCode = RESULT_CANCELED;
@@ -278,7 +279,7 @@ public class PaiementPopUp extends SherlockActivity implements OnClickListener, 
 	}
 
 	private void sendLocationBroadcast(Intent intent){
-		Log.v(getClass().toString(), "Sending Update broadcast");
+		 if (Config.DEBUG == 1) Log.v(getClass().toString(), "Sending Update broadcast");
 	    intent.putExtra("action", "update");
 	    LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 	}

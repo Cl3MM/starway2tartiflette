@@ -8,6 +8,7 @@ import java.util.Date;
 import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.antidots.android.altibus.R;
 import com.j256.ormlite.stmt.DeleteBuilder;
 import fr.wheelmilk.android.altibusproject.models.BilletDB;
 import fr.wheelmilk.android.altibusproject.support.Config;
@@ -67,13 +68,13 @@ public class HistoriqueFragment extends ListeBilletsFragment implements ActionMo
         if (billetCourant != null) 
 			if (vid == R.id.itrash) { //user pressed information button
 				SimpleAlertDialog dlg = new SimpleAlertDialog(getActivity(), getString(R.string.confirmDeleteOutdated),	getString(R.string.supprimer), getString(R.string.cancel), this);
-				Log.v(getClass().toString(), "Supprimer");
+				 if (Config.DEBUG == 1) Log.v(getClass().toString(), "Supprimer");
 				dlg.setTitle("Supprimer le billet ?");
 				dlg.show();
 			} else if ( vid == R.id.iSee) { // user pressed trash button
-				Log.v(getClass().toString(), "Voir");
+				 if (Config.DEBUG == 1) Log.v(getClass().toString(), "Voir");
 		        if (position != ListView.INVALID_POSITION) {
-		            Log.v(getClass().toString(), "Billet : " + aaBillets.getItem(position) );
+		 if (Config.DEBUG == 1)             Log.v(getClass().toString(), "Billet : " + aaBillets.getItem(position) );
 		        }
 				Intent i = new Intent(this.getActivity(), BilletCompostagePopUp.class);
 				i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -127,8 +128,8 @@ public class HistoriqueFragment extends ListeBilletsFragment implements ActionMo
 	@Override
 	public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
     	if ( billetCourant != null ) {
-			Log.v(getClass().toString(), item.getTitle().toString());
-			Log.v(getClass().toString(), "Passager: " + billetCourant.toString());
+			 if (Config.DEBUG == 1) Log.v(getClass().toString(), item.getTitle().toString());
+			 if (Config.DEBUG == 1) Log.v(getClass().toString(), "Passager: " + billetCourant.toString());
 			if ( edit.equals( item.getTitle().toString() ) ) { // On edite lance l'activité d'édition de passager
 				Intent i = new Intent(this.getActivity(), BilletCompostagePopUp.class);
 				i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_ANIMATION);

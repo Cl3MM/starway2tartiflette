@@ -1,6 +1,9 @@
 package fr.wheelmilk.android.altibusproject;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.antidots.android.altibus.R;
+
+import fr.wheelmilk.android.altibusproject.support.Config;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -60,7 +63,7 @@ public class AltibusMenuFragment extends SherlockFragment implements OnClickList
 	@Override
 	public void onClick(View v) {
 		int vid = v.getId();
-		Log.v(getClass().toString(), "Item clicked: "+ vid);
+		 if (Config.DEBUG == 1) Log.v(getClass().toString(), "Item clicked: "+ vid);
 //		Fragment newContent = null;
 		int position = -1;
 		if (vid == R.id.rlMenuReservation) {

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.antidots.android.altibus.R;
 import com.loopj.android.http.RequestParams;
 
 import fr.wheelmilk.android.altibusproject.models.GaresArrivee;
@@ -81,12 +82,12 @@ public class GareArriveePopUp extends ActivityPopUpFactory {
 		if(xmlString.contains("<stations>")) {
 			dismissProgressBar();
 			isLoadingStation = false;
-			Log.v(getClass().toString(), xmlString);
+			 if (Config.DEBUG == 1) Log.v(getClass().toString(), xmlString);
 			Stations stations = (Stations) new AltibusSerializer(Stations.class).serializeXmlToObject(xmlString);
 			if(stations != null) {
 				isStation  = stations.isStation();
-				Log.v(getClass().toString(), "YEAHHH !!! Check de la station !!!!");
-				Log.v(getClass().toString(), "isStation: " + (isStation ? "TRUE" : "FALSE"));
+				 if (Config.DEBUG == 1) Log.v(getClass().toString(), "YEAHHH !!! Check de la station !!!!");
+				 if (Config.DEBUG == 1) Log.v(getClass().toString(), "isStation: " + (isStation ? "TRUE" : "FALSE"));
 			}
 			finish();
 		} else {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import fr.wheelmilk.android.altibusproject.models.Gares4Geoloc;
+import fr.wheelmilk.android.altibusproject.support.Config;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
+import com.antidots.android.altibus.R;
 
 public class PopUpArrayAdapter extends ArrayAdapter<Gares4Geoloc>  implements Filterable {
 
@@ -90,7 +92,7 @@ public class PopUpArrayAdapter extends ArrayAdapter<Gares4Geoloc>  implements Fi
 			@SuppressWarnings("unchecked")
             @Override
             protected void publishResults(CharSequence constraint,FilterResults results) {
-				Log.v(this.getClass().toString(), "results:" + results);
+				 if (Config.DEBUG == 1) Log.v(this.getClass().toString(), "results:" + results);
                 items = (ArrayList<Gares4Geoloc>) results.values; // has the filtered values
                 notifyDataSetChanged();  // notifies the data with new filtered values
             }
@@ -111,7 +113,7 @@ public class PopUpArrayAdapter extends ArrayAdapter<Gares4Geoloc>  implements Fi
                 } else {
 
                 	constraint = constraint.toString().toLowerCase(Locale.FRANCE);
-        			Log.v(this.getClass().toString(), "constraint:" + constraint);
+        			 if (Config.DEBUG == 1) Log.v(this.getClass().toString(), "constraint:" + constraint);
 
         			for(Gares4Geoloc item : items) {
 
@@ -119,8 +121,8 @@ public class PopUpArrayAdapter extends ArrayAdapter<Gares4Geoloc>  implements Fi
                             FilteredArrList.add(item);
                         }
             	    }
-        			Log.v(this.getClass().toString(), "Filter count:" + FilteredArrList.size());
-        			Log.v(this.getClass().toString(), "Full list count:" + items.size());
+        			 if (Config.DEBUG == 1) Log.v(this.getClass().toString(), "Filter count:" + FilteredArrList.size());
+        			 if (Config.DEBUG == 1) Log.v(this.getClass().toString(), "Full list count:" + items.size());
 
 //                    for (int i = 0; i < mOriginalValues.size(); i++) {
 //                        String data = mOriginalValues.get(i);

@@ -11,7 +11,9 @@ import android.util.Log;
 
 import com.loopj.android.http.RequestParams;
 
-import fr.wheelmilk.android.altibusproject.R;
+import com.antidots.android.altibus.R;
+
+import fr.wheelmilk.android.altibusproject.support.Config;
 
 public class Passagers extends ArrayList<Passager> implements Parcelable {
 
@@ -53,7 +55,7 @@ public class Passagers extends ArrayList<Passager> implements Parcelable {
 
 			if (!isValid) {
 				StringBuilder message = new StringBuilder();
-				Log.v(this.getClass().toString(), p.getClass().toString());
+				 if (Config.DEBUG == 1) Log.v(this.getClass().toString(), p.getClass().toString());
 				if ( p.isPrincipal ) {
 					messagePassagerPrincipal.append(p.errorMessages());
 				} else {
@@ -76,7 +78,7 @@ public class Passagers extends ArrayList<Passager> implements Parcelable {
 		if (erroMessages.length()> 0) { 
 			result = false;
 		}
-		Log.v(this.getClass().toString(), "Passager valid? " + result);
+		 if (Config.DEBUG == 1) Log.v(this.getClass().toString(), "Passager valid? " + result);
 		return result;
 	}
 	public String getErrorMessages() {

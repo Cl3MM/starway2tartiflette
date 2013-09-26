@@ -3,6 +3,7 @@ package fr.wheelmilk.android.altibusproject;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.antidots.android.altibus.R;
 import com.loopj.android.http.RequestParams;
 
 import android.app.Activity;
@@ -74,7 +75,7 @@ public class PageAchat extends PageFactory implements OnWebserviceListenner, Dia
 	}
 
 	private void sendLocationBroadcast(Intent intent){
-		Log.v(getClass().toString(), "Sending Update broadcast");
+		 if (Config.DEBUG == 1) Log.v(getClass().toString(), "Sending Update broadcast");
 	    intent.putExtra("action", "update");
 	    LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
 	}
@@ -91,8 +92,8 @@ public class PageAchat extends PageFactory implements OnWebserviceListenner, Dia
 	@Override
 	public void onClick(View v) {
 		int vid = v.getId();
-		Log.v(getClass().toString(), "Vid: "+vid);
-		Log.v(getClass().toString(), "rlBtnNew: "+R.id.rlButtonNew);
+		 if (Config.DEBUG == 1) Log.v(getClass().toString(), "Vid: "+vid);
+		 if (Config.DEBUG == 1) Log.v(getClass().toString(), "rlBtnNew: "+R.id.rlButtonNew);
 		if (vid == R.id.llPassagers) {
 			startPassagerActivity();
 		} else if (vid == R.id.rlButtonPaiement) {
@@ -124,8 +125,8 @@ public class PageAchat extends PageFactory implements OnWebserviceListenner, Dia
 		Calendar c = Calendar.getInstance();
 		c.setTime(new Date());
 		c.add(Calendar.HOUR_OF_DAY, -1);
-		Log.v("Spéciale CLEM", "MEGA DATE LONG " + c.getTime().getTime());
-		Log.v("Spéciale CLEM", "MEGA DATE " + c.getTime());
+		 if (Config.DEBUG == 1) Log.v("Spéciale CLEM", "MEGA DATE LONG " + c.getTime().getTime());
+		 if (Config.DEBUG == 1) Log.v("Spéciale CLEM", "MEGA DATE " + c.getTime());
 		Intent i = new Intent(getActivity(), PassagersPopUp.class);
 		i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		if (tvPassagers.getTag() != null) {
@@ -189,14 +190,14 @@ public class PageAchat extends PageFactory implements OnWebserviceListenner, Dia
 	}
 	@Override
 	public void onWebserviceSuccess(String xmlString) {
-		Log.v(this.getClass().toString(), xmlString);
+		 if (Config.DEBUG == 1) Log.v(this.getClass().toString(), xmlString);
 		if(xmlString.contains(">ERREUR<")) {
 			Helper.grilledRare(getActivity(), getString(R.string.erreurRefReservation));
 		} else {
 			reservation = (AltibusDataReservation) new AltibusSerializer(AltibusDataReservation.class).serializeXmlToObject(xmlString);
 			if (reservation != null) {
 				billet.setReservation(reservation.reservation);
-				Log.v(this.getClass().toString(), "Montant: " + reservation.getMontant());
+				 if (Config.DEBUG == 1) Log.v(this.getClass().toString(), "Montant: " + reservation.getMontant());
 				tvMontant.setText( reservation.getPrettyMontant() );
 				tvMontant.setTag( reservation.getMontant() );
 				rlButtonPaiement.setEnabled(true);
@@ -205,7 +206,7 @@ public class PageAchat extends PageFactory implements OnWebserviceListenner, Dia
 				tvMontant.setText( "" );
 				tvMontant.setTag(null);
 				// Problème de sérialisation
-				Log.v(this.getClass().toString(), "Serializer faillure :(");
+				 if (Config.DEBUG == 1) Log.v(this.getClass().toString(), "Serializer faillure :(");
 			}
 		}
 		layoutView.findViewById(R.id.rlLoading).setVisibility(View.GONE);
@@ -214,7 +215,7 @@ public class PageAchat extends PageFactory implements OnWebserviceListenner, Dia
 	public void onWebserviceFailure() {
 		layoutView.findViewById(R.id.rlLoading).setVisibility(View.GONE);
 		Helper.grilledRare(getActivity(), "Délai d'attente au serveur dépassé. Veuillez réessayer.");
-		Log.v(this.getClass().toString(), "Webservice Failure :(");
+		 if (Config.DEBUG == 1) Log.v(this.getClass().toString(), "Webservice Failure :(");
 	}
 	@Override
 	protected void toggleAllerRetour() {
@@ -245,16 +246,16 @@ public class PageAchat extends PageFactory implements OnWebserviceListenner, Dia
 	@Override
 	public void onClick(DialogInterface dialog, int which) {
 
-		Log.v(getClass().toString(), "Dialog class: " + dialog.getClass());
+		 if (Config.DEBUG == 1) Log.v(getClass().toString(), "Dialog class: " + dialog.getClass());
 		if (mDialog != null && mDialog.isVisible()) {
 			if (mDialog.getTag().equals("cgv")) {
-				Log.v(getClass().toString(), "Launching Payment...");
+				 if (Config.DEBUG == 1) Log.v(getClass().toString(), "Launching Payment...");
 				mDialog.dismiss();
 				if (which == DialogInterface.BUTTON_POSITIVE) {
 					startPaiementActivity();
 				}
 			} else if (mDialog.getTag().equals("hardReset")) {
-				Log.v(getClass().toString(), "Resetting fields...");
+				 if (Config.DEBUG == 1) Log.v(getClass().toString(), "Resetting fields...");
 				if (which == DialogInterface.BUTTON_POSITIVE) {
 					mDialog.dismiss();
 					harReset();
@@ -289,7 +290,7 @@ public class PageAchat extends PageFactory implements OnWebserviceListenner, Dia
 	}
 	@Override
 	public void onSaveInstanceState(Bundle data) {
-		Log.v(getClass().toString(), "Saving instance...");
+		 if (Config.DEBUG == 1) Log.v(getClass().toString(), "Saving instance...");
 		super.onSaveInstanceState(data);
 		data.putParcelable("passagers", passagers);
 	}

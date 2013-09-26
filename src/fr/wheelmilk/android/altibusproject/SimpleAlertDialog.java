@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.view.ContextThemeWrapper;
+import com.antidots.android.altibus.R;
 
 public class SimpleAlertDialog extends AlertDialog {
 	private String mMessage;
